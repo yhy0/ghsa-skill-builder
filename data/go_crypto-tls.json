@@ -1,0 +1,698 @@
+[
+  {
+    "advisory": {
+      "ghsaId": "GHSA-j443-wcqq-xprh",
+      "summary": "Terraform Provider for SendGrid: TLS Session Resumption Bypasses Certificate Authority Trust Store Modifications in Go",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-295",
+            "name": "Improper Certificate Validation"
+          }
+        ]
+      },
+      "publishedAt": "2026-03-11T00:32:49Z",
+      "references": [
+        {
+          "url": "https://github.com/arslanbekov/terraform-provider-sendgrid/security/advisories/GHSA-j443-wcqq-xprh"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-h355-32pf-p2xm"
+        },
+        {
+          "url": "https://security.snyk.io/vuln/SNYK-CHAINGUARDLATEST-TERRAFORMPROVIDERSENDGRID-15265295"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-j443-wcqq-xprh"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/arslanbekov/terraform-provider-sendgrid"
+    },
+    "vulnerableVersionRange": "<= 1.1.3-0.20250606002314-b4a2dfeb7b0f",
+    "firstPatchedVersion": null
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-j2hr-q93x-gxvh",
+      "summary": "SSOReady has an XML Signature Bypass via differential XML parsing",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-347",
+            "name": "Improper Verification of Cryptographic Signature"
+          }
+        ]
+      },
+      "publishedAt": "2024-10-11T16:58:36Z",
+      "references": [
+        {
+          "url": "https://github.com/ssoready/ssoready/security/advisories/GHSA-j2hr-q93x-gxvh"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-47832"
+        },
+        {
+          "url": "https://github.com/ssoready/ssoready/commit/7f92a0630439972fcbefa8c7eafe8c144bd89915"
+        },
+        {
+          "url": "https://pkg.go.dev/vuln/GO-2024-3185"
+        },
+        {
+          "url": "https://ssoready.com/docs/self-hosting/self-hosting-sso-ready"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-j2hr-q93x-gxvh"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/ssoready/ssoready"
+    },
+    "vulnerableVersionRange": "< 0.0.0-20241009153838-7f92a0630439",
+    "firstPatchedVersion": {
+      "identifier": "0.0.0-20241009153838-7f92a0630439"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-x6r5-vxfg-gq3v",
+      "summary": "Helm Improper Certificate Validation",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-295",
+            "name": "Improper Certificate Validation"
+          }
+        ]
+      },
+      "publishedAt": "2022-05-24T16:50:33Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-1010275"
+        },
+        {
+          "url": "https://github.com/helm/helm/pull/3152"
+        },
+        {
+          "url": "https://github.com/helm/helm/pull/3152/files/1096813bf9a425e2aa4ac755b6c991b626dfab50"
+        },
+        {
+          "url": "https://github.com/helm/helm/releases/tag/v2.7.2"
+        },
+        {
+          "url": "https://github.com/helm/helm/commit/1096813bf9a425e2aa4ac755b6c991b626dfab50"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-x6r5-vxfg-gq3v"
+        }
+      ]
+    },
+    "package": {
+      "name": "helm.sh/helm"
+    },
+    "vulnerableVersionRange": "< 2.7.2",
+    "firstPatchedVersion": {
+      "identifier": "2.7.2"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-75rw-34q6-72cr",
+      "summary": "Signature forgery in Biscuit",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-347",
+            "name": "Improper Verification of Cryptographic Signature"
+          }
+        ]
+      },
+      "publishedAt": "2022-06-17T00:38:03Z",
+      "references": [
+        {
+          "url": "https://github.com/biscuit-auth/biscuit/security/advisories/GHSA-75rw-34q6-72cr"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-31053"
+        },
+        {
+          "url": "https://eprint.iacr.org/2020/1484"
+        },
+        {
+          "url": "https://pkg.go.dev/vuln/GO-2022-0564"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-75rw-34q6-72cr"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/biscuit-auth/biscuit-go"
+    },
+    "vulnerableVersionRange": "< 2.0.0",
+    "firstPatchedVersion": {
+      "identifier": "2.0.0"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-cj2h-ww36-v932",
+      "summary": "Improper Certificate Validation in HashiCorp Nomad",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-295",
+            "name": "Improper Certificate Validation"
+          }
+        ]
+      },
+      "publishedAt": "2021-05-18T18:20:26Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-7956"
+        },
+        {
+          "url": "https://github.com/hashicorp/nomad/issues/7003"
+        },
+        {
+          "url": "https://github.com/hashicorp/nomad/pull/7023"
+        },
+        {
+          "url": "https://www.hashicorp.com/blog/category/nomad/"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-cj2h-ww36-v932"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/hashicorp/nomad"
+    },
+    "vulnerableVersionRange": "< 0.10.3",
+    "firstPatchedVersion": {
+      "identifier": "0.10.3"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-cj4v-437j-jq4c",
+      "summary": "Gogs: Cross-repository LFS object overwrite via missing content hash verification",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.3,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:L"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-345",
+            "name": "Insufficient Verification of Data Authenticity"
+          }
+        ]
+      },
+      "publishedAt": "2026-03-05T19:14:41Z",
+      "references": [
+        {
+          "url": "https://github.com/gogs/gogs/security/advisories/GHSA-cj4v-437j-jq4c"
+        },
+        {
+          "url": "https://github.com/gogs/gogs/pull/8166"
+        },
+        {
+          "url": "https://github.com/gogs/gogs/commit/81ee8836445ac888d99da8b652be7d5cbc5c4d5c"
+        },
+        {
+          "url": "https://github.com/gogs/gogs/releases/tag/v0.14.2"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-25921"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-cj4v-437j-jq4c"
+        }
+      ]
+    },
+    "package": {
+      "name": "gogs.io/gogs"
+    },
+    "vulnerableVersionRange": "<= 0.14.1",
+    "firstPatchedVersion": {
+      "identifier": "0.14.2"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-m9hp-7r99-94h5",
+      "summary": "Critical security issues in XML encoding in github.com/dexidp/dex",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.3,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:N"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-347",
+            "name": "Improper Verification of Cryptographic Signature"
+          }
+        ]
+      },
+      "publishedAt": "2021-12-20T17:53:53Z",
+      "references": [
+        {
+          "url": "https://github.com/dexidp/dex/security/advisories/GHSA-m9hp-7r99-94h5"
+        },
+        {
+          "url": "https://github.com/russellhaering/goxmldsig/security/advisories/GHSA-q547-gmf8-8jr7"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-26290"
+        },
+        {
+          "url": "https://github.com/dexidp/dex/commit/324b1c886b407594196113a3dbddebe38eecd4e8"
+        },
+        {
+          "url": "https://github.com/dexidp/dex/releases/tag/v2.27.0"
+        },
+        {
+          "url": "https://github.com/mattermost/xml-roundtrip-validator/blob/master/advisories/unstable-attributes.md"
+        },
+        {
+          "url": "https://github.com/mattermost/xml-roundtrip-validator/blob/master/advisories/unstable-directives.md"
+        },
+        {
+          "url": "https://github.com/mattermost/xml-roundtrip-validator/blob/master/advisories/unstable-elements.md"
+        },
+        {
+          "url": "https://mattermost.com/blog/coordinated-disclosure-go-xml-vulnerabilities/"
+        },
+        {
+          "url": "https://github.com/russellhaering/goxmldsig/commit/f6188febf0c29d7ffe26a0436212b19cb9615e64"
+        },
+        {
+          "url": "https://pkg.go.dev/vuln/GO-2020-0050"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-m9hp-7r99-94h5"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/russellhaering/goxmldsig"
+    },
+    "vulnerableVersionRange": "< 1.1.0",
+    "firstPatchedVersion": {
+      "identifier": "1.1.0"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-m462-mqw4-2c8m",
+      "summary": "Mattermost Server has X.509 Improper Certificate Validation",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.1,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-295",
+            "name": "Improper Certificate Validation"
+          }
+        ]
+      },
+      "publishedAt": "2022-05-24T17:21:07Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2017-18911"
+        },
+        {
+          "url": "https://github.com/mattermost/mattermost/commit/222bce0c5c1abb2f58c3a6de1fe8c5d3accffb21"
+        },
+        {
+          "url": "https://github.com/mattermost/mattermost/commit/691c18157025d4808b5b11de1d6de01050e54fa6"
+        },
+        {
+          "url": "https://github.com/mattermost/mattermost/commit/e9bb8cdfb4915067349a4840ab15ff941c4eb070"
+        },
+        {
+          "url": "https://mattermost.com/security-updates"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-m462-mqw4-2c8m"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/mattermost/mattermost-server"
+    },
+    "vulnerableVersionRange": ">= 3.8.0, < 3.8.2",
+    "firstPatchedVersion": {
+      "identifier": "3.8.2"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-8jmm-3xwx-w974",
+      "summary": "Alist has Insecure TLS Config",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.1,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-295",
+            "name": "Improper Certificate Validation"
+          }
+        ]
+      },
+      "publishedAt": "2026-02-04T18:41:26Z",
+      "references": [
+        {
+          "url": "https://github.com/AlistGo/alist/security/advisories/GHSA-8jmm-3xwx-w974"
+        },
+        {
+          "url": "https://github.com/AlistGo/alist/commit/69629ca76a8f2c8c973ede3b616f93aa26ff23fb"
+        },
+        {
+          "url": "https://github.com/AlistGo/alist/releases/tag/v3.57.0"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-25160"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-8jmm-3xwx-w974"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/alist-org/alist/v3"
+    },
+    "vulnerableVersionRange": "< 3.57.0",
+    "firstPatchedVersion": {
+      "identifier": "3.57.0"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-95v9-hv42-pwrj",
+      "summary": "gnark is vulnerable to signature malleability in EdDSA and ECDSA due to missing scalar checks",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 9.1,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-347",
+            "name": "Improper Verification of Cryptographic Signature"
+          }
+        ]
+      },
+      "publishedAt": "2025-08-22T20:58:21Z",
+      "references": [
+        {
+          "url": "https://github.com/Consensys/gnark/security/advisories/GHSA-95v9-hv42-pwrj"
+        },
+        {
+          "url": "https://github.com/Consensys/gnark/commit/0ba6730f05537a351517998add89a61a0d82716e"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-57801"
+        },
+        {
+          "url": "https://pkg.go.dev/vuln/GO-2025-3912"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-95v9-hv42-pwrj"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/consensys/gnark"
+    },
+    "vulnerableVersionRange": "< 0.14.0",
+    "firstPatchedVersion": {
+      "identifier": "0.14.0"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-q7p4-7xjv-j3wf",
+      "summary": "Fabio allows HTTP clients to manipulate custom headers it adds",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.1,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-345",
+            "name": "Insufficient Verification of Data Authenticity"
+          },
+          {
+            "cweId": "CWE-348",
+            "name": "Use of Less Trusted Source"
+          }
+        ]
+      },
+      "publishedAt": "2025-05-29T16:50:58Z",
+      "references": [
+        {
+          "url": "https://github.com/fabiolb/fabio/security/advisories/GHSA-q7p4-7xjv-j3wf"
+        },
+        {
+          "url": "https://github.com/fabiolb/fabio/commit/fdaf1e966162e9dd3b347ffdd0647b39dc71a1a3"
+        },
+        {
+          "url": "https://github.com/fabiolb/fabio/releases/tag/v1.6.6"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-48865"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-q7p4-7xjv-j3wf"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/fabiolb/fabio"
+    },
+    "vulnerableVersionRange": "<= 1.6.5",
+    "firstPatchedVersion": {
+      "identifier": "1.6.6"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-jqvr-j2vg-gjrv",
+      "summary": "Signature validation bypass in github.com/moov-io/signedxml",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.1,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-347",
+            "name": "Improper Verification of Cryptographic Signature"
+          }
+        ]
+      },
+      "publishedAt": "2023-05-30T06:30:25Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-34205"
+        },
+        {
+          "url": "https://github.com/moov-io/signedxml/issues/23"
+        },
+        {
+          "url": "https://github.com/moov-io/signedxml/pull/25"
+        },
+        {
+          "url": "https://github.com/moov-io/signedxml/releases/tag/v1.1.0"
+        },
+        {
+          "url": "https://pkg.go.dev/vuln/GO-2023-1826"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-jqvr-j2vg-gjrv"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/moov-io/signedxml"
+    },
+    "vulnerableVersionRange": "< 1.1.0",
+    "firstPatchedVersion": {
+      "identifier": "1.1.0"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-g962-2j28-3cg9",
+      "summary": "OliveTin has JWT Audience Validation Bypass in Local Key and HMAC Modes",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 8.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-287",
+            "name": "Improper Authentication"
+          },
+          {
+            "cweId": "CWE-345",
+            "name": "Insufficient Verification of Data Authenticity"
+          }
+        ]
+      },
+      "publishedAt": "2026-03-05T20:52:12Z",
+      "references": [
+        {
+          "url": "https://github.com/OliveTin/OliveTin/security/advisories/GHSA-g962-2j28-3cg9"
+        },
+        {
+          "url": "https://github.com/OliveTin/OliveTin/commit/e97d8ecbd8d6ba468c418ca496fcd18f78131233"
+        },
+        {
+          "url": "https://github.com/OliveTin/OliveTin/releases/tag/3000.11.1"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-30223"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-g962-2j28-3cg9"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/OliveTin/OliveTin"
+    },
+    "vulnerableVersionRange": "< 0.0.0-20260304231339-e97d8ecbd8d6",
+    "firstPatchedVersion": {
+      "identifier": "0.0.0-20260304231339-e97d8ecbd8d6"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-x9mp-jm4h-jjf8",
+      "summary": "Duplicate Advisory: EVE Doesn't Protect Rootfs",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 8.8,
+        "vectorString": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-345",
+            "name": "Insufficient Verification of Data Authenticity"
+          }
+        ]
+      },
+      "publishedAt": "2023-09-20T15:30:52Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-43636"
+        },
+        {
+          "url": "https://asrg.io/security-advisories/19274"
+        },
+        {
+          "url": "https://asrg.io/security-advisories/cve-2023-43636"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-x9mp-jm4h-jjf8"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/lf-edge/eve/pkg/grub"
+    },
+    "vulnerableVersionRange": "< 0.0.0-20220708121648-5fef4d92e758",
+    "firstPatchedVersion": {
+      "identifier": "0.0.0-20220708121648-5fef4d92e758"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-4jj9-cgqc-x9h5",
+      "summary": "NeuVector OpenID Connect is vulnerable to man-in-the-middle (MITM)",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 8.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-295",
+            "name": "Improper Certificate Validation"
+          }
+        ]
+      },
+      "publishedAt": "2025-12-12T19:22:04Z",
+      "references": [
+        {
+          "url": "https://github.com/neuvector/neuvector/security/advisories/GHSA-4jj9-cgqc-x9h5"
+        },
+        {
+          "url": "https://github.com/neuvector/neuvector/commit/955904b5762f296d209bf395a5fcc7a40a53c424"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-66001"
+        },
+        {
+          "url": "https://bugzilla.suse.com/show_bug.cgi?id=CVE-2025-66001"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-4jj9-cgqc-x9h5"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/neuvector/neuvector"
+    },
+    "vulnerableVersionRange": ">= 5.3.0, < 5.4.8",
+    "firstPatchedVersion": {
+      "identifier": "5.4.8"
+    }
+  }
+]

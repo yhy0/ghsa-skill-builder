@@ -1,0 +1,9 @@
+{
+  "name": "ghsa-skill-builder",
+  "description": "Meta-tool for generating security audit Skills from GHSA and HackerOne data",
+  "version": "1.0.0",
+  "author": { "name": "yhy0" },
+  "repository": "https://github.com/yhy0/ghsa-skill-builder",
+  "license": "MIT",
+  "keywords": ["GHSA", "HackerOne", "vulnerability", "skill-generator"]
+}

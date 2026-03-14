@@ -1,0 +1,162 @@
+[
+  {
+    "id": "3090123",
+    "title": "insecure deserilize object leads to RCE On Sitecore (CVE-██████████-27218)",
+    "url": "https://hackerone.com/reports/3090123",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [
+      "CVE-2025-27218"
+    ],
+    "cwe": "Deserialization of Untrusted Data",
+    "disclosed_at": "2025-05-12T16:04:46.111Z",
+    "total_awarded_amount": null,
+    "reporter": "the_reinhardt",
+    "program": "mars",
+    "program_name": "Mars",
+    "hacktivity_summary": "This critical vulnerability involved an insecure deserialization issue in Sitecore implementation, which was assigned CVE-2025-27218. The vulnerability allowed remote code execution through unsanitized user input in the ThumbnailsAccessToken header. The vulnerability was remediated by removing public access to the affected site, which was then protected behind Cloudflare WAF."
+  },
+  {
+    "id": "2357778",
+    "title": "Unrestricted File Upload at ██████████",
+    "url": "https://hackerone.com/reports/2357778",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [],
+    "cwe": "Unrestricted Upload of File with Dangerous Type",
+    "disclosed_at": "2024-02-19T14:34:21.049Z",
+    "total_awarded_amount": null,
+    "reporter": "xplo1t",
+    "program": "mars",
+    "program_name": "Mars",
+    "hacktivity_summary": "The endpoint \"████████\" enabled unrestricted file uploads, allowing anyone to upload any type of file without registration."
+  },
+  {
+    "id": "2248328",
+    "title": "RCE on Wordpress website",
+    "url": "https://hackerone.com/reports/2248328",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [],
+    "cwe": "Deserialization of Untrusted Data",
+    "disclosed_at": "2023-12-28T11:11:00.101Z",
+    "total_awarded_amount": null,
+    "reporter": "lukasreschke",
+    "program": "nextcloud",
+    "program_name": "Nextcloud",
+    "hacktivity_summary": "A remote code execution vulnerability was exploited on a WordPress website due to unsafe deserialization of user input. This allowed arbitrary code execution as the web server user."
+  },
+  {
+    "id": "3062122",
+    "title": "[Xenoblade Chronicles X: Definitive Edition] Unrestricted RPCs allow DoS and writing arbitrary flags remotely",
+    "url": "https://hackerone.com/reports/3062122",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [],
+    "cwe": "Resource Injection",
+    "disclosed_at": "2025-05-15T00:11:16.633Z",
+    "total_awarded_amount": null,
+    "reporter": "roccodev",
+    "program": "nintendo",
+    "program_name": "Nintendo",
+    "hacktivity_summary": "The Xenoblade Chronicles X: Definitive Edition vulnerability allowed attackers to perform Denial-of-Service (DoS) attacks and write arbitrary flags remotely due to unrestricted Remote Procedure Calls (RPCs)."
+  },
+  {
+    "id": "3414079",
+    "title": "DNN - Unrestricted Arbitrary File Upload #████████",
+    "url": "https://hackerone.com/reports/3414079",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [
+      "CVE-2025-64095"
+    ],
+    "cwe": "File Content Injection",
+    "disclosed_at": "2026-01-12T19:03:57.998Z",
+    "total_awarded_amount": null,
+    "reporter": "0xr2r",
+    "program": "deptofdefense",
+    "program_name": "U.S. Dept Of Defense",
+    "hacktivity_summary": "A vulnerability was discovered in versions of DNN (formerly DotNetNuke) prior to 10.1.1. The vulnerability was caused by the default HTML editor provider allowing unauthenticated file uploads and overwriting of existing files. This could have led to website defacement and cross-site scripting attacks."
+  },
+  {
+    "id": "728614",
+    "title": "[HTAF4-213] [Pre-submission] Unsafe AMF deserialization (CVE-2017-5641) in Apache Flex BlazeDS at the https://www.███████/daip/messagebroker/amf",
+    "url": "https://hackerone.com/reports/728614",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [
+      "CVE-2017-5641"
+    ],
+    "cwe": "Deserialization of Untrusted Data",
+    "disclosed_at": "2024-06-18T17:04:47.779Z",
+    "total_awarded_amount": null,
+    "reporter": "sp1d3rs",
+    "program": "deptofdefense",
+    "program_name": "U.S. Dept Of Defense",
+    "hacktivity_summary": "The vulnerability was an unsafe AMF (Action Message Format) deserialization issue in Apache Flex BlazeDS, affecting the `/daip/messagebroker/amf` endpoint. Successful exploitation could allow an attacker to trigger a DNS lookup by sending a crafted AMF payload. The vulnerability was identified and reported prior to submission."
+  },
+  {
+    "id": "715949",
+    "title": "[HTA2] XXE on https://███ via SpellCheck Endpoint.",
+    "url": "https://hackerone.com/reports/715949",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [],
+    "cwe": "XML External Entities (XXE)",
+    "disclosed_at": "2023-05-15T15:13:37.449Z",
+    "total_awarded_amount": null,
+    "reporter": "cdl",
+    "program": "deptofdefense",
+    "program_name": "U.S. Dept Of Defense",
+    "hacktivity_summary": "A full read XXE vulnerability was discovered on a website via the SpellCheck endpoint, allowing an attacker to read local files, make HTTP requests to internal applications and read the responses, steal NTLM hashes, and also completely deny service to the application."
+  },
+  {
+    "id": "3079738",
+    "title": "Two click Account Takeover ",
+    "url": "https://hackerone.com/reports/3079738",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [],
+    "cwe": "Deserialization of Untrusted Data",
+    "disclosed_at": "2025-11-11T09:14:15.992Z",
+    "total_awarded_amount": null,
+    "reporter": "fr4via",
+    "program": "basecamp",
+    "program_name": "Basecamp",
+    "hacktivity_summary": "A vulnerability was discovered in the HEY Email Android application that allowed for a two-click account takeover. Improper handling of incoming deeplinks led to the application's authorization bearer token being sent to an attacker-controlled server if the user could be tricked into clicking a link and then performing an Undo action."
+  },
+  {
+    "id": "3031518",
+    "title": "CVE-2025-24813: Remote Code Execution and/or Information disclosure and/or malicious content added to uploaded files via write enabled Default Servlet",
+    "url": "https://hackerone.com/reports/3031518",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [
+      "CVE-2025-24813"
+    ],
+    "cwe": "Deserialization of Untrusted Data",
+    "disclosed_at": "2025-04-27T14:53:24.607Z",
+    "total_awarded_amount": 4323,
+    "reporter": "sw0rd1ight",
+    "program": "ibb",
+    "program_name": "Internet Bug Bounty",
+    "hacktivity_summary": "The Apache Tomcat vulnerability CVE-2025-24813 allowed remote code execution and information disclosure. The vulnerability was caused by a combination of features, including writes enabled for the default servlet, support for partial PUT requests, and the use of Tomcat's file-based session persistence with the default storage location. If these conditions were met, a malicious user could have taken advantage of the vulnerability."
+  },
+  {
+    "id": "2071554",
+    "title": "[CVE-2023-27531] Possible Deserialization of Untrusted Data vulnerability in Kredis JSON",
+    "url": "https://hackerone.com/reports/2071554",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [
+      "CVE-2023-27531"
+    ],
+    "cwe": "Deserialization of Untrusted Data",
+    "disclosed_at": "2023-08-15T20:21:08.030Z",
+    "total_awarded_amount": 4660,
+    "reporter": "ooooooo_q",
+    "program": "ibb",
+    "program_name": "Internet Bug Bounty",
+    "hacktivity_summary": "A deserialization vulnerability was discovered in the Kredis JSON deserialization code, allowing for the potential deserialization of untrusted data. This could result in unexpected objects being deserialized in the system. The vulnerability has been assigned the CVE identifier CVE-2023-27531."
+  }
+]

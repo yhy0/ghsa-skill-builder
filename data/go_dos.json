@@ -1,0 +1,732 @@
+[
+  {
+    "advisory": {
+      "ghsaId": "GHSA-jpgg-cp2x-qrw3",
+      "summary": "Duplicate Advisory: ecnepsnai/web vulnerable to Uncontrolled Resource Consumption",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-400",
+            "name": "Uncontrolled Resource Consumption"
+          },
+          {
+            "cweId": "CWE-476",
+            "name": "NULL Pointer Dereference"
+          }
+        ]
+      },
+      "publishedAt": "2022-12-28T00:30:23Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-4236"
+        },
+        {
+          "url": "https://github.com/ecnepsnai/web/commit/5a78f8d5c41ce60dcf9f61aaf47a7a8dc3e0002f"
+        },
+        {
+          "url": "https://pkg.go.dev/vuln/GO-2021-0107"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-jpgg-cp2x-qrw3"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/ecnepsnai/web"
+    },
+    "vulnerableVersionRange": ">= 1.4.0, < 1.5.2",
+    "firstPatchedVersion": {
+      "identifier": "1.5.2"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-5gjg-jgh4-gppm",
+      "summary": "Websocket requests did not call AuthenticateMethod",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-304",
+            "name": "Missing Critical Step in Authentication"
+          },
+          {
+            "cweId": "CWE-400",
+            "name": "Uncontrolled Resource Consumption"
+          },
+          {
+            "cweId": "CWE-476",
+            "name": "NULL Pointer Dereference"
+          }
+        ]
+      },
+      "publishedAt": "2021-06-23T17:26:30Z",
+      "references": [
+        {
+          "url": "https://github.com/ecnepsnai/web/security/advisories/GHSA-5gjg-jgh4-gppm"
+        },
+        {
+          "url": "https://github.com/ecnepsnai/web/commit/5a78f8d5c41ce60dcf9f61aaf47a7a8dc3e0002f"
+        },
+        {
+          "url": "https://pkg.go.dev/vuln/GO-2021-0107"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-4236"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-5gjg-jgh4-gppm"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/ecnepsnai/web"
+    },
+    "vulnerableVersionRange": ">= 1.4.0, < 1.5.2",
+    "firstPatchedVersion": {
+      "identifier": "1.5.2"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-vpjr-h6fh-mw4p",
+      "summary": "Duplicate Advisory: EVE Freely Allocates Buffer on The Stack With Data From Socket",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.1,
+        "vectorString": "CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-770",
+            "name": "Allocation of Resources Without Limits or Throttling"
+          },
+          {
+            "cweId": "CWE-789",
+            "name": "Memory Allocation with Excessive Size Value"
+          }
+        ]
+      },
+      "publishedAt": "2023-09-21T15:30:15Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-43632"
+        },
+        {
+          "url": "https://asrg.io/security-advisories/cve-2023-43632"
+        },
+        {
+          "url": "https://asrg.io/security-advisories/freely-allocate-buffer-on-the-stack-with-data-from-socket"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-vpjr-h6fh-mw4p"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/lf-edge/eve"
+    },
+    "vulnerableVersionRange": "< 0.0.0-20230519072751-977f42b07fa9",
+    "firstPatchedVersion": {
+      "identifier": "0.0.0-20230519072751-977f42b07fa9"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-4p6f-m4f9-ch88",
+      "summary": "Binary vulnerable to Slice Memory Allocation with Excessive Size Value",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 8.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-400",
+            "name": "Uncontrolled Resource Consumption"
+          },
+          {
+            "cweId": "CWE-789",
+            "name": "Memory Allocation with Excessive Size Value"
+          }
+        ]
+      },
+      "publishedAt": "2022-09-16T21:25:03Z",
+      "references": [
+        {
+          "url": "https://github.com/gagliardetto/binary/security/advisories/GHSA-4p6f-m4f9-ch88"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-36078"
+        },
+        {
+          "url": "https://github.com/gagliardetto/binary/pull/7"
+        },
+        {
+          "url": "https://github.com/gagliardetto/binary/releases/tag/v0.7.1"
+        },
+        {
+          "url": "https://pkg.go.dev/vuln/GO-2022-0963"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-4p6f-m4f9-ch88"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/gagliardetto/binary"
+    },
+    "vulnerableVersionRange": "< 0.7.1",
+    "firstPatchedVersion": {
+      "identifier": "0.7.1"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-qqj3-g7mx-5p4w",
+      "summary": "NeuVector telemetry sender is vulnerable to MITM and DoS",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 8.6,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-295",
+            "name": "Improper Certificate Validation"
+          },
+          {
+            "cweId": "CWE-770",
+            "name": "Allocation of Resources Without Limits or Throttling"
+          }
+        ]
+      },
+      "publishedAt": "2025-10-21T20:25:21Z",
+      "references": [
+        {
+          "url": "https://github.com/neuvector/neuvector/security/advisories/GHSA-qqj3-g7mx-5p4w"
+        },
+        {
+          "url": "https://github.com/neuvector/neuvector/commit/06424701e69bf1eb76ff90180d78853fded93021"
+        },
+        {
+          "url": "https://github.com/neuvector/neuvector/commit/415737cbec581a5dc5f204fac1c78b7f29ad7dc2"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-54470"
+        },
+        {
+          "url": "https://bugzilla.suse.com/show_bug.cgi?id=CVE-2025-54470"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-qqj3-g7mx-5p4w"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/neuvector/neuvector"
+    },
+    "vulnerableVersionRange": ">= 0.0.0-20230727023453-1c4957d53911, < 0.0.0-20251020133207-084a437033b4",
+    "firstPatchedVersion": {
+      "identifier": "0.0.0-20251020133207-084a437033b4"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-4h45-jpvh-6p5j",
+      "summary": "Rancher affected by unauthenticated Denial of Service",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 8.2,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-770",
+            "name": "Allocation of Resources Without Limits or Throttling"
+          }
+        ]
+      },
+      "publishedAt": "2025-08-29T15:38:23Z",
+      "references": [
+        {
+          "url": "https://github.com/rancher/rancher/security/advisories/GHSA-4h45-jpvh-6p5j"
+        },
+        {
+          "url": "https://github.com/rancher/rancher/commit/aee95d4e2a41ba2df6f88c9634d4fe1f42dee4d9"
+        },
+        {
+          "url": "https://github.com/rancher/rancher/releases/tag/v2.10.9"
+        },
+        {
+          "url": "https://github.com/rancher/rancher/releases/tag/v2.11.5"
+        },
+        {
+          "url": "https://github.com/rancher/rancher/releases/tag/v2.12.1"
+        },
+        {
+          "url": "https://github.com/rancher/rancher/releases/tag/v2.9.11"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-4h45-jpvh-6p5j"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/rancher/rancher"
+    },
+    "vulnerableVersionRange": "< 0.0.0-20250813072957-aee95d4e2a41",
+    "firstPatchedVersion": {
+      "identifier": "0.0.0-20250813072957-aee95d4e2a41"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-m974-xj4j-7qv5",
+      "summary": "Boxo bitswap/server: DOS unbounded persistent memory leak",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 8.2,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-400",
+            "name": "Uncontrolled Resource Consumption"
+          },
+          {
+            "cweId": "CWE-770",
+            "name": "Allocation of Resources Without Limits or Throttling"
+          }
+        ]
+      },
+      "publishedAt": "2023-05-11T20:32:18Z",
+      "references": [
+        {
+          "url": "https://github.com/ipfs/boxo/security/advisories/GHSA-m974-xj4j-7qv5"
+        },
+        {
+          "url": "https://github.com/ipfs/go-libipfs/security/advisories/GHSA-m974-xj4j-7qv5"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-25568"
+        },
+        {
+          "url": "https://github.com/ipfs/boxo/commit/62cbac40b96f49e39cd7fedc77ee6b56adce4916"
+        },
+        {
+          "url": "https://github.com/ipfs/boxo/commit/9cb5cb54d40b57084d1221ba83b9e6bb3fcc3197"
+        },
+        {
+          "url": "https://github.com/ipfs/boxo/commit/baa748b682fabb21a4c1f7628a8af348d4645974"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-m974-xj4j-7qv5"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/ipfs/go-libipfs"
+    },
+    "vulnerableVersionRange": "< 0.4.1",
+    "firstPatchedVersion": {
+      "identifier": "0.4.1"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-r2rj-wwm5-x6mq",
+      "summary": "Kyverno Denial of Service via Context Variable Amplification in Policy Engine",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 7.7,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-770",
+            "name": "Allocation of Resources Without Limits or Throttling"
+          }
+        ]
+      },
+      "publishedAt": "2026-01-27T18:02:22Z",
+      "references": [
+        {
+          "url": "https://github.com/kyverno/kyverno/security/advisories/GHSA-r2rj-wwm5-x6mq"
+        },
+        {
+          "url": "https://github.com/kyverno/kyverno/commit/7a651be3a8c78dcabfbf4178b8d89026bf3b850f"
+        },
+        {
+          "url": "https://github.com/kyverno/kyverno/commit/f5617f60920568a301740485472bf704892175b7"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-23881"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-r2rj-wwm5-x6mq"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/kyverno/kyverno"
+    },
+    "vulnerableVersionRange": ">= 1.16.0-rc.1, < 1.16.3",
+    "firstPatchedVersion": {
+      "identifier": "1.16.3"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-h7wq-jj8r-qm7p",
+      "summary": "Kubernetes Nil pointer dereference in KCM after v1 HPA patch request",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 7.7,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-20",
+            "name": "Improper Input Validation"
+          },
+          {
+            "cweId": "CWE-476",
+            "name": "NULL Pointer Dereference"
+          }
+        ]
+      },
+      "publishedAt": "2024-11-17T12:30:29Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-0793"
+        },
+        {
+          "url": "https://github.com/openshift/kubernetes/pull/1876"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2024:0741"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2024:1267"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2024-0793"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2214402"
+        },
+        {
+          "url": "https://github.com/kubernetes/kubernetes/issues/107038#issuecomment-1911327145"
+        },
+        {
+          "url": "https://pkg.go.dev/vuln/GO-2024-3277"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-h7wq-jj8r-qm7p"
+        }
+      ]
+    },
+    "package": {
+      "name": "k8s.io/kubernetes"
+    },
+    "vulnerableVersionRange": "< 1.27.0-alpha.1",
+    "firstPatchedVersion": {
+      "identifier": "1.27.0-alpha.1"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-2xhq-gv6c-p224",
+      "summary": "Etcd Gateway can include itself as an endpoint resulting in resource exhaustion",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 7.7,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-400",
+            "name": "Uncontrolled Resource Consumption"
+          },
+          {
+            "cweId": "CWE-772",
+            "name": "Missing Release of Resource after Effective Lifetime"
+          }
+        ]
+      },
+      "publishedAt": "2024-01-31T00:21:52Z",
+      "references": [
+        {
+          "url": "https://github.com/etcd-io/etcd/security/advisories/GHSA-2xhq-gv6c-p224"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-15114"
+        },
+        {
+          "url": "https://lists.fedoraproject.org/archives/list/package-announce@lists.fedoraproject.org/message/L6B6R43Y7M3DCHWK3L3UVGE2K6WWECMP/"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-2xhq-gv6c-p224"
+        }
+      ]
+    },
+    "package": {
+      "name": "go.etcd.io/etcd"
+    },
+    "vulnerableVersionRange": "< 3.3.23",
+    "firstPatchedVersion": {
+      "identifier": "3.3.23"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-p2g7-xwvr-rrw3",
+      "summary": "Helm Controller denial of service",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 7.7,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-400",
+            "name": "Uncontrolled Resource Consumption"
+          },
+          {
+            "cweId": "CWE-770",
+            "name": "Allocation of Resources Without Limits or Throttling"
+          }
+        ]
+      },
+      "publishedAt": "2022-09-16T18:49:48Z",
+      "references": [
+        {
+          "url": "https://github.com/fluxcd/flux2/security/advisories/GHSA-p2g7-xwvr-rrw3"
+        },
+        {
+          "url": "https://github.com/helm/helm/security/advisories/GHSA-7hfp-qfw3-5jxh"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-36049"
+        },
+        {
+          "url": "https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=44996"
+        },
+        {
+          "url": "https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=48360"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-p2g7-xwvr-rrw3"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/fluxcd/flux2"
+    },
+    "vulnerableVersionRange": ">= 0.0.17, < 0.32.0",
+    "firstPatchedVersion": {
+      "identifier": "0.32.0"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-rmrf-g9r3-73pm",
+      "summary": "flagd Vulnerable to Allocation of Resources Without Limits or Throttling",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 7.5,
+        "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-770",
+            "name": "Allocation of Resources Without Limits or Throttling"
+          }
+        ]
+      },
+      "publishedAt": "2026-03-11T00:33:30Z",
+      "references": [
+        {
+          "url": "https://github.com/open-feature/flagd/security/advisories/GHSA-rmrf-g9r3-73pm"
+        },
+        {
+          "url": "https://github.com/open-feature/flagd/commit/25c5fd7e80c26eb2c00b20317b2456fe6f927ea3"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-31866"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-rmrf-g9r3-73pm"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/open-feature/flagd/flagd"
+    },
+    "vulnerableVersionRange": "< 0.14.2",
+    "firstPatchedVersion": {
+      "identifier": "0.14.2"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-xw98-5q62-jx94",
+      "summary": "Traefik: tcp router clears read deadlines before tls forwarding, enabling stalled handshakes (Slowloris DOS)",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 7.5,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-400",
+            "name": "Uncontrolled Resource Consumption"
+          }
+        ]
+      },
+      "publishedAt": "2026-03-04T18:29:09Z",
+      "references": [
+        {
+          "url": "https://github.com/traefik/traefik/security/advisories/GHSA-xw98-5q62-jx94"
+        },
+        {
+          "url": "https://github.com/traefik/traefik/releases/tag/v2.11.38"
+        },
+        {
+          "url": "https://github.com/traefik/traefik/releases/tag/v3.6.9"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-26999"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-xw98-5q62-jx94"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/traefik/traefik/v3"
+    },
+    "vulnerableVersionRange": "<= 3.6.8",
+    "firstPatchedVersion": {
+      "identifier": "3.6.9"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-45m3-398w-m2m9",
+      "summary": "OliveTin has unauthenticated DoS via concurrent map writes in OAuth2 state handling",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 7.5,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-362",
+            "name": "Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition')"
+          },
+          {
+            "cweId": "CWE-400",
+            "name": "Uncontrolled Resource Consumption"
+          },
+          {
+            "cweId": "CWE-662",
+            "name": "Improper Synchronization"
+          }
+        ]
+      },
+      "publishedAt": "2026-03-02T21:41:36Z",
+      "references": [
+        {
+          "url": "https://github.com/OliveTin/OliveTin/security/advisories/GHSA-45m3-398w-m2m9"
+        },
+        {
+          "url": "https://github.com/OliveTin/OliveTin/commit/f044d90d5525c4c8e3f421b32ed7eff771c22d36"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-28789"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-45m3-398w-m2m9"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/OliveTin/OliveTin"
+    },
+    "vulnerableVersionRange": "< 0.0.0-20260301235225-f044d90d5525c",
+    "firstPatchedVersion": {
+      "identifier": "0.0.0-20260301235225-f044d90d5525c"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-pc8g-78pf-4xrp",
+      "summary": "OliveTin has Unauthenticated Denial of Service via Memory Exhaustion in PasswordHash API Endpoint",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 7.5,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-400",
+            "name": "Uncontrolled Resource Consumption"
+          },
+          {
+            "cweId": "CWE-770",
+            "name": "Allocation of Resources Without Limits or Throttling"
+          }
+        ]
+      },
+      "publishedAt": "2026-03-02T18:49:27Z",
+      "references": [
+        {
+          "url": "https://github.com/OliveTin/OliveTin/security/advisories/GHSA-pc8g-78pf-4xrp"
+        },
+        {
+          "url": "https://github.com/OliveTin/OliveTin/commit/2eb5f0ba79d4bbef3c802bf8b4666a7e18dcfd90"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-28342"
+        },
+        {
+          "url": "https://github.com/OliveTin/OliveTin/releases/tag/3000.10.2"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-pc8g-78pf-4xrp"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/OliveTin/OliveTin"
+    },
+    "vulnerableVersionRange": "< 0.0.0-20260227002407-2eb5f0ba79d4",
+    "firstPatchedVersion": {
+      "identifier": "0.0.0-20260227002407-2eb5f0ba79d4"
+    }
+  }
+]

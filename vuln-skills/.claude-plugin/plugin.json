@@ -1,0 +1,9 @@
+{
+  "name": "vuln-skills",
+  "description": "26 security vulnerability audit and penetration testing Skills covering Go/Python code audit and web pentesting",
+  "version": "1.0.0",
+  "author": { "name": "yhy0" },
+  "repository": "https://github.com/yhy0/ghsa-skill-builder",
+  "license": "MIT",
+  "keywords": ["security", "vulnerability", "audit", "pentest", "GHSA", "HackerOne"]
+}

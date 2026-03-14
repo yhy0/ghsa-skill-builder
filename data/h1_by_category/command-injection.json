@@ -1,0 +1,165 @@
+[
+  {
+    "id": "3088290",
+    "title": "Middleware Authentication Bypass on IBM Portal",
+    "url": "https://hackerone.com/reports/3088290",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [
+      "CVE-2025-29927"
+    ],
+    "cwe": "Command Injection - Generic",
+    "disclosed_at": "2025-05-02T14:58:27.989Z",
+    "total_awarded_amount": null,
+    "reporter": "muhammadwaseem3",
+    "program": "ibm",
+    "program_name": "IBM",
+    "hacktivity_summary": "The vulnerability of middleware authentication bypass on the IBM Portal endpoint was reported, analyzed, and remediated. The discovery was reported by an external researcher."
+  },
+  {
+    "id": "2778350",
+    "title": "Cisco IOS XE instance at ████ vulnerable to CVE-██████",
+    "url": "https://hackerone.com/reports/2778350",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [
+      "CVE-2023-20198",
+      "CVE-2023-20273"
+    ],
+    "cwe": "Command Injection - Generic",
+    "disclosed_at": "2025-02-19T06:23:28.648Z",
+    "total_awarded_amount": null,
+    "reporter": "odaysec",
+    "program": "mtn_group",
+    "program_name": "MTN Group",
+    "hacktivity_summary": "A vulnerability was discovered in a Cisco IOS XE instance that allowed bypassing authentication to reach a web endpoint and execute arbitrary Cisco IOS commands or make configuration changes with Privilege 15 privileges. The vulnerability was characterized by improper path validation to bypass filtering and access the webui_wsma_http endpoint. Further exploitation leveraged another vulnerability to escalate to the underlying Linux OS root user."
+  },
+  {
+    "id": "2762119",
+    "title": "CVE-2017-9822 DotNetNuke Cookie Deserialization Remote Code Execution (RCE) on lonidoor.mtn.ci",
+    "url": "https://hackerone.com/reports/2762119",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [
+      "CVE-2017-9822"
+    ],
+    "cwe": "Code Injection",
+    "disclosed_at": "2024-11-16T19:38:39.134Z",
+    "total_awarded_amount": null,
+    "reporter": "odaysec",
+    "program": "mtn_group",
+    "program_name": "MTN Group",
+    "hacktivity_summary": "The DotNetNuke (DNN) versions between 5.0.0 and 9.3.0 were affected by a deserialization vulnerability that could lead to remote code execution. The vulnerability was caused by the way DNN handled the `DNNPersonalization` cookie, which was used to store anonymous users' personalization options. The vulnerability was exploitable when the application was configured to handle 404 errors with its built-in error page."
+  },
+  {
+    "id": "1425565",
+    "title": "Remote code injection in Log4j on  https://mymtn.mtncongo.net - CVE-2021-44228",
+    "url": "https://hackerone.com/reports/1425565",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [
+      "CVE-2021-44228"
+    ],
+    "cwe": "OS Command Injection",
+    "disclosed_at": "2024-08-24T11:55:16.698Z",
+    "total_awarded_amount": null,
+    "reporter": "renzi",
+    "program": "mtn_group",
+    "program_name": "MTN Group",
+    "hacktivity_summary": "The website https://mymtn.mtncongo.net was vulnerable to remote code injection due to the CVE-2021-44228 vulnerability in the Log4j library. This critical vulnerability allowed for remote command execution."
+  },
+  {
+    "id": "1425563",
+    "title": "Remote code injection in Log4j on http://mtn1app.mtncameroon.net  - CVE-2021-44228",
+    "url": "https://hackerone.com/reports/1425563",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [
+      "CVE-2021-44228"
+    ],
+    "cwe": "OS Command Injection",
+    "disclosed_at": "2024-08-24T11:29:12.957Z",
+    "total_awarded_amount": null,
+    "reporter": "renzi",
+    "program": "mtn_group",
+    "program_name": "MTN Group",
+    "hacktivity_summary": "The vulnerability CVE-2021-44228, a remote code injection flaw in Log4j, was discovered on the website http://mtn1app.mtncameroon.net. The vulnerability was confirmed to be present on the ports 8080 and 8443 of the website. The issue was demonstrated by retrieving the hostname of the affected machine using a nuclei script."
+  },
+  {
+    "id": "1677047",
+    "title": "Remote code execution via crafted pentaho report uploaded using default credentials for pentaho business server",
+    "url": "https://hackerone.com/reports/1677047",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [],
+    "cwe": "Code Injection",
+    "disclosed_at": "2023-12-31T21:08:44.212Z",
+    "total_awarded_amount": null,
+    "reporter": "zer0code",
+    "program": "mtn_group",
+    "program_name": "MTN Group",
+    "hacktivity_summary": "A remote code execution vulnerability was discovered in Pentaho Business Analytics Server. By uploading a specially crafted Pentaho report file using default credentials, an attacker could achieve arbitrary code execution."
+  },
+  {
+    "id": "2255750",
+    "title": "Remote code execution and exfiltration of secret tokens by poisoning the mozilla/fxa CI build cache",
+    "url": "https://hackerone.com/reports/2255750",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [],
+    "cwe": "Code Injection",
+    "disclosed_at": "2024-01-20T02:43:11.589Z",
+    "total_awarded_amount": 8000,
+    "reporter": "0x90security",
+    "program": "mozilla",
+    "program_name": "Mozilla",
+    "hacktivity_summary": "Remote code execution and data exfiltration were possible by poisoning a cache used in a CI build process. A proof of concept demonstrated the ability to exfiltrate sensitive data by re-uploading a modified cache artifact. The vulnerability required access to the source code repository to be exploited."
+  },
+  {
+    "id": "2817658",
+    "title": "Unauthenticated Path Traversal and Command Injection in Trellix Enterprise Security Manager 11.6.10",
+    "url": "https://hackerone.com/reports/2817658",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [],
+    "cwe": "OS Command Injection",
+    "disclosed_at": "2025-01-12T07:22:07.649Z",
+    "total_awarded_amount": null,
+    "reporter": "r4v",
+    "program": "trellix",
+    "program_name": "Trellix",
+    "hacktivity_summary": "A critical vulnerability was identified in Trellix Enterprise Security Manager (ESM) version 11.6.10. The vulnerability allowed unauthenticated access to internal API endpoints through path traversal and enabled remote code execution via command injection. The issue stemmed from insecure AJP proxy configuration and lack of input validation. The vulnerability has been confirmed on the publicly available trial version."
+  },
+  {
+    "id": "2468496",
+    "title": "GlobalProtect - OS Command Injection #█████████",
+    "url": "https://hackerone.com/reports/2468496",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [
+      "CVE-2024-3400"
+    ],
+    "cwe": "OS Command Injection",
+    "disclosed_at": "2026-01-12T19:02:41.698Z",
+    "total_awarded_amount": null,
+    "reporter": "0xr2r",
+    "program": "deptofdefense",
+    "program_name": "U.S. Dept Of Defense",
+    "hacktivity_summary": "A command injection vulnerability was discovered in the GlobalProtect feature of Palo Alto Networks PAN-OS software for specific PAN-OS versions and distinct feature configurations. This vulnerability could have enabled an unauthenticated attacker to execute arbitrary code with root privileges on the firewall. Cloud NGFW, Panorama appliances, and Prisma Access were not impacted by this vulnerability."
+  },
+  {
+    "id": "2083771",
+    "title": " Remote Code Execution and AWS IAM Credentials Exfiltration in https://████████/",
+    "url": "https://hackerone.com/reports/2083771",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [],
+    "cwe": "Command Injection - Generic",
+    "disclosed_at": "2024-12-18T19:53:05.209Z",
+    "total_awarded_amount": null,
+    "reporter": "shuvam321",
+    "program": "deptofdefense",
+    "program_name": "U.S. Dept Of Defense",
+    "hacktivity_summary": "The host https://██████/ had a vulnerability in the /jenkins/script directory that allowed users to execute system commands on the host. This could have led to the disclosure of AWS IAM credentials, which could have been used by an attacker to manage various AWS resources, create and delete resources, read and write data in AWS services, create and manage other IAM users and roles, access the AWS Management Console, and use the AWS Command Line Interface (CLI)."
+  }
+]

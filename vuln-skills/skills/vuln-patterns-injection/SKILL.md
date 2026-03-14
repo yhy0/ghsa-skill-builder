@@ -39,6 +39,25 @@ description: "Use when auditing Python code involving command execution (subproc
 - **列表参数模式**：`subprocess.run(shlex.split(cmd), shell=False)` — 避免 shell 解析
 
 **检测路径：**
+
+搜索 sink 调用的 Grep 模式：
+```bash
+# 代码执行
+grep -rn "eval(" --include="*.py"
+grep -rn "exec(" --include="*.py"
+# 命令执行
+grep -rn "shell=True" --include="*.py"
+grep -rn "os\.system\|os\.popen" --include="*.py"
+# SQL 拼接
+grep -rn "sqlalchemy\.text\|\.execute(" --include="*.py"
+grep -rn "\.extra(\|\.raw(" --include="*.py"
+# 模板注入
+grep -rn "Template(" --include="*.py"
+grep -rn "from_string(" --include="*.py"
+# 动态实例化
+grep -rn "instantiate(\|__import__(" --include="*.py"
+```
+
 1. 搜索 sink 调用（`eval(`, `exec(`, `subprocess.*shell=True`, `sqlalchemy.text(`, `os.system(`）
 2. 回溯数据流，检查参数是否来自 source（HTTP 输入、LLM 输出、用户可控配置）
 3. 验证 source->sink 路径上是否存在有效 sanitization

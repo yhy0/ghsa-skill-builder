@@ -1,0 +1,676 @@
+[
+  {
+    "advisory": {
+      "ghsaId": "GHSA-v469-7wp6-7cvp",
+      "summary": "Mattermost allows reading arbitrary files",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-22",
+            "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+          }
+        ]
+      },
+      "publishedAt": "2025-02-24T09:35:45Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-20051"
+        },
+        {
+          "url": "https://mattermost.com/security-updates"
+        },
+        {
+          "url": "https://github.com/mattermost/mattermost-plugin-boards/commit/025ce8d363a054473bc002f43f602a4032d38c06"
+        },
+        {
+          "url": "https://github.com/mattermost/mattermost/commit/4ed702ccff4ec3c9eff832a9b6060f9f4454141d"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-v469-7wp6-7cvp"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/mattermost/mattermost/server/v8"
+    },
+    "vulnerableVersionRange": ">= 10.4.0-rc1, < 10.4.2",
+    "firstPatchedVersion": {
+      "identifier": "10.4.2"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-5fwx-p6xh-vjrh",
+      "summary": "Mattermost allows reading arbitrary files related to importing boards",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-22",
+            "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+          }
+        ]
+      },
+      "publishedAt": "2025-02-24T09:35:48Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-25279"
+        },
+        {
+          "url": "https://mattermost.com/security-updates"
+        },
+        {
+          "url": "https://github.com/mattermost/mattermost-plugin-boards/commit/025ce8d363a054473bc002f43f602a4032d38c06"
+        },
+        {
+          "url": "https://github.com/mattermost/mattermost/commit/4ed702ccff4ec3c9eff832a9b6060f9f4454141d"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-5fwx-p6xh-vjrh"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/mattermost/mattermost/server/v8"
+    },
+    "vulnerableVersionRange": ">= 10.4.0-rc1, < 10.4.2",
+    "firstPatchedVersion": {
+      "identifier": "10.4.2"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-9r4c-jwx3-3j76",
+      "summary": "WhoDB has a path traversal opening Sqlite3 database",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-22",
+            "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+          }
+        ]
+      },
+      "publishedAt": "2025-02-06T19:58:24Z",
+      "references": [
+        {
+          "url": "https://github.com/clidey/whodb/security/advisories/GHSA-9r4c-jwx3-3j76"
+        },
+        {
+          "url": "https://github.com/clidey/whodb/commit/547336ac73c8d17929c18c3941c0d5b0099753cc"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-24786"
+        },
+        {
+          "url": "https://github.com/clidey/whodb/blob/ba6eb81d0ca40baead74bca58b2567166999d6a6/core/src/plugins/sqlite3/db.go#L14-L20"
+        },
+        {
+          "url": "https://github.com/clidey/whodb/blob/ba6eb81d0ca40baead74bca58b2567166999d6a6/core/src/plugins/sqlite3/db.go#L26"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-9r4c-jwx3-3j76"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/clidey/whodb/core"
+    },
+    "vulnerableVersionRange": "< 0.0.0-20250127172032-547336ac73c8",
+    "firstPatchedVersion": {
+      "identifier": "0.0.0-20250127172032-547336ac73c8"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-494h-9924-xww9",
+      "summary": "Pterodactyl Wings vulnerable to improper isolation of server file access",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-22",
+            "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+          },
+          {
+            "cweId": "CWE-362",
+            "name": "Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition')"
+          },
+          {
+            "cweId": "CWE-363",
+            "name": "Race Condition Enabling Link Following"
+          }
+        ]
+      },
+      "publishedAt": "2024-03-15T16:48:21Z",
+      "references": [
+        {
+          "url": "https://github.com/pterodactyl/wings/security/advisories/GHSA-494h-9924-xww9"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-27102"
+        },
+        {
+          "url": "https://github.com/pterodactyl/wings/commit/d1c0ca526007113a0f74f56eba99511b4e989287"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-494h-9924-xww9"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/pterodactyl/wings"
+    },
+    "vulnerableVersionRange": "< 1.11.9",
+    "firstPatchedVersion": {
+      "identifier": "1.11.9"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-4v98-7qmw-rqr8",
+      "summary": "BuildKit vulnerable to possible host system access from mount stub cleaner",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-22",
+            "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+          }
+        ]
+      },
+      "publishedAt": "2024-01-31T22:43:26Z",
+      "references": [
+        {
+          "url": "https://github.com/moby/buildkit/security/advisories/GHSA-4v98-7qmw-rqr8"
+        },
+        {
+          "url": "https://github.com/moby/buildkit/pull/4603"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-23652"
+        },
+        {
+          "url": "https://github.com/moby/buildkit/releases/tag/v0.12.5"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-4v98-7qmw-rqr8"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/moby/buildkit"
+    },
+    "vulnerableVersionRange": "< 0.12.5",
+    "firstPatchedVersion": {
+      "identifier": "0.12.5"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-j77r-2fxf-5jrw",
+      "summary": "Improper path handling in kustomization files allows path traversal",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-22",
+            "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+          }
+        ]
+      },
+      "publishedAt": "2022-05-04T18:04:07Z",
+      "references": [
+        {
+          "url": "https://github.com/fluxcd/flux2/security/advisories/GHSA-j77r-2fxf-5jrw"
+        },
+        {
+          "url": "https://github.com/fluxcd/kustomize-controller/commit/f4528fb25d611da94e491346bea056d5c5c3611f"
+        },
+        {
+          "url": "https://github.com/fluxcd/pkg/commit/0ec014baf417fd3879d366a45503a548b9267d2a"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-24877"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-j77r-2fxf-5jrw"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/fluxcd/flux2"
+    },
+    "vulnerableVersionRange": "< 0.29.0",
+    "firstPatchedVersion": {
+      "identifier": "0.29.0"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-449p-3h89-pw88",
+      "summary": "Maliciously crafted Git server replies can lead to path traversal and RCE on go-git clients",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-22",
+            "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+          }
+        ]
+      },
+      "publishedAt": "2024-01-10T15:37:05Z",
+      "references": [
+        {
+          "url": "https://github.com/go-git/go-git/security/advisories/GHSA-449p-3h89-pw88"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-49569"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-449p-3h89-pw88"
+        }
+      ]
+    },
+    "package": {
+      "name": "gopkg.in/src-d/go-git.v4"
+    },
+    "vulnerableVersionRange": ">= 4.0.0, <= 4.13.1",
+    "firstPatchedVersion": null
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-r7j8-5h9c-f6fx",
+      "summary": "Remote Command Execution in file editing in gogs",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-22",
+            "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+          }
+        ]
+      },
+      "publishedAt": "2024-12-23T17:53:01Z",
+      "references": [
+        {
+          "url": "https://github.com/gogs/gogs/security/advisories/GHSA-r7j8-5h9c-f6fx"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-54148"
+        },
+        {
+          "url": "https://github.com/gogs/gogs/issues/7582"
+        },
+        {
+          "url": "https://github.com/gogs/gogs/pull/7857"
+        },
+        {
+          "url": "https://github.com/gogs/gogs/commit/c94baec9ca923f38c19f0c7c5af722b9ec04022a"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-r7j8-5h9c-f6fx"
+        }
+      ]
+    },
+    "package": {
+      "name": "gogs.io/gogs"
+    },
+    "vulnerableVersionRange": "< 0.13.1",
+    "firstPatchedVersion": {
+      "identifier": "0.13.1"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-xq3x-grrj-fj6x",
+      "summary": "sjqzhang go-fastdfs vulnerable to path traversal",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-22",
+            "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+          },
+          {
+            "cweId": "CWE-24",
+            "name": "Path Traversal: '../filedir'"
+          },
+          {
+            "cweId": "CWE-434",
+            "name": "Unrestricted Upload of File with Dangerous Type"
+          }
+        ]
+      },
+      "publishedAt": "2023-04-02T12:30:16Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-1800"
+        },
+        {
+          "url": "https://github.com/yangyanglo/ForCVE/blob/main/2023-0x05.md"
+        },
+        {
+          "url": "https://vuldb.com/?ctiid.224768"
+        },
+        {
+          "url": "https://vuldb.com/?id.224768"
+        },
+        {
+          "url": "https://github.com/sjqzhang/go-fastdfs/commit/61cbff5124c61e292994099372b11c06cdb5b80b"
+        },
+        {
+          "url": "https://github.com/yangyanglo/ForCVE/blob/93a16663cd32a36d37d8a0f0102e1592254d0279/2023-0x05.md"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-xq3x-grrj-fj6x"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/sjqzhang/go-fastdfs"
+    },
+    "vulnerableVersionRange": "< 1.4.5-0.20230408141131-61cbff5124c6",
+    "firstPatchedVersion": {
+      "identifier": "1.4.5-0.20230408141131-61cbff5124c6"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-xvq9-4vpv-227m",
+      "summary": "Nginx-UI vulnerable to arbitrary file write through the Import Certificate feature",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-22",
+            "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+          }
+        ]
+      },
+      "publishedAt": "2024-01-29T22:30:18Z",
+      "references": [
+        {
+          "url": "https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-xvq9-4vpv-227m"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-23827"
+        },
+        {
+          "url": "https://github.com/0xJacky/nginx-ui/commit/8581bdd3c6f49ab345b773517ba9173fa7fc6199"
+        },
+        {
+          "url": "https://github.com/0xJacky/nginx-ui/blob/f20d97a9fdc2a83809498b35b6abc0239ec7fdda/api/certificate/certificate.go#L72"
+        },
+        {
+          "url": "https://github.com/0xJacky/nginx-ui/blob/f20d97a9fdc2a83809498b35b6abc0239ec7fdda/internal/cert/write_file.go#L15"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-xvq9-4vpv-227m"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/0xJacky/Nginx-UI"
+    },
+    "vulnerableVersionRange": "< 2.0.0-beta.12",
+    "firstPatchedVersion": {
+      "identifier": "2.0.0-beta.12"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-p5pc-m4q7-7qm9",
+      "summary": "Helm Unsafe Link Following",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-59",
+            "name": "Improper Link Resolution Before File Access ('Link Following')"
+          }
+        ]
+      },
+      "publishedAt": "2022-05-24T22:01:14Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-18658"
+        },
+        {
+          "url": "https://helm.sh/blog/2019-10-30-helm-symlink-security-notice/"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-p5pc-m4q7-7qm9"
+        }
+      ]
+    },
+    "package": {
+      "name": "helm.sh/helm"
+    },
+    "vulnerableVersionRange": ">= 2.0.0, < 2.15.2",
+    "firstPatchedVersion": {
+      "identifier": "2.15.2"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-vpjc-4jcv-jc29",
+      "summary": "NATS nats-server allows directory traversal via unintended path to a management action ",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-22",
+            "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+          }
+        ]
+      },
+      "publishedAt": "2023-09-19T03:30:34Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-28357"
+        },
+        {
+          "url": "https://advisories.nats.io/CVE/CVE-2022-28357.txt"
+        },
+        {
+          "url": "https://github.com/nats-io/nats-server/releases/tag/v2.7.4"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-vpjc-4jcv-jc29"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/nats-io/nats-server"
+    },
+    "vulnerableVersionRange": ">= 2.2.0, < 2.7.4",
+    "firstPatchedVersion": {
+      "identifier": "2.7.4"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-95f9-94vc-665h",
+      "summary": "Path Traversal in Beego",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-22",
+            "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+          }
+        ]
+      },
+      "publishedAt": "2022-07-06T00:00:28Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-31836"
+        },
+        {
+          "url": "https://github.com/beego/beego/issues/4961"
+        },
+        {
+          "url": "https://github.com/beego/beego/pull/5025"
+        },
+        {
+          "url": "https://github.com/beego/beego/pull/5025/commits/ea5ae58d40589d249cf577a053e490509de2bf57"
+        },
+        {
+          "url": "https://pkg.go.dev/vuln/GO-2022-0569"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-95f9-94vc-665h"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/beego/beego/v2"
+    },
+    "vulnerableVersionRange": ">= 2.0.0, < 2.0.4",
+    "firstPatchedVersion": {
+      "identifier": "2.0.4"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-4j5x-f394-xx79",
+      "summary": "gitjacker arbitrary code execution",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-22",
+            "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+          }
+        ]
+      },
+      "publishedAt": "2022-05-24T22:01:30Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-29417"
+        },
+        {
+          "url": "https://github.com/liamg/gitjacker/compare/v0.0.3...v0.1.0"
+        },
+        {
+          "url": "https://github.com/liamg/gitjacker/releases/tag/v0.1.0"
+        },
+        {
+          "url": "https://vuln.ryotak.me/advisories/5"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-4j5x-f394-xx79"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/liamg/gitjacker"
+    },
+    "vulnerableVersionRange": "< 0.1.0",
+    "firstPatchedVersion": {
+      "identifier": "0.1.0"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-v9j4-cp63-qv62",
+      "summary": "Tarslip in go-unarr",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-22",
+            "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+          }
+        ]
+      },
+      "publishedAt": "2021-09-01T18:32:02Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-38197"
+        },
+        {
+          "url": "https://github.com/gen2brain/go-unarr/issues/21"
+        },
+        {
+          "url": "https://github.com/gen2brain/go-unarr/commit/239ec404d348280b50bbf671327709e8857fc5f4"
+        },
+        {
+          "url": "https://github.com/gen2brain/go-unarr/releases/tag/v0.1.4"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-v9j4-cp63-qv62"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/gen2brain/go-unarr"
+    },
+    "vulnerableVersionRange": "< 0.1.4",
+    "firstPatchedVersion": {
+      "identifier": "0.1.4"
+    }
+  }
+]

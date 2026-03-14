@@ -1,0 +1,712 @@
+[
+  {
+    "advisory": {
+      "ghsaId": "GHSA-8w87-58w6-hfv8",
+      "summary": "Rancher doesn't properly sanitize credentials in cluster template answers",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-200",
+            "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+          },
+          {
+            "cweId": "CWE-312",
+            "name": "Cleartext Storage of Sensitive Information"
+          },
+          {
+            "cweId": "CWE-522",
+            "name": "Insufficiently Protected Credentials"
+          }
+        ]
+      },
+      "publishedAt": "2026-03-03T14:49:34Z",
+      "references": [
+        {
+          "url": "https://github.com/rancher/rancher/security/advisories/GHSA-8w87-58w6-hfv8"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-36783"
+        },
+        {
+          "url": "https://bugzilla.suse.com/show_bug.cgi?id=1193990"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-8w87-58w6-hfv8"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/rancher/rancher"
+    },
+    "vulnerableVersionRange": ">= 2.6.0, <= 2.6.3",
+    "firstPatchedVersion": {
+      "identifier": "2.6.4"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-786q-9hcg-v9ff",
+      "summary": "Argo CD's Project API Token Exposes Repository Credentials",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-200",
+            "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+          }
+        ]
+      },
+      "publishedAt": "2025-09-04T19:49:56Z",
+      "references": [
+        {
+          "url": "https://github.com/argoproj/argo-cd/security/advisories/GHSA-786q-9hcg-v9ff"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/commit/e8f86101f5378662ae6151ce5c3a76e9141900e8"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-55190"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-786q-9hcg-v9ff"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/argoproj/argo-cd/v3"
+    },
+    "vulnerableVersionRange": ">= 3.1.0-rc1, < 3.1.2",
+    "firstPatchedVersion": {
+      "identifier": "3.1.2"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-wj44-9vcg-wjq7",
+      "summary": "Gogs allows deletion of internal files which leads to remote command execution",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-552",
+            "name": "Files or Directories Accessible to External Parties"
+          }
+        ]
+      },
+      "publishedAt": "2025-06-24T19:00:20Z",
+      "references": [
+        {
+          "url": "https://github.com/gogs/gogs/security/advisories/GHSA-wj44-9vcg-wjq7"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-56731"
+        },
+        {
+          "url": "https://github.com/gogs/gogs/commit/77a4a945ae9a87f77e392e9066b560edb71b5de9"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-ccqv-43vm-4f3w"
+        },
+        {
+          "url": "https://github.com/gogs/gogs/releases/tag/v0.13.3"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-wj44-9vcg-wjq7"
+        }
+      ]
+    },
+    "package": {
+      "name": "gogs.io/gogs"
+    },
+    "vulnerableVersionRange": "<= 0.13.2",
+    "firstPatchedVersion": {
+      "identifier": "0.13.3"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-ccqv-43vm-4f3w",
+      "summary": "Gogs allows deletion of internal files",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AC:L/AV:N/A:H/C:H/I:H/PR:L/S:C/UI:N"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-552",
+            "name": "Files or Directories Accessible to External Parties"
+          }
+        ]
+      },
+      "publishedAt": "2024-12-23T20:38:20Z",
+      "references": [
+        {
+          "url": "https://github.com/gogs/gogs/security/advisories/GHSA-ccqv-43vm-4f3w"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-39931"
+        },
+        {
+          "url": "https://www.sonarsource.com/blog/securing-developer-tools-unpatched-code-vulnerabilities-in-gogs-1"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-ccqv-43vm-4f3w"
+        }
+      ]
+    },
+    "package": {
+      "name": "gogs.io/gogs"
+    },
+    "vulnerableVersionRange": "<= 0.13.0",
+    "firstPatchedVersion": {
+      "identifier": "0.13.1"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-2vgj-3pvg-xh4w",
+      "summary": "Duplicate Advisory: Gogs allows deletion of internal files",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-552",
+            "name": "Files or Directories Accessible to External Parties"
+          }
+        ]
+      },
+      "publishedAt": "2024-07-04T18:31:10Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-39931"
+        },
+        {
+          "url": "https://github.com/gogs/gogs/releases"
+        },
+        {
+          "url": "https://www.sonarsource.com/blog/securing-developer-tools-unpatched-code-vulnerabilities-in-gogs-1"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-2vgj-3pvg-xh4w"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/gogs/gogs"
+    },
+    "vulnerableVersionRange": "<= 0.13.0",
+    "firstPatchedVersion": null
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-g7j7-h4q8-8w2f",
+      "summary": "Rancher API and cluster.management.cattle.io object vulnerable to plaintext storage and exposure of credentials",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-312",
+            "name": "Cleartext Storage of Sensitive Information"
+          }
+        ]
+      },
+      "publishedAt": "2022-09-23T18:11:28Z",
+      "references": [
+        {
+          "url": "https://github.com/rancher/rancher/security/advisories/GHSA-g7j7-h4q8-8w2f"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-36782"
+        },
+        {
+          "url": "https://bugzilla.suse.com/show_bug.cgi?id=1193988"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-g7j7-h4q8-8w2f"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/rancher/rancher"
+    },
+    "vulnerableVersionRange": ">= 2.6.0, < 2.6.7",
+    "firstPatchedVersion": {
+      "identifier": "2.6.7"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-r642-gv9p-2wjj",
+      "summary": "Argo CD will blindly trust JWT claims if anonymous access is enabled",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-200",
+            "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+          },
+          {
+            "cweId": "CWE-287",
+            "name": "Improper Authentication"
+          },
+          {
+            "cweId": "CWE-290",
+            "name": "Authentication Bypass by Spoofing"
+          }
+        ]
+      },
+      "publishedAt": "2022-05-24T20:47:34Z",
+      "references": [
+        {
+          "url": "https://github.com/argoproj/argo-cd/security/advisories/GHSA-r642-gv9p-2wjj"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-29165"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/releases/tag/v2.1.15"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/releases/tag/v2.2.9"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/releases/tag/v2.3.4"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-r642-gv9p-2wjj"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/argoproj/argo-cd"
+    },
+    "vulnerableVersionRange": "<= 1.8.7",
+    "firstPatchedVersion": {
+      "identifier": "2.1.15"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-2f5v-8r3f-8pww",
+      "summary": "Improper access control allows admin privilege escalation in Argo CD",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-200",
+            "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+          },
+          {
+            "cweId": "CWE-269",
+            "name": "Improper Privilege Management"
+          },
+          {
+            "cweId": "CWE-862",
+            "name": "Missing Authorization"
+          }
+        ]
+      },
+      "publishedAt": "2022-03-24T00:18:54Z",
+      "references": [
+        {
+          "url": "https://github.com/argoproj/argo-cd/security/advisories/GHSA-2f5v-8r3f-8pww"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-24768"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/commit/af03b291d4b7e9d3ce9a6580ae9c8141af0e05cf"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/releases/tag/v2.1.14"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/releases/tag/v2.2.8"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/releases/tag/v2.3.2"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-2f5v-8r3f-8pww"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/argoproj/argo-cd"
+    },
+    "vulnerableVersionRange": ">= 2.3.0, < 2.3.2",
+    "firstPatchedVersion": {
+      "identifier": "2.3.2"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-fwr2-64vr-xv9m",
+      "summary": "Argo CD cluster secret might leak in cluster details page",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.9,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:L"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-200",
+            "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+          },
+          {
+            "cweId": "CWE-532",
+            "name": "Insertion of Sensitive Information into Log File"
+          }
+        ]
+      },
+      "publishedAt": "2023-09-11T12:59:30Z",
+      "references": [
+        {
+          "url": "https://github.com/argoproj/argo-cd/security/advisories/GHSA-fwr2-64vr-xv9m"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-40029"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/pull/7139"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/commit/44e52c4ae76e6da1343bdd54e57a822d93549f28"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/commit/4b2e5b06bff2ffd8ed1970654ddd8e55fc4a41c4"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/commit/7122b83fc346ec2729227405a2f9c2aa84b0bf80"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/releases/tag/v2.6.15"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/releases/tag/v2.7.14"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/releases/tag/v2.8.3"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-fwr2-64vr-xv9m"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/argoproj/argo-cd/v2"
+    },
+    "vulnerableVersionRange": ">= 2.8.0, < 2.8.3",
+    "firstPatchedVersion": {
+      "identifier": "2.8.3"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-q5mg-pc7r-r8cr",
+      "summary": "Files or Directories Accessible to External Parties in ProjectDiscovery",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-552",
+            "name": "Files or Directories Accessible to External Parties"
+          }
+        ]
+      },
+      "publishedAt": "2024-06-05T06:30:39Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-5262"
+        },
+        {
+          "url": "https://github.com/projectdiscovery/interactsh/pull/874"
+        },
+        {
+          "url": "https://zuso.ai/advisory/za-2024-01"
+        },
+        {
+          "url": "https://github.com/projectdiscovery/interactsh/commit/6a0cb98b16636a98712729f3d23e34d8bf7260e7"
+        },
+        {
+          "url": "https://pkg.go.dev/vuln/GO-2024-2907"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-q5mg-pc7r-r8cr"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/projectdiscovery/interactsh"
+    },
+    "vulnerableVersionRange": "< 1.2.0",
+    "firstPatchedVersion": {
+      "identifier": "1.2.0"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-5r2v-6gm6-vpvh",
+      "summary": "Insecure Permissions in Gogs",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-200",
+            "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+          }
+        ]
+      },
+      "publishedAt": "2021-05-18T17:33:58Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-14544"
+        },
+        {
+          "url": "https://github.com/gogs/gogs/issues/5764"
+        },
+        {
+          "url": "https://github.com/gogs/gogs/commit/c3af3ff1d0484de3bd789ee6c6e47f35d590e945"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-5r2v-6gm6-vpvh"
+        }
+      ]
+    },
+    "package": {
+      "name": "gogs.io/gogs"
+    },
+    "vulnerableVersionRange": "< 0.11.91",
+    "firstPatchedVersion": {
+      "identifier": "0.11.91"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-2h2p-mvfx-868w",
+      "summary": "SiYuan Vulnerable to Path Traversal in /export Endpoint Allows Arbitrary File Read and Secret Leakage",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.3,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:L"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-22",
+            "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+          },
+          {
+            "cweId": "CWE-200",
+            "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+          },
+          {
+            "cweId": "CWE-285",
+            "name": "Improper Authorization"
+          }
+        ]
+      },
+      "publishedAt": "2026-03-07T02:19:45Z",
+      "references": [
+        {
+          "url": "https://github.com/siyuan-note/siyuan/security/advisories/GHSA-2h2p-mvfx-868w"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-30869"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-2h2p-mvfx-868w"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/siyuan-note/siyuan/kernel"
+    },
+    "vulnerableVersionRange": "<= 3.5.9",
+    "firstPatchedVersion": {
+      "identifier": "3.5.10"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-vh7g-p26c-j2cw",
+      "summary": "Dex vulnerable to Man-in-the-Middle allowing ID token capture via intercepted authorization code",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.3,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:N"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-200",
+            "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+          },
+          {
+            "cweId": "CWE-862",
+            "name": "Missing Authorization"
+          }
+        ]
+      },
+      "publishedAt": "2022-10-03T19:12:03Z",
+      "references": [
+        {
+          "url": "https://github.com/dexidp/dex/security/advisories/GHSA-vh7g-p26c-j2cw"
+        },
+        {
+          "url": "https://github.com/dexidp/dex/releases/tag/v2.35.0"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-39222"
+        },
+        {
+          "url": "https://github.com/dexidp/dex/commit/49471b14c8080ddb034d4855841123d378b7a634"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-vh7g-p26c-j2cw"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/dexidp/dex"
+    },
+    "vulnerableVersionRange": "<= 2.34.0",
+    "firstPatchedVersion": {
+      "identifier": "2.35.0"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-xj7w-r753-vj8v",
+      "summary": "Exposure of vSphere's CPI and CSI credentials in Rancher",
+      "severity": "HIGH",
+      "cvss": {
+        "score": 9.1,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:L"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-522",
+            "name": "Insufficiently Protected Credentials"
+          }
+        ]
+      },
+      "publishedAt": "2024-10-25T19:35:55Z",
+      "references": [
+        {
+          "url": "https://github.com/rancher/rancher/security/advisories/GHSA-xj7w-r753-vj8v"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-45157"
+        },
+        {
+          "url": "https://bugzilla.suse.com/show_bug.cgi?id=CVE-2022-45157"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-xj7w-r753-vj8v"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/rancher/rancher"
+    },
+    "vulnerableVersionRange": ">= 2.7.0, < 2.8.9",
+    "firstPatchedVersion": {
+      "identifier": "2.8.9"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-xggc-qprg-x6mw",
+      "summary": "Weave GitOps leaked cluster credentials into logs on connection errors",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.1,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-200",
+            "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+          },
+          {
+            "cweId": "CWE-209",
+            "name": "Generation of Error Message Containing Sensitive Information"
+          },
+          {
+            "cweId": "CWE-532",
+            "name": "Insertion of Sensitive Information into Log File"
+          },
+          {
+            "cweId": "CWE-538",
+            "name": "Insertion of Sensitive Information into Externally-Accessible File or Directory"
+          }
+        ]
+      },
+      "publishedAt": "2022-06-23T17:40:34Z",
+      "references": [
+        {
+          "url": "https://github.com/weaveworks/weave-gitops/security/advisories/GHSA-xggc-qprg-x6mw"
+        },
+        {
+          "url": "https://github.com/weaveworks/weave-gitops/commit/567356f471353fb5c676c77f5abc2a04631d50ca"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-31098"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-xggc-qprg-x6mw"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/weaveworks/weave-gitops"
+    },
+    "vulnerableVersionRange": "<= 0.8.1-rc.5",
+    "firstPatchedVersion": {
+      "identifier": "0.8.1-rc.6"
+    }
+  }
+]

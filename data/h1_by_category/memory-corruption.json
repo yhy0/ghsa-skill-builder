@@ -1,0 +1,145 @@
+[
+  {
+    "id": "1977252",
+    "title": "UAF on JSEthereumProvider",
+    "url": "https://hackerone.com/reports/1977252",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [],
+    "cwe": "Use After Free",
+    "disclosed_at": "2023-10-11T17:02:49.777Z",
+    "total_awarded_amount": 3000,
+    "reporter": "nick0ve",
+    "program": "brave",
+    "program_name": "Brave Software",
+    "hacktivity_summary": "A UAF (Use After Free) vulnerability was discovered in the renderer implementation of the Ethereum wallet. This vulnerability allowed an attacker to trigger a crash in the renderer process and potentially execute arbitrary code."
+  },
+  {
+    "id": "1707287",
+    "title": "CVE-2022-40604: Apache Airflow: Format String Vulnerability",
+    "url": "https://hackerone.com/reports/1707287",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [
+      "CVE-2022-40604"
+    ],
+    "cwe": "Use of Externally-Controlled Format String",
+    "disclosed_at": "2025-01-18T16:28:11.849Z",
+    "total_awarded_amount": 8000,
+    "reporter": "leixiao",
+    "program": "ibb",
+    "program_name": "Internet Bug Bounty",
+    "hacktivity_summary": "There is a format string vulnerability in Apache Airflow versions 2.3.0 through 2.3.4 in the src/airflow/utils/log/file_task_handler.py file. The vulnerability was caused by unnecessary formatting of a URL, which could allow for information extraction."
+  },
+  {
+    "id": "1813453",
+    "title": "[MK8DX] Improper ranking/replay file parsing",
+    "url": "https://hackerone.com/reports/1813453",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [],
+    "cwe": "Memory Corruption - Generic",
+    "disclosed_at": "2025-07-06T23:23:12.322Z",
+    "total_awarded_amount": null,
+    "reporter": "crazy_man123",
+    "program": "nintendo",
+    "program_name": "Nintendo",
+    "hacktivity_summary": "The vulnerability in the Mario Kart 8 Deluxe game involved improper ranking and replay file parsing. This allowed for potential exploitation, leading to potentially unintended consequences."
+  },
+  {
+    "id": "2101076",
+    "title": "HackerOne SAML signup domain enforcement bypass results in unauthorized access to HackerOne PullRequest organization",
+    "url": "https://hackerone.com/reports/2101076",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [],
+    "cwe": "Improper Null Termination",
+    "disclosed_at": "2024-02-04T02:19:19.962Z",
+    "total_awarded_amount": null,
+    "reporter": "0xacb",
+    "program": "security",
+    "program_name": "HackerOne",
+    "hacktivity_summary": "A vulnerability was discovered where SAML signup domain enforcement for new signups belonging to SAML-enabled organizations could be bypassed by appending control characters, allowing unauthorized access. This was leveraged to access the HackerOne PullRequest organization and view source code in pull requests. It was found email domains enforced by HackerOne SSO were not allowed for regular registration, but appending \"%0d%0a\" to the email parameter allowed the request to complete. Then logging in with the actual email worked, pending email verification. Since hackerone.com is a domain part of a SAML-enabled organization, creating accounts with @hackerone.com emails and getting one clicked allowed PullRequest access via \"Sign in with HackerOne\". This gave source code access. To mitigate, the email address should be normalized in the signup endpoint and access to PullRequest should require manual approval for @hackerone.com accounts."
+  },
+  {
+    "id": "2585375",
+    "title": "important: Apache HTTP Server: Crash resulting in Denial of Service in mod_proxy via a malicious request (CVE-2024-38477)",
+    "url": "https://hackerone.com/reports/2585375",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [
+      "CVE-2024-38477"
+    ],
+    "cwe": "NULL Pointer Dereference",
+    "disclosed_at": "2024-07-13T14:36:11.635Z",
+    "total_awarded_amount": 4920,
+    "reporter": "orange",
+    "program": "ibb",
+    "program_name": "Internet Bug Bounty",
+    "hacktivity_summary": "important: Apache HTTP Server: Crash resulting in Denial of Service in mod_proxy via a malicious request (CVE-2024-38477)\n\nA null pointer dereference vulnerability was discovered in mod_proxy in Apache HTTP Server versions 2.4.59 and earlier. This vulnerability allowed an attacker to crash the server by sending a malicious request. The issue was reported to the Apache Software Foundation and was fixed in version 2.4.60, which was released on July 1, 2024."
+  },
+  {
+    "id": "3048061",
+    "title": "[Xenoblade Chronicles X: Definitive Edition] Buffer overflow in string escape function, multiplayer DoS",
+    "url": "https://hackerone.com/reports/3048061",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [],
+    "cwe": "Classic Buffer Overflow",
+    "disclosed_at": "2025-05-15T00:10:38.073Z",
+    "total_awarded_amount": null,
+    "reporter": "roccodev",
+    "program": "nintendo",
+    "program_name": "Nintendo",
+    "hacktivity_summary": "A buffer overflow vulnerability was discovered in the string escape function of Xenoblade Chronicles X: Definitive Edition, which could have led to a denial-of-service (DoS) issue in the game's multiplayer mode."
+  },
+  {
+    "id": "3405778",
+    "title": "Timeout-based race conditions make Uint8Array/Buffer.alloc non-zerofilled",
+    "url": "https://hackerone.com/reports/3405778",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [
+      "CVE-2025-55131"
+    ],
+    "cwe": "Improper Initialization",
+    "disclosed_at": "2026-02-12T14:41:45.527Z",
+    "total_awarded_amount": null,
+    "reporter": "chalker",
+    "program": "nodejs",
+    "program_name": "Node.js",
+    "hacktivity_summary": "A flaw in Node.js's buffer allocation logic was discovered, where buffers allocated with `Buffer.alloc` and other `TypedArray` instances like `Uint8Array` may contain leftover data from previous operations under specific timing conditions."
+  },
+  {
+    "id": "2900606",
+    "title": "sys_fsc2h_ctrl kernel stack free",
+    "url": "https://hackerone.com/reports/2900606",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [],
+    "cwe": "Use After Free",
+    "disclosed_at": "2025-04-18T06:40:26.814Z",
+    "total_awarded_amount": 10000,
+    "reporter": "theflow0",
+    "program": "playstation",
+    "program_name": "PlayStation",
+    "hacktivity_summary": "The sys_fsc2h_ctrl kernel function can lead to a kernel stack free vulnerability. The vulnerability is caused by a race condition involving multiple threads accessing a local stack buffer. This could potentially result in a privilege escalation."
+  },
+  {
+    "id": "2177925",
+    "title": "Remote vulnerabilities in spp",
+    "url": "https://hackerone.com/reports/2177925",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [
+      "CVE-2006-4304"
+    ],
+    "cwe": "Classic Buffer Overflow",
+    "disclosed_at": "2024-04-25T21:49:25.943Z",
+    "total_awarded_amount": 12500,
+    "reporter": "theflow0",
+    "program": "playstation",
+    "program_name": "PlayStation",
+    "hacktivity_summary": "A vulnerability was discovered in the spp (PPPoE) implementation on the PS4/PS5. The vulnerability could allow a malicious PPPoE server to cause a heap buffer overwrite and overread, potentially leading to denial-of-service or remote code execution in kernel context. The vulnerability was caused by insufficient input validation in the sppp_ipcp_RCR and sppp_pap_input functions."
+  }
+]

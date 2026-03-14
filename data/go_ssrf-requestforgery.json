@@ -1,0 +1,674 @@
+[
+  {
+    "advisory": {
+      "ghsaId": "GHSA-8p9x-46gm-qfx2",
+      "summary": "Kyverno Cross-Namespace Privilege Escalation via Policy apiCall",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-269",
+            "name": "Improper Privilege Management"
+          },
+          {
+            "cweId": "CWE-918",
+            "name": "Server-Side Request Forgery (SSRF)"
+          }
+        ]
+      },
+      "publishedAt": "2026-01-27T18:01:26Z",
+      "references": [
+        {
+          "url": "https://github.com/kyverno/kyverno/security/advisories/GHSA-8p9x-46gm-qfx2"
+        },
+        {
+          "url": "https://github.com/kyverno/kyverno/commit/e0ba4de4f1e0ca325066d5095db51aec45b1407b"
+        },
+        {
+          "url": "https://github.com/kyverno/kyverno/commit/eba60fa856c781bcb9c3be066061a3df03ae4e3e"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-22039"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-8p9x-46gm-qfx2"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/kyverno/kyverno"
+    },
+    "vulnerableVersionRange": ">= 1.16.0-rc.1, < 1.16.3",
+    "firstPatchedVersion": {
+      "identifier": "1.16.3"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-4h4p-553m-46qh",
+      "summary": "Gitea Cross-site Scripting Vulnerability",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-79",
+            "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+          }
+        ]
+      },
+      "publishedAt": "2024-08-06T06:30:36Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-6886"
+        },
+        {
+          "url": "https://github.com/go-gitea/gitea/pull/31200"
+        },
+        {
+          "url": "https://blog.gitea.com/release-of-1.22.1"
+        },
+        {
+          "url": "https://github.com/go-gitea/gitea/commit/b6280f4d21309cfae7cc07f74173354c664d5e10"
+        },
+        {
+          "url": "https://pkg.go.dev/vuln/GO-2024-3056"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-4h4p-553m-46qh"
+        }
+      ]
+    },
+    "package": {
+      "name": "code.gitea.io/gitea"
+    },
+    "vulnerableVersionRange": "< 1.22.1",
+    "firstPatchedVersion": {
+      "identifier": "1.22.1"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-f2rj-m42r-6jm2",
+      "summary": "Skipper vulnerable to SSRF via X-Skipper-Proxy",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-918",
+            "name": "Server-Side Request Forgery (SSRF)"
+          }
+        ]
+      },
+      "publishedAt": "2022-10-25T20:22:29Z",
+      "references": [
+        {
+          "url": "https://github.com/zalando/skipper/security/advisories/GHSA-f2rj-m42r-6jm2"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-38580"
+        },
+        {
+          "url": "https://gist.github.com/Fadavvi/9fffcfa4aaa9e25b77cfe7b3044b2857#file-cve-2022-38580"
+        },
+        {
+          "url": "https://pastebin.com/dXxpgPAK"
+        },
+        {
+          "url": "http://skipper.com"
+        },
+        {
+          "url": "http://zalando.com"
+        },
+        {
+          "url": "https://github.com/zalando/skipper/pull/2058"
+        },
+        {
+          "url": "https://github.com/zalando/skipper/releases/tag/v0.13.237"
+        },
+        {
+          "url": "https://pkg.go.dev/vuln/GO-2022-1086"
+        },
+        {
+          "url": "https://github.com/zalando/skipper/commit/842634347da8fe77e396f66edea79d329fd72130"
+        },
+        {
+          "url": "http://packetstormsecurity.com/files/171546/X-Skipper-Proxy-0.13.237-Server-Side-Request-Forgery.html"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-f2rj-m42r-6jm2"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/zalando/skipper"
+    },
+    "vulnerableVersionRange": "< 0.13.237",
+    "firstPatchedVersion": {
+      "identifier": "0.13.237"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-4wpp-w5r4-7v5v",
+      "summary": "Server-Side Request Forgery in charm",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.8,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-918",
+            "name": "Server-Side Request Forgery (SSRF)"
+          }
+        ]
+      },
+      "publishedAt": "2022-05-24T20:55:22Z",
+      "references": [
+        {
+          "url": "https://github.com/charmbracelet/charm/security/advisories/GHSA-4wpp-w5r4-7v5v"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-29180"
+        },
+        {
+          "url": "https://github.com/charmbracelet/charm/commit/3c90668f955c7ce5ef721e4fc9faee7053232fd3"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-4wpp-w5r4-7v5v"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/charmbracelet/charm"
+    },
+    "vulnerableVersionRange": ">= 0.9.0, < 0.12.1",
+    "firstPatchedVersion": {
+      "identifier": "0.12.1"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-vqp6-rc3h-83cp",
+      "summary": "Tailscale Windows daemon is vulnerable to RCE via CSRF",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.6,
+        "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-346",
+            "name": "Origin Validation Error"
+          },
+          {
+            "cweId": "CWE-352",
+            "name": "Cross-Site Request Forgery (CSRF)"
+          }
+        ]
+      },
+      "publishedAt": "2022-11-21T22:34:00Z",
+      "references": [
+        {
+          "url": "https://github.com/tailscale/tailscale/security/advisories/GHSA-vqp6-rc3h-83cp"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-41924"
+        },
+        {
+          "url": "https://emily.id.au/tailscale"
+        },
+        {
+          "url": "https://tailscale.com/security-bulletins/#ts-2022-004"
+        },
+        {
+          "url": "https://github.com/tailscale/tailscale/releases/tag/v1.32.3"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-vqp6-rc3h-83cp"
+        }
+      ]
+    },
+    "package": {
+      "name": "tailscale.com"
+    },
+    "vulnerableVersionRange": "< 1.32.3",
+    "firstPatchedVersion": {
+      "identifier": "1.32.3"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-pr34-2v5x-6qjq",
+      "summary": "ZITADEL has 1-Click Account Takeover via XSS in /saml-post Endpoint",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.3,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:N"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-79",
+            "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+          }
+        ]
+      },
+      "publishedAt": "2026-03-04T22:47:08Z",
+      "references": [
+        {
+          "url": "https://github.com/zitadel/zitadel/security/advisories/GHSA-pr34-2v5x-6qjq"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-29191"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-pr34-2v5x-6qjq"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/zitadel/zitadel/v2"
+    },
+    "vulnerableVersionRange": ">= 4.0.0, < 4.12.0",
+    "firstPatchedVersion": {
+      "identifier": "4.12.0"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-6865-qjcf-286f",
+      "summary": "SiYuan: Unauthenticated Reflected XSS via SVG Injection in /api/icon/getDynamicIcon Endpoint",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.3,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:N"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-79",
+            "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+          }
+        ]
+      },
+      "publishedAt": "2026-03-04T21:45:10Z",
+      "references": [
+        {
+          "url": "https://github.com/siyuan-note/siyuan/security/advisories/GHSA-6865-qjcf-286f"
+        },
+        {
+          "url": "https://github.com/siyuan-note/siyuan/commit/d68bd5a79391742b3cb2e14d892bdd9997064927"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-29183"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-6865-qjcf-286f"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/siyuan-note/siyuan/kernel"
+    },
+    "vulnerableVersionRange": "< 0.0.0-20260304034809-d68bd5a79391",
+    "firstPatchedVersion": {
+      "identifier": "0.0.0-20260304034809-d68bd5a79391"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-7wfc-4796-gmg5",
+      "summary": "ZITADEL Vulnerable to Unauthenticated Full-Read SSRF via V2 Login",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.3,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:L/A:N"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-918",
+            "name": "Server-Side Request Forgery (SSRF)"
+          }
+        ]
+      },
+      "publishedAt": "2025-12-08T22:19:04Z",
+      "references": [
+        {
+          "url": "https://github.com/zitadel/zitadel/security/advisories/GHSA-7wfc-4796-gmg5"
+        },
+        {
+          "url": "https://github.com/zitadel/zitadel/commit/4c879b47334e01d4fcab921ac1b44eda39acdb96"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-67494"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-7wfc-4796-gmg5"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/zitadel/zitadel/v2"
+    },
+    "vulnerableVersionRange": "< 1.80.0-v2.20.0.20251208091519-4c879b47334e",
+    "firstPatchedVersion": {
+      "identifier": "1.80.0-v2.20.0.20251208091519-4c879b47334e"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-2j42-h78h-q4fg",
+      "summary": "Beego allows Reflected/Stored XSS in Beego's RenderForm() Function Due to Unescaped User Input",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.3,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:N"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-79",
+            "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+          }
+        ]
+      },
+      "publishedAt": "2025-03-31T16:55:22Z",
+      "references": [
+        {
+          "url": "https://github.com/beego/beego/security/advisories/GHSA-2j42-h78h-q4fg"
+        },
+        {
+          "url": "https://github.com/beego/beego/commit/939bb18c66406466715ddadd25dd9ffa6f169e25"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-30223"
+        },
+        {
+          "url": "https://pkg.go.dev/vuln/GO-2025-3585"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-2j42-h78h-q4fg"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/beego/beego"
+    },
+    "vulnerableVersionRange": "<= 1.12.14",
+    "firstPatchedVersion": null
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-4mq2-gc4j-cmw6",
+      "summary": "Django Template Engine Vulnerable to XSS",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.3,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:H/A:N"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-20",
+            "name": "Improper Input Validation"
+          },
+          {
+            "cweId": "CWE-79",
+            "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+          },
+          {
+            "cweId": "CWE-116",
+            "name": "Improper Encoding or Escaping of Output"
+          }
+        ]
+      },
+      "publishedAt": "2024-01-11T16:41:42Z",
+      "references": [
+        {
+          "url": "https://github.com/gofiber/template/security/advisories/GHSA-4mq2-gc4j-cmw6"
+        },
+        {
+          "url": "https://github.com/gofiber/template/commit/28cff3ac4d4c117ab25b5396954676d624b6cb46"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-22199"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-4mq2-gc4j-cmw6"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/gofiber/template/django/v3"
+    },
+    "vulnerableVersionRange": "< 3.1.9",
+    "firstPatchedVersion": {
+      "identifier": "3.1.9"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-3fvx-xrxq-8jvv",
+      "summary": "soft-serve vulnerable to SSRF via unvalidated LFS endpoint in repo import",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.1,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:L"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-918",
+            "name": "Server-Side Request Forgery (SSRF)"
+          }
+        ]
+      },
+      "publishedAt": "2026-03-06T22:16:00Z",
+      "references": [
+        {
+          "url": "https://github.com/charmbracelet/soft-serve/security/advisories/GHSA-3fvx-xrxq-8jvv"
+        },
+        {
+          "url": "https://github.com/charmbracelet/soft-serve/commit/3ef660098ab37a7950457da8ecc25b516e37ce4e"
+        },
+        {
+          "url": "https://github.com/charmbracelet/soft-serve/releases/tag/v0.11.4"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-30832"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-3fvx-xrxq-8jvv"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/charmbracelet/soft-serve"
+    },
+    "vulnerableVersionRange": ">= 0.6.0, < 0.11.4",
+    "firstPatchedVersion": {
+      "identifier": "0.11.4"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-vwq2-jx9q-9h9f",
+      "summary": "Soft Serve is vulnerable to SSRF through its Webhooks",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.1,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:L"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-918",
+            "name": "Server-Side Request Forgery (SSRF)"
+          }
+        ]
+      },
+      "publishedAt": "2025-11-10T21:34:44Z",
+      "references": [
+        {
+          "url": "https://github.com/charmbracelet/soft-serve/security/advisories/GHSA-vwq2-jx9q-9h9f"
+        },
+        {
+          "url": "https://github.com/charmbracelet/soft-serve/commit/bb73b9a0eea0d902da4811420535842a4f9aae3b"
+        },
+        {
+          "url": "https://github.com/charmbracelet/soft-serve/releases/tag/v0.11.1"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-64522"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-vwq2-jx9q-9h9f"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/charmbracelet/soft-serve"
+    },
+    "vulnerableVersionRange": "< 0.11.1",
+    "firstPatchedVersion": {
+      "identifier": "0.11.1"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-2hj5-g64g-fp6p",
+      "summary": "Argo CD allows cross-site scripting on repositories page",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.1,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-79",
+            "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+          }
+        ]
+      },
+      "publishedAt": "2025-05-28T17:36:32Z",
+      "references": [
+        {
+          "url": "https://github.com/argoproj/argo-cd/security/advisories/GHSA-2hj5-g64g-fp6p"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/commit/a5b4041a79c54bc7b3d090805d070bcdb9a9e4d1"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-47933"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-2hj5-g64g-fp6p"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/argoproj/argo-cd/v3"
+    },
+    "vulnerableVersionRange": "< 3.0.4",
+    "firstPatchedVersion": {
+      "identifier": "3.0.4"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-jwv5-8mqv-g387",
+      "summary": "Cross-site scripting on application summary component",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.1,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-79",
+            "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+          }
+        ]
+      },
+      "publishedAt": "2024-03-15T19:46:21Z",
+      "references": [
+        {
+          "url": "https://github.com/argoproj/argo-cd/security/advisories/GHSA-jwv5-8mqv-g387"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-28175"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/commit/479b5544b57dc9ef767d49f7003f39602c480b71"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-jwv5-8mqv-g387"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/argoproj/argo-cd"
+    },
+    "vulnerableVersionRange": ">= 1.0.0, <= 1.8.7",
+    "firstPatchedVersion": null
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-hjmr-xm25-36mh",
+      "summary": "Answer subject to Cross-site Scripting vulnerability",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 9.1,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-79",
+            "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+          }
+        ]
+      },
+      "publishedAt": "2023-02-08T09:30:24Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-0743"
+        },
+        {
+          "url": "https://github.com/answerdev/answer/commit/860b1a3bd8cfaa8827e6e6f50ab1d98fa4c2c816"
+        },
+        {
+          "url": "https://huntr.dev/bounties/366cf8bb-19f6-4388-b089-d0a260efd863"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-hjmr-xm25-36mh"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/answerdev/answer"
+    },
+    "vulnerableVersionRange": "< 1.0.4",
+    "firstPatchedVersion": {
+      "identifier": "1.0.4"
+    }
+  }
+]

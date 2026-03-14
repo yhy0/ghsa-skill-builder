@@ -1,0 +1,25 @@
+{
+  "name": "ghsa-skill-builder",
+  "owner": {
+    "name": "yhy0",
+    "email": "admin@chabug.org"
+  },
+  "metadata": {
+    "description": "安全漏洞审计 Skills（GHSA + HackerOne）和 Skill 生成器",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "vuln-skills",
+      "source": "./vuln-skills",
+      "description": "26 security vulnerability audit and penetration testing Skills covering Go/Python code audit and web pentesting",
+      "version": "1.0.0"
+    },
+    {
+      "name": "ghsa-skill-builder",
+      "source": "./ghsa-skill-builder",
+      "description": "Meta-tool for generating security audit Skills from GHSA and HackerOne data",
+      "version": "1.0.0"
+    }
+  ]
+}

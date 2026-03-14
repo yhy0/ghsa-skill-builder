@@ -36,6 +36,22 @@ description: "Use when auditing Python code involving authentication flows, perm
 - CSRF Token 校验（尤其在 SSO/OAuth 身份关联场景中防止跨站身份绑定）
 
 **检测路径：**
+
+搜索认证/授权模式的 Grep 模式：
+```bash
+# DRF 视图缺少 permission_classes
+grep -rn "class.*APIView\|class.*ViewSet" --include="*.py"
+grep -rn "permission_classes" --include="*.py"
+# 异常处理中的 fallback
+grep -rn "except.*return" --include="*.py"
+# 认证装饰器
+grep -rn "login_required\|permission_required" --include="*.py"
+# SSO/OAuth 相关
+grep -rn "SAML\|OAuth\|OpenID\|IdP" --include="*.py"
+# 事件总线
+grep -rn "event.*handler\|on_event\|publish(" --include="*.py"
+```
+
 1. 搜索受保护的资源/操作端点（API view、RPC method、event handler）
 2. 检查是否有认证/授权屏障保护（装饰器、permission_classes、手动校验）
 3. 验证屏障是否可被绕过：

@@ -36,6 +36,21 @@ description: "Use when auditing Python code involving HTTP client calls (request
 - **域名白名单**：`validators.domain()` 验证或 `allowed_urls` 配置
 
 **检测路径：**
+
+搜索 SSRF sink 的 Grep 模式：
+```bash
+# HTTP 客户端调用
+grep -rn "requests\.\(get\|post\|put\|delete\|head\)" --include="*.py"
+grep -rn "httpx\.\|AsyncClient\|Client()" --include="*.py"
+grep -rn "urlopen\|urllib\.request" --include="*.py"
+grep -rn "aiohttp.*\.get\|ClientSession" --include="*.py"
+# URL 验证函数
+grep -rn "is_private\|is_reserved\|is_loopback\|gethostbyname" --include="*.py"
+grep -rn "allow_redirects\|follow_redirects" --include="*.py"
+# SVG/XML 外部资源
+grep -rn "xlink\|url_fetcher\|external_resource" --include="*.py"
+```
+
 1. 搜索 HTTP 请求发起函数（`requests.get`、`httpx.get`、`urlopen`、`session.request` 等）
 2. 回溯 URL 参数来源，检查是否直接或间接来自用户输入
 3. 验证是否存在以下防护措施：

@@ -1,0 +1,762 @@
+[
+  {
+    "advisory": {
+      "ghsaId": "GHSA-gqf8-rvrh-g7w6",
+      "summary": "Rancher cloud credentials can be used through proxy API by users without access",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-284",
+            "name": "Improper Access Control"
+          }
+        ]
+      },
+      "publishedAt": "2026-03-03T14:52:15Z",
+      "references": [
+        {
+          "url": "https://github.com/rancher/rancher/security/advisories/GHSA-gqf8-rvrh-g7w6"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-25320"
+        },
+        {
+          "url": "https://bugzilla.suse.com/show_bug.cgi?id=1185514"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-gqf8-rvrh-g7w6"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/rancher/rancher"
+    },
+    "vulnerableVersionRange": ">= 2.5.0, < 2.5.9",
+    "firstPatchedVersion": {
+      "identifier": "2.5.9"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-8p9x-46gm-qfx2",
+      "summary": "Kyverno Cross-Namespace Privilege Escalation via Policy apiCall",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-269",
+            "name": "Improper Privilege Management"
+          },
+          {
+            "cweId": "CWE-918",
+            "name": "Server-Side Request Forgery (SSRF)"
+          }
+        ]
+      },
+      "publishedAt": "2026-01-27T18:01:26Z",
+      "references": [
+        {
+          "url": "https://github.com/kyverno/kyverno/security/advisories/GHSA-8p9x-46gm-qfx2"
+        },
+        {
+          "url": "https://github.com/kyverno/kyverno/commit/e0ba4de4f1e0ca325066d5095db51aec45b1407b"
+        },
+        {
+          "url": "https://github.com/kyverno/kyverno/commit/eba60fa856c781bcb9c3be066061a3df03ae4e3e"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-22039"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-8p9x-46gm-qfx2"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/kyverno/kyverno"
+    },
+    "vulnerableVersionRange": ">= 1.16.0-rc.1, < 1.16.3",
+    "firstPatchedVersion": {
+      "identifier": "1.16.3"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-h8cp-697h-8c8p",
+      "summary": "Step CA Has Authorization Bypass in ACME and SCEP Provisioners",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-306",
+            "name": "Missing Authentication for Critical Function"
+          }
+        ]
+      },
+      "publishedAt": "2025-12-03T17:00:03Z",
+      "references": [
+        {
+          "url": "https://github.com/smallstep/certificates/security/advisories/GHSA-h8cp-697h-8c8p"
+        },
+        {
+          "url": "https://github.com/smallstep/certificates/commit/1011f5f5408b470a636f583bf74c0d7bbaf75d72"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-h8cp-697h-8c8p"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/smallstep/certificates"
+    },
+    "vulnerableVersionRange": "<= 0.28.4",
+    "firstPatchedVersion": {
+      "identifier": "0.29.0"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-mp6x-97xj-9x62",
+      "summary": "Mattermost fails to to verify the token used during code exchange",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-287",
+            "name": "Improper Authentication"
+          },
+          {
+            "cweId": "CWE-303",
+            "name": "Incorrect Implementation of Authentication Algorithm"
+          }
+        ]
+      },
+      "publishedAt": "2025-11-27T18:30:26Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-12421"
+        },
+        {
+          "url": "https://mattermost.com/security-updates"
+        },
+        {
+          "url": "https://github.com/mattermost/mattermost/commit/5072bbf689a46b3b97b2373f26149f5891396e6b"
+        },
+        {
+          "url": "https://github.com/mattermost/mattermost/commit/acda1fb5dd46a2f46c76ae67012423c760525eaa"
+        },
+        {
+          "url": "https://github.com/mattermost/mattermost/commit/f361e7d75a7ab9df5a2106e1ceb919b94b55e41d"
+        },
+        {
+          "url": "https://github.com/mattermost/mattermost/commit/feb598ed2b7ac3cb78a253b032ad7e4628b0de00"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-mp6x-97xj-9x62"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/mattermost/mattermost-server"
+    },
+    "vulnerableVersionRange": ">= 10.5.0, < 10.5.13",
+    "firstPatchedVersion": {
+      "identifier": "10.5.13"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-3x39-62h4-f8j6",
+      "summary": "Mattermost fails to properly validate OAuth state tokens during OpenID Connect authentication",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-287",
+            "name": "Improper Authentication"
+          },
+          {
+            "cweId": "CWE-303",
+            "name": "Incorrect Implementation of Authentication Algorithm"
+          }
+        ]
+      },
+      "publishedAt": "2025-11-27T18:30:25Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-12419"
+        },
+        {
+          "url": "https://mattermost.com/security-updates"
+        },
+        {
+          "url": "https://github.com/mattermost/mattermost/pull/34296"
+        },
+        {
+          "url": "https://github.com/mattermost/mattermost/commit/15364790cc277cfaa372693d2d5442b87f70fd42"
+        },
+        {
+          "url": "https://github.com/mattermost/mattermost/commit/364c2203de00fe0d8424b6b46d6f0eeb02a2539a"
+        },
+        {
+          "url": "https://github.com/mattermost/mattermost/commit/46b5c436bb3093cc1da3fa2455f93d4c52389eee"
+        },
+        {
+          "url": "https://github.com/mattermost/mattermost/commit/c3f4818afe46a7084740e809708ae22641c76d8d"
+        },
+        {
+          "url": "https://github.com/mattermost/mattermost/commit/d3ed703dc8330684952eb8d49a375bac6ea7b0c6"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-3x39-62h4-f8j6"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/mattermost/mattermost-server"
+    },
+    "vulnerableVersionRange": ">= 11.0.0, < 11.0.4",
+    "firstPatchedVersion": {
+      "identifier": "11.0.4"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-w62r-7c53-fmc5",
+      "summary": "Grafana Incorrect Privilege Assignment vulnerability",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-266",
+            "name": "Incorrect Privilege Assignment"
+          }
+        ]
+      },
+      "publishedAt": "2025-11-21T15:31:28Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-41115"
+        },
+        {
+          "url": "https://grafana.com/security/security-advisories/CVE-2025-41115"
+        },
+        {
+          "url": "https://github.com/grafana/grafana/releases/tag/v12.3.0"
+        },
+        {
+          "url": "https://github.com/grafana/grafana/commit/ca5d89812015ef2db3acc62826f73650450b331e"
+        },
+        {
+          "url": "https://github.com/grafana/grafana/releases/tag/v12.0.7"
+        },
+        {
+          "url": "https://github.com/grafana/grafana/releases/tag/v12.1.4"
+        },
+        {
+          "url": "https://github.com/grafana/grafana/releases/tag/v12.2.2"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-w62r-7c53-fmc5"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/grafana/grafana"
+    },
+    "vulnerableVersionRange": ">= 1.9.2-0.20250310110405-e6fdb746f235, < 1.9.2-0.20251106142618-ca5d89812015",
+    "firstPatchedVersion": {
+      "identifier": "1.9.2-0.20251106142618-ca5d89812015"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-6m9f-pj6w-w87g",
+      "summary": "Rancher Webhook is misconfigured during upgrade process",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-269",
+            "name": "Improper Privilege Management"
+          },
+          {
+            "cweId": "CWE-276",
+            "name": "Incorrect Default Permissions"
+          }
+        ]
+      },
+      "publishedAt": "2023-04-24T22:34:59Z",
+      "references": [
+        {
+          "url": "https://github.com/rancher/rancher/security/advisories/GHSA-6m9f-pj6w-w87g"
+        },
+        {
+          "url": "https://github.com/rancher/rancher/releases/tag/v2.7.3"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-22651"
+        },
+        {
+          "url": "https://bugzilla.suse.com/show_bug.cgi?id=CVE-2023-22651"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-6m9f-pj6w-w87g"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/rancher/rancher"
+    },
+    "vulnerableVersionRange": ">= 0.0.0-20220922131902-ec6d6d3a7616, < 0.0.0-20230424183121-6d9a175954c6",
+    "firstPatchedVersion": {
+      "identifier": "0.0.0-20230424183121-6d9a175954c6"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-p976-h52c-26p6",
+      "summary": "Rancher vulnerable to Privilege Escalation via manipulation of Secrets",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-267",
+            "name": "Privilege Defined With Unsafe Actions"
+          },
+          {
+            "cweId": "CWE-269",
+            "name": "Improper Privilege Management"
+          }
+        ]
+      },
+      "publishedAt": "2023-06-06T02:00:28Z",
+      "references": [
+        {
+          "url": "https://github.com/rancher/rancher/security/advisories/GHSA-p976-h52c-26p6"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-22647"
+        },
+        {
+          "url": "https://bugzilla.suse.com/show_bug.cgi?id=CVE-2023-22647"
+        },
+        {
+          "url": "https://github.com/rancher/rancher/releases/tag/v2.6.13"
+        },
+        {
+          "url": "https://github.com/rancher/rancher/releases/tag/v2.7.4"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-p976-h52c-26p6"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/rancher/rancher"
+    },
+    "vulnerableVersionRange": ">= 2.7.0, < 2.7.4",
+    "firstPatchedVersion": {
+      "identifier": "2.7.4"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-5m7g-pj8w-7593",
+      "summary": "Vela Insecure Defaults",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-269",
+            "name": "Improper Privilege Management"
+          }
+        ]
+      },
+      "publishedAt": "2022-11-09T19:17:21Z",
+      "references": [
+        {
+          "url": "https://github.com/go-vela/server/security/advisories/GHSA-5m7g-pj8w-7593"
+        },
+        {
+          "url": "https://github.com/go-vela/worker/security/advisories/GHSA-2w78-ffv6-p46w"
+        },
+        {
+          "url": "https://github.com/go-vela/server/commit/05558ee99d70f7d6f83bed7c8f78ac0b35fa26f4"
+        },
+        {
+          "url": "https://docs.docker.com/engine/security/#docker-daemon-attack-surface"
+        },
+        {
+          "url": "https://github.com/go-vela/server/releases/tag/v0.16.0"
+        },
+        {
+          "url": "https://github.com/go-vela/ui/security/advisories/GHSA-xf39-98m2-889v"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-39395"
+        },
+        {
+          "url": "https://github.com/go-vela/ui/releases/tag/v0.17.0"
+        },
+        {
+          "url": "https://github.com/go-vela/worker/releases/tag/v0.16.0"
+        },
+        {
+          "url": "https://go-vela.github.io/docs/installation/server/reference/#vela_repo_allowlist"
+        },
+        {
+          "url": "https://go-vela.github.io/docs/installation/worker/reference/#vela_runtime_privileged_images"
+        },
+        {
+          "url": "https://pkg.go.dev/vuln/GO-2022-1100"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-5m7g-pj8w-7593"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/go-vela/worker"
+    },
+    "vulnerableVersionRange": "< 0.16.0",
+    "firstPatchedVersion": {
+      "identifier": "0.16.0"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-828r-r2c8-rfw3",
+      "summary": "Privilege Escalation in kubevirt",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-269",
+            "name": "Improper Privilege Management"
+          }
+        ]
+      },
+      "publishedAt": "2024-04-24T20:54:37Z",
+      "references": [
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-14316"
+        },
+        {
+          "url": "https://github.com/kubevirt/kubevirt/pull/3686"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1848951"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-828r-r2c8-rfw3"
+        }
+      ]
+    },
+    "package": {
+      "name": "kubevirt.io/kubevirt"
+    },
+    "vulnerableVersionRange": "< 0.30.0",
+    "firstPatchedVersion": {
+      "identifier": "0.30.0"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-68wm-pfjf-wqp6",
+      "summary": "Authelia vulnerable to an authentication bypassed with malformed request URI on nginx",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-287",
+            "name": "Improper Authentication"
+          }
+        ]
+      },
+      "publishedAt": "2021-12-20T16:57:16Z",
+      "references": [
+        {
+          "url": "https://github.com/authelia/authelia/security/advisories/GHSA-68wm-pfjf-wqp6"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-32637"
+        },
+        {
+          "url": "https://github.com/authelia/authelia/commit/c62dbd43d6e69ae81530e7c4f8763857f8ff1dda"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-68wm-pfjf-wqp6"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/authelia/authelia/v4"
+    },
+    "vulnerableVersionRange": ">= 4.0.0-alpha1, <= 4.29.2",
+    "firstPatchedVersion": {
+      "identifier": "4.29.3"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-74j8-w7f9-pp62",
+      "summary": "Improper configuration of RBAC permissions obtaining cluster control permissions",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-287",
+            "name": "Improper Authentication"
+          },
+          {
+            "cweId": "CWE-863",
+            "name": "Incorrect Authorization"
+          }
+        ]
+      },
+      "publishedAt": "2023-06-30T20:25:52Z",
+      "references": [
+        {
+          "url": "https://github.com/labring/sealos/security/advisories/GHSA-74j8-w7f9-pp62"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-33190"
+        },
+        {
+          "url": "https://github.com/labring/sealos/commit/4cdf52e55666864e5f90ed502e9fc13e18985b7b"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-74j8-w7f9-pp62"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/labring/sealos"
+    },
+    "vulnerableVersionRange": "< 4.2.1-rc4",
+    "firstPatchedVersion": {
+      "identifier": "4.2.1-rc4"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-pvrc-wvj2-f59p",
+      "summary": "Pomerium vulnerable to Incorrect Authorization with specially crafted requests",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-285",
+            "name": "Improper Authorization"
+          }
+        ]
+      },
+      "publishedAt": "2023-05-26T22:00:39Z",
+      "references": [
+        {
+          "url": "https://github.com/pomerium/pomerium/security/advisories/GHSA-pvrc-wvj2-f59p"
+        },
+        {
+          "url": "https://github.com/pomerium/pomerium/commit/d315e683357a9b587ba9ef399a8813bcc52fdebb"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-33189"
+        },
+        {
+          "url": "https://github.com/pomerium/pomerium/releases/tag/v0.17.4"
+        },
+        {
+          "url": "https://github.com/pomerium/pomerium/releases/tag/v0.18.1"
+        },
+        {
+          "url": "https://github.com/pomerium/pomerium/releases/tag/v0.19.2"
+        },
+        {
+          "url": "https://github.com/pomerium/pomerium/releases/tag/v0.20.1"
+        },
+        {
+          "url": "https://github.com/pomerium/pomerium/releases/tag/v0.21.4"
+        },
+        {
+          "url": "https://github.com/pomerium/pomerium/releases/tag/v0.22.2"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-pvrc-wvj2-f59p"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/pomerium/pomerium"
+    },
+    "vulnerableVersionRange": "< 0.17.4",
+    "firstPatchedVersion": {
+      "identifier": "0.17.4"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-r642-gv9p-2wjj",
+      "summary": "Argo CD will blindly trust JWT claims if anonymous access is enabled",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-200",
+            "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+          },
+          {
+            "cweId": "CWE-287",
+            "name": "Improper Authentication"
+          },
+          {
+            "cweId": "CWE-290",
+            "name": "Authentication Bypass by Spoofing"
+          }
+        ]
+      },
+      "publishedAt": "2022-05-24T20:47:34Z",
+      "references": [
+        {
+          "url": "https://github.com/argoproj/argo-cd/security/advisories/GHSA-r642-gv9p-2wjj"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-29165"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/releases/tag/v2.1.15"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/releases/tag/v2.2.9"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/releases/tag/v2.3.4"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-r642-gv9p-2wjj"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/argoproj/argo-cd"
+    },
+    "vulnerableVersionRange": "<= 1.8.7",
+    "firstPatchedVersion": {
+      "identifier": "2.1.15"
+    }
+  },
+  {
+    "advisory": {
+      "ghsaId": "GHSA-2f5v-8r3f-8pww",
+      "summary": "Improper access control allows admin privilege escalation in Argo CD",
+      "severity": "CRITICAL",
+      "cvss": {
+        "score": 10.0,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H"
+      },
+      "cwes": {
+        "nodes": [
+          {
+            "cweId": "CWE-200",
+            "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+          },
+          {
+            "cweId": "CWE-269",
+            "name": "Improper Privilege Management"
+          },
+          {
+            "cweId": "CWE-862",
+            "name": "Missing Authorization"
+          }
+        ]
+      },
+      "publishedAt": "2022-03-24T00:18:54Z",
+      "references": [
+        {
+          "url": "https://github.com/argoproj/argo-cd/security/advisories/GHSA-2f5v-8r3f-8pww"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-24768"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/commit/af03b291d4b7e9d3ce9a6580ae9c8141af0e05cf"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/releases/tag/v2.1.14"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/releases/tag/v2.2.8"
+        },
+        {
+          "url": "https://github.com/argoproj/argo-cd/releases/tag/v2.3.2"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-2f5v-8r3f-8pww"
+        }
+      ]
+    },
+    "package": {
+      "name": "github.com/argoproj/argo-cd"
+    },
+    "vulnerableVersionRange": ">= 2.3.0, < 2.3.2",
+    "firstPatchedVersion": {
+      "identifier": "2.3.2"
+    }
+  }
+]

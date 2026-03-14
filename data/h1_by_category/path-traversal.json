@@ -1,0 +1,166 @@
+[
+  {
+    "id": "3060373",
+    "title": "Path Traversal Vulnerability found on IBM Cloud",
+    "url": "https://hackerone.com/reports/3060373",
+    "substate": "resolved",
+    "severity_rating": "Critical",
+    "cve_ids": [],
+    "cwe": "Path Traversal",
+    "disclosed_at": "2025-05-07T17:43:20.026Z",
+    "total_awarded_amount": null,
+    "reporter": "0xnullbytex0",
+    "program": "ibm",
+    "program_name": "IBM",
+    "hacktivity_summary": "The path traversal vulnerability on IBM Cloud was reported by an external researcher, analyzed, and remediated. The vulnerability has been addressed."
+  },
+  {
+    "id": "1710541",
+    "title": "Arbitrary write in the application's data folder and arbitrary read of server's replies from 3rd party apps. ",
+    "url": "https://hackerone.com/reports/1710541",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [],
+    "cwe": "Path Traversal",
+    "disclosed_at": "2023-06-07T15:06:10.300Z",
+    "total_awarded_amount": null,
+    "reporter": "fr4via",
+    "program": "basecamp",
+    "program_name": "Basecamp",
+    "hacktivity_summary": "A path traversal vulnerability was found in the Android app `com.basecamp.bc3` version `3.26.3`, allowing an attacker to write arbitrary files in the app's private directory. Additionally, the attacker could redirect server responses containing sensitive information to 3rd party apps using a custom-crafted deeplink scheme."
+  },
+  {
+    "id": "1096043",
+    "title": "Non-authenticated path traversal leading to arbitrary file read ",
+    "url": "https://hackerone.com/reports/1096043",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [
+      "CVE-2021-44534"
+    ],
+    "cwe": "Path Traversal",
+    "disclosed_at": "2024-05-28T20:42:43.961Z",
+    "total_awarded_amount": null,
+    "reporter": "d3addog",
+    "program": "expressionengine",
+    "program_name": "ExpressionEngine",
+    "hacktivity_summary": "Non-authenticated path traversal leading to arbitrary file read. Insufficient user input filtering resulted in arbitrary file read by non-authenticated attacker, leading to sensitive information disclosure."
+  },
+  {
+    "id": "2434811",
+    "title": "Path traversal by monkey-patching Buffer internals",
+    "url": "https://hackerone.com/reports/2434811",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [
+      "CVE-2024-21896"
+    ],
+    "cwe": "Path Traversal",
+    "disclosed_at": "2024-05-29T14:32:15.660Z",
+    "total_awarded_amount": 2430,
+    "reporter": "tniessen",
+    "program": "ibb",
+    "program_name": "Internet Bug Bounty",
+    "hacktivity_summary": "In Node.js 20 and 21, a path traversal vulnerability was introduced due to the ability to monkey-patch Buffer internals. By overwriting Buffer.prototype.utf8Write, an attacker could bypass the path resolution logic and access restricted file system paths. The vulnerability was caused by the implementation's reliance on Buffer.from() to obtain a Buffer from the result of path.resolve()."
+  },
+  {
+    "id": "2256167",
+    "title": "Path traversal through path stored in Uint8Array in Node.js 20",
+    "url": "https://hackerone.com/reports/2256167",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [
+      "CVE-2023-39332"
+    ],
+    "cwe": "Path Traversal",
+    "disclosed_at": "2024-01-20T16:26:31.233Z",
+    "total_awarded_amount": 3495,
+    "reporter": "tniessen",
+    "program": "ibb",
+    "program_name": "Internet Bug Bounty",
+    "hacktivity_summary": "A path traversal vulnerability was discovered in Node.js 20 through paths stored in Uint8Array objects. The vulnerability allowed bypassing path sanitization protections and reading arbitrary files outside of a restricted directory. The issue was addressed by properly sanitizing Uint8Array paths in addition to string paths."
+  },
+  {
+    "id": "2225660",
+    "title": "Permission model improperly protects against path traversal in Node.js 20",
+    "url": "https://hackerone.com/reports/2225660",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [
+      "CVE-2023-39331"
+    ],
+    "cwe": "Path Traversal",
+    "disclosed_at": "2023-11-30T15:43:45.568Z",
+    "total_awarded_amount": 2330,
+    "reporter": "tniessen",
+    "program": "ibb",
+    "program_name": "Internet Bug Bounty",
+    "hacktivity_summary": "A path traversal vulnerability was introduced in Node.js 20 due to insufficient patching of CVE-2023-30584. The vulnerability arises because the permission model implementation does not protect itself against the application overwriting built-in utility functions like path.resolve with user-defined implementations. This allows bypassing of path sanitization, enabling arbitrary file reads and writes. The vulnerability affects all Node.js 20.x users of the experimental permission model. It was reported by Tobias Nießen, who also provided the patch."
+  },
+  {
+    "id": "2104564",
+    "title": "(CVE-2023-32004) Permission model bypass by specifying a path traversal sequence in a Buffer",
+    "url": "https://hackerone.com/reports/2104564",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [
+      "CVE-2023-32004"
+    ],
+    "cwe": "Path Traversal",
+    "disclosed_at": "2023-10-07T18:45:48.085Z",
+    "total_awarded_amount": null,
+    "reporter": "haxatron1",
+    "program": "ibb",
+    "program_name": "Internet Bug Bounty",
+    "hacktivity_summary": "A vulnerability was discovered in Node.js version 20, specifically within the experimental permission model. It allowed for a bypass of the permission model by specifying a path traversal sequence in a Buffer, leading to improper handling of file permissions."
+  },
+  {
+    "id": "2995025",
+    "title": "Mozilla VPN Clients: RCE via file write and path traversal",
+    "url": "https://hackerone.com/reports/2995025",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [],
+    "cwe": "Path Traversal",
+    "disclosed_at": "2025-07-29T09:53:41.088Z",
+    "total_awarded_amount": 6000,
+    "reporter": "trein",
+    "program": "mozilla",
+    "program_name": "Mozilla",
+    "hacktivity_summary": "The report describes a path traversal vulnerability in the Mozilla VPN client software that allowed for remote code execution. The vulnerability was found in the \"live_reload\" command of the client's inspector feature, which could be accessed when the client was in developer mode with \"Use Staging Servers\" enabled. The vulnerable code in the InspectorHotreloader::fetchAndAnnounce() function failed to properly sanitize file paths when downloading remote files to a temporary folder, enabling attackers to write arbitrary files to any location on the filesystem."
+  },
+  {
+    "id": "3160912",
+    "title": "Windows Device Names (CON, PRN, AUX) Bypass Path Traversal Protection in path.normalize()",
+    "url": "https://hackerone.com/reports/3160912",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [
+      "CVE-2025-27210"
+    ],
+    "cwe": "Path Traversal",
+    "disclosed_at": "2025-07-15T22:44:08.515Z",
+    "total_awarded_amount": null,
+    "reporter": "oblivionsage",
+    "program": "nodejs",
+    "program_name": "Node.js",
+    "hacktivity_summary": "An incomplete fix has been identified for a vulnerability affecting Windows device names in the `path.normalize()` function in Node.js. The vulnerability allows path traversal protection to be bypassed on devices such as CON, PRN, and AUX."
+  },
+  {
+    "id": "2218653",
+    "title": "Path traversal by monkey-patching Buffer internals",
+    "url": "https://hackerone.com/reports/2218653",
+    "substate": "resolved",
+    "severity_rating": "High",
+    "cve_ids": [
+      "CVE-2024-21896"
+    ],
+    "cwe": "Path Traversal",
+    "disclosed_at": "2024-02-15T18:36:27.124Z",
+    "total_awarded_amount": null,
+    "reporter": "tniessen",
+    "program": "nodejs",
+    "program_name": "Node.js",
+    "hacktivity_summary": "A path traversal vulnerability was introduced in the experimental permission model in Node.js 20 and 21 by monkey-patching Buffer internals. This allowed modification of the result of path.resolve(), leading to traversal beyond the expected path."
+  }
+]
